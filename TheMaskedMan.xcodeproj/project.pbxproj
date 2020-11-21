@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,9 @@
 		4BC6B8B4256885830075D1AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BC6B8B2256885830075D1AD /* Main.storyboard */; };
 		4BC6B8B6256885850075D1AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BC6B8B5256885850075D1AD /* Assets.xcassets */; };
 		4BC6B8B9256885850075D1AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BC6B8B7256885850075D1AD /* LaunchScreen.storyboard */; };
+		4BC6B8D92568A4660075D1AD /* data.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4BC6B8D82568A4660075D1AD /* data.txt */; };
+		4BC6B8DC2568A93C0075D1AD /* ClosestMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8DB2568A93C0075D1AD /* ClosestMask.swift */; };
+		71A91E57CEEFB28F98580A49 /* Pods_TheMaskedMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6608149DC866C530286A75C /* Pods_TheMaskedMan.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,11 @@
 		4BC6B8B5256885850075D1AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4BC6B8B8256885850075D1AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4BC6B8BA256885850075D1AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4BC6B8D82568A4660075D1AD /* data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data.txt; sourceTree = "<group>"; };
+		4BC6B8DB2568A93C0075D1AD /* ClosestMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosestMask.swift; sourceTree = "<group>"; };
+		77F47A0E998DA15209E67309 /* Pods-TheMaskedMan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMaskedMan.release.xcconfig"; path = "Target Support Files/Pods-TheMaskedMan/Pods-TheMaskedMan.release.xcconfig"; sourceTree = "<group>"; };
+		7910A0699914C99A1DA7B4D3 /* Pods-TheMaskedMan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMaskedMan.debug.xcconfig"; path = "Target Support Files/Pods-TheMaskedMan/Pods-TheMaskedMan.debug.xcconfig"; sourceTree = "<group>"; };
+		C6608149DC866C530286A75C /* Pods_TheMaskedMan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheMaskedMan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +39,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71A91E57CEEFB28F98580A49 /* Pods_TheMaskedMan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1383F80F4E92946452787ECC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7910A0699914C99A1DA7B4D3 /* Pods-TheMaskedMan.debug.xcconfig */,
+				77F47A0E998DA15209E67309 /* Pods-TheMaskedMan.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		4BC6B8A0256885830075D1AD = {
 			isa = PBXGroup;
 			children = (
 				4BC6B8AB256885830075D1AD /* TheMaskedMan */,
 				4BC6B8AA256885830075D1AD /* Products */,
+				1383F80F4E92946452787ECC /* Pods */,
+				654F9997AF04BDE8ECEF102E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +76,25 @@
 		4BC6B8AB256885830075D1AD /* TheMaskedMan */ = {
 			isa = PBXGroup;
 			children = (
+				4BC6B8D82568A4660075D1AD /* data.txt */,
 				4BC6B8AC256885830075D1AD /* AppDelegate.swift */,
 				4BC6B8AE256885830075D1AD /* SceneDelegate.swift */,
 				4BC6B8B0256885830075D1AD /* ViewController.swift */,
+				4BC6B8DB2568A93C0075D1AD /* ClosestMask.swift */,
 				4BC6B8B2256885830075D1AD /* Main.storyboard */,
 				4BC6B8B5256885850075D1AD /* Assets.xcassets */,
 				4BC6B8B7256885850075D1AD /* LaunchScreen.storyboard */,
 				4BC6B8BA256885850075D1AD /* Info.plist */,
 			);
 			path = TheMaskedMan;
+			sourceTree = "<group>";
+		};
+		654F9997AF04BDE8ECEF102E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C6608149DC866C530286A75C /* Pods_TheMaskedMan.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +104,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4BC6B8BD256885850075D1AD /* Build configuration list for PBXNativeTarget "TheMaskedMan" */;
 			buildPhases = (
+				2B493705B8704DB5BC2D234D /* [CP] Check Pods Manifest.lock */,
 				4BC6B8A5256885830075D1AD /* Sources */,
 				4BC6B8A6256885830075D1AD /* Frameworks */,
 				4BC6B8A7256885830075D1AD /* Resources */,
+				1BEC75833233536CF984B6EC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -124,6 +156,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BC6B8D92568A4660075D1AD /* data.txt in Resources */,
 				4BC6B8B9256885850075D1AD /* LaunchScreen.storyboard in Resources */,
 				4BC6B8B6256885850075D1AD /* Assets.xcassets in Resources */,
 				4BC6B8B4256885830075D1AD /* Main.storyboard in Resources */,
@@ -132,6 +165,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1BEC75833233536CF984B6EC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TheMaskedMan/Pods-TheMaskedMan-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TheMaskedMan/Pods-TheMaskedMan-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TheMaskedMan/Pods-TheMaskedMan-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2B493705B8704DB5BC2D234D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TheMaskedMan-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4BC6B8A5256885830075D1AD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -139,6 +214,7 @@
 			files = (
 				4BC6B8B1256885830075D1AD /* ViewController.swift in Sources */,
 				4BC6B8AD256885830075D1AD /* AppDelegate.swift in Sources */,
+				4BC6B8DC2568A93C0075D1AD /* ClosestMask.swift in Sources */,
 				4BC6B8AF256885830075D1AD /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -283,6 +359,7 @@
 		};
 		4BC6B8BE256885850075D1AD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7910A0699914C99A1DA7B4D3 /* Pods-TheMaskedMan.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -303,6 +380,7 @@
 		};
 		4BC6B8BF256885850075D1AD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 77F47A0E998DA15209E67309 /* Pods-TheMaskedMan.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
