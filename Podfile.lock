@@ -1,16 +1,21 @@
 PODS:
-  - FuzzyMatchingSwift (0.8.1)
+  - Fuzzywuzzy_swift (0.0.2)
 
 DEPENDENCIES:
-  - FuzzyMatchingSwift (~> 0.8)
+  - Fuzzywuzzy_swift (from `https://github.com/lxian/Fuzzywuzzy_swift.git`)
 
-SPEC REPOS:
-  trunk:
-    - FuzzyMatchingSwift
+EXTERNAL SOURCES:
+  Fuzzywuzzy_swift:
+    :git: https://github.com/lxian/Fuzzywuzzy_swift.git
+
+CHECKOUT OPTIONS:
+  Fuzzywuzzy_swift:
+    :commit: cb371fb2a0d4b0ffb1d0c16f17933405195f122d
+    :git: https://github.com/lxian/Fuzzywuzzy_swift.git
 
 SPEC CHECKSUMS:
-  FuzzyMatchingSwift: a269cf2fa47ae67ee682bf84b787dc89b5fcf100
+  Fuzzywuzzy_swift: a2f9a77bb6d3f1d99dc6364eda541254124e393d
 
-PODFILE CHECKSUM: 204caaab8a54caab635cce2aa430694b0a3905c6
+PODFILE CHECKSUM: d8759debe0e0cd2e81cf96793e9e1045a06fedac
 
 COCOAPODS: 1.9.3

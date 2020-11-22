@@ -30,11 +30,23 @@
 import UIKit
 import Vision
 import VisionKit
-import FuzzyMatchingSwift
+import Fuzzywuzzy_swift
 
-private let opts = FuzzyMatchOptions(threshold: 0.5, distance: 0)
-private let max_dist : Int = 1000000000000
+// threshold in FuzzyMatchOptions defines how strict you want to be when fuzzy matching. A value of 0.0 is equivalent to an exact match. A value of 1.0 indicates a very loose understanding of whether a match has been found.
+// distance in FuzzyMatchOptions defines where in the host String to look for the pattern.
 
+// private let opts = FuzzyMatchOptions(threshold: 0.5, distance: 0)
+private let max_dist : Double = 0.999
+
+/*
+extension String {
+    func distance(_ other : String) -> Double {
+        // A Double which indicates how confident we are that the pattern can be found in the host string. A low value (0.001) indicates that the pattern is likely to be found. A high value (0.999) indicates that the pattern is not likely to be found
+        return self.confidenceScore(other) ?? max_dist
+    }
+}
+*/
+ 
 class Company : CustomStringConvertible {
     var name : String = ""
     var masks : [Mask] = []
@@ -52,37 +64,46 @@ class Company : CustomStringConvertible {
         self.masks.append(mask)
     }
     
-    func distance(to other: Company) -> Int {
-        return name.fuzzyMatchPattern(other.name, loc: nil, options: opts) ?? max_dist
+    func distance(to_company: Company) -> Double {
+        return self.name.distance(between: to_company.name)
     }
 
-    func distance(to name: String) -> Int {
-        return name.fuzzyMatchPattern(name, loc: nil, options: opts) ?? max_dist
+    func distance(to_name: String) -> Double {
+        return self.name.distance(between: to_name)
     }
 }
 
 class Mask : Decodable, CustomStringConvertible {
     var company : String = ""
     var model : String = ""
+    let niosh_approved : Bool
+    let eua_authorized : Bool
+    let countries_of_origin : [String]
+    let respirator_type : String
+    let valve_type : String
     
     var description: String {
         return company + " : " + model
     }
 
-    func distance(to other: Mask) -> Int {
-        let dist_company = company.fuzzyMatchPattern(other.company, loc: nil, options: opts) ?? max_dist
-        let dist_model = model.fuzzyMatchPattern(other.model, loc: nil, options: opts) ?? max_dist
+    func distance(to_mask: Mask) -> Double {
+        let dist_company = self.company.distance(between: to_mask.company)
+        let dist_model = self.model.distance(between: to_mask.model)
         return dist_company + dist_model
     }
 
-    func distance(to company: String, model: String) -> Int {
-        let dist_company = self.company.fuzzyMatchPattern(company, loc: nil, options: opts) ?? max_dist
-        let dist_model = self.model.fuzzyMatchPattern(model, loc: nil, options: opts) ?? max_dist
+    func distance(to_company: String, to_model: String) -> Double {
+        let dist_company = self.company.distance(between: to_company)
+        let dist_model = self.model.distance(between: to_model)
         return dist_company + dist_model
     }
     
-    func distance_model_only(to model: String) -> Int {
-        return self.model.fuzzyMatchPattern(model, loc: nil, options: opts) ?? max_dist
+    func distance_model_only(to_model: String) -> Double {
+        return self.model.distance(between: to_model)
+    }
+
+    func distance_company_only(to_company: String) -> Double {
+        return self.company.distance(between: to_company)
     }
 }
 
@@ -130,6 +151,20 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate {
         return companies
     }
     
+    private func test_find() {
+        
+        /*
+        var candidates : [String] = ["3M","antsheism","3Meotnuh"]
+        if let closest_company = ClosestMask.find_closest_company(candidates: candidates, companies: companies) {
+            
+            candidates = ["9001","101"]
+            if let closest_mask = ClosestMask.find_closest_by_model_only(candidates: candidates, masks: closest_company.masks).first {
+                //...
+            }
+        }
+         */
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -137,14 +172,8 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate {
         masks = load_masks()
         companies = organize_masks_by_company(masks)
         
-        var candidates : [String] = ["3M"]
-        if let closest_company = ClosestMask.find_closest_company(candidates: candidates, companies: companies) {
-            
-            candidates = ["9001"]
-            if let closest_mask = ClosestMask.find_closest_by_model_only(candidates: candidates, masks: closest_company.masks) {
-                //...
-            }
-        }
+        // Test
+        // test_find()
         
         // Do any additional setup after loading the view.
         setupVision()
@@ -161,6 +190,13 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate {
         scannerViewController.delegate = self
         present(scannerViewController, animated: true)
         
+        /*
+        if let path = Bundle.main.path(forResource: "IMG_4409", ofType: "JPG") {
+            if let image = UIImage(contentsOfFile: path) {
+                processImage(image)
+            }
+        }
+         */
     }
             
     private func setupVision() {
@@ -169,25 +205,41 @@ class ViewController: UIViewController, VNDocumentCameraViewControllerDelegate {
             
             var candidates : [String] = []
             
-            var detectedText = ""
+            // var detectedText = ""
             for observation in observations {
                 guard let topCandidate = observation.topCandidates(1).first else { return }
-                print("text \(topCandidate.string) has confidence \(topCandidate.confidence)")
+                // print("text \(topCandidate.string) has confidence \(topCandidate.confidence)")
                 
-                detectedText += topCandidate.string
-                detectedText += "\n"
+                // detectedText += topCandidate.string
+                // detectedText += "\n"
                 
+                // Exclude confidence under 0.5
+                if topCandidate.confidence < 0.5 {
+                    continue
+                }
+                
+                // Exclude single character guesses
+                if topCandidate.string.count <= 1 {
+                    continue
+                }
+                            
                 candidates.append(topCandidate.string)
             }
             
-            let closest_company = ClosestMask.find_closest_company(candidates: candidates, companies: self.companies)
+            print("--- Closest mask by company then model ---")
+            let closest_masks = ClosestMask.find_closest_mask_by_company_then_model(candidates: candidates, companies: self.companies, max_no: 10)
+            print(closest_masks)
+
+            print("--- Closest mask by model only ---")
+            let closest_masks_by_model = ClosestMask.find_closest_mask_by_model_only(candidates: candidates, masks: self.masks, max_no: 10)
+            print(closest_masks_by_model)
             
             DispatchQueue.main.async {
-                print(detectedText)
+                print(candidates)
             }
         }
         
-        textRecognitionRequest.recognitionLevel = .accurate
+        textRecognitionRequest.recognitionLevel = .fast
     }
     
     private func processImage(_ image: UIImage) {

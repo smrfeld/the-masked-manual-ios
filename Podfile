@@ -5,7 +5,6 @@ target 'TheMaskedMan' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  # Pods for TheMaskedMan
-  pod 'FuzzyMatchingSwift', '~> 0.8'
+  pod 'Fuzzywuzzy_swift', :git=> 'https://github.com/lxian/Fuzzywuzzy_swift.git'
 
 end
