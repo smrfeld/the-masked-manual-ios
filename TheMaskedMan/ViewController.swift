@@ -84,6 +84,28 @@ class Mask : Decodable, CustomStringConvertible {
         return company + " : " + model + " - " + respirator_type
     }
 
+    func is_surgical_mask() -> Bool {
+        switch respirator_type {
+        case "SURGICAL_MASK_EUA":
+            return true
+        case "SURGICAL_MASK_FDA":
+            return true
+        case "SURGICAL_MASK_FDA_POTENTIALLY_RECALLED":
+            return true
+        case "RESPIRATOR_EUA":
+            return false
+        case "RESPIRATOR_EUA_EXPIRED_AUTH":
+            return false
+        case "RESPIRATOR_N95_NIOSH":
+            return false
+        case "RESPIRATOR_N95_NIOSH_FDA":
+            return false
+        default:
+            print("Warning! Respirator type not recognized...")
+            return false
+        }
+    }
+    
     func distance(to_mask: Mask) -> Double {
         let dist_company = self.company.distance(between: to_mask.company)
         let dist_model = self.model.distance(between: to_mask.model)

@@ -31,7 +31,9 @@ import UIKit
 
 class SearchModelViewController: UIViewController {
 
+    var search_term : String = ""
     var masks : [Mask] = []
+    @IBOutlet weak var segmented_control: UISegmentedControl!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -47,6 +49,11 @@ class SearchModelViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Sort
+        masks.sort { (m1, m2) -> Bool in
+            return m1.model < m2.model
+        }
+        
         masks_filtered = masks
         print(masks_filtered)
 
@@ -59,10 +66,37 @@ class SearchModelViewController: UIViewController {
     }
     
     // ***************
+    // MARK: - Segment
+    // ***************
+    
+    @IBAction func segmented_control_changed(_ sender: Any) {
+        if segmented_control.selectedSegmentIndex == 0 {
+            // Surgical masks only
+            masks_filtered = masks.filter({ (mask) -> Bool in
+                return mask.is_surgical_mask() && (search_term == "" || mask.model.lowercased().contains(search_term.lowercased()))
+            })
+        } else if segmented_control.selectedSegmentIndex == 1 {
+            // Both
+            masks_filtered = masks.filter({ (mask) -> Bool in
+                return search_term == "" || mask.model.lowercased().contains(search_term.lowercased())
+            })
+        } else {
+            // Respirators only
+            masks_filtered = masks.filter({ (mask) -> Bool in
+                return !mask.is_surgical_mask() && (search_term == "" || mask.model.lowercased().contains(search_term.lowercased()))
+            })
+        }
+        
+        tableView.reloadData()
+    }
+    
+    // ***************
     // MARK: - Filter search
     // ***************
     
     func filterContentForSearchText(_ searchText: String, company_name: String? = nil) {
+        search_term = searchText
+        
         if searchText == "" {
             masks_filtered = masks
         } else {

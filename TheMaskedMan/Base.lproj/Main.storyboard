@@ -278,6 +278,9 @@
                                     <segment title="Both"/>
                                     <segment title="Respirators"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmented_control_changed:" destination="FAv-fB-8lH" eventType="valueChanged" id="gg1-Ej-e7c"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="s5a-dc-snq"/>
@@ -294,6 +297,7 @@
                     <tabBarItem key="tabBarItem" title="Search" id="S05-mP-4hV"/>
                     <navigationItem key="navigationItem" title="Search by model" id="bE7-D7-4iy"/>
                     <connections>
+                        <outlet property="segmented_control" destination="Bpz-BB-1xX" id="Gae-xW-h9B"/>
                         <outlet property="tableView" destination="70E-Dj-ytg" id="0N1-1y-P4S"/>
                     </connections>
                 </viewController>
