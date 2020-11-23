@@ -63,9 +63,13 @@ class SearchModelViewController: UIViewController {
     // ***************
     
     func filterContentForSearchText(_ searchText: String, company_name: String? = nil) {
-        masks_filtered = masks.filter({ (mask) -> Bool in
-            return mask.model.lowercased().contains(searchText.lowercased())
-        })
+        if searchText == "" {
+            masks_filtered = masks
+        } else {
+            masks_filtered = masks.filter({ (mask) -> Bool in
+                return mask.model.lowercased().contains(searchText.lowercased())
+            })
+        }
         
         tableView.reloadData()
     }
@@ -121,6 +125,6 @@ extension SearchModelViewController: UITableViewDelegate, UITableViewDataSource 
         
         // Segue
         let mask = masks_filtered[indexPath.row]
-        performSegue(withIdentifier: "toMaskDetails", sender: mask)
+        // performSegue(withIdentifier: "toMaskDetails", sender: mask)
     }
 }

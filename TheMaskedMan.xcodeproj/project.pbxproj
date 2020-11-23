@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		4B7CF3E5256A04E4001191A7 /* StringDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7CF3E4256A04E4001191A7 /* StringDistance.swift */; };
-		4B7CF3E9256A1021001191A7 /* data.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B7CF3E8256A1021001191A7 /* data.txt */; };
 		4B7CF3F6256B800B001191A7 /* SearchCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7CF3F5256B800B001191A7 /* SearchCompanyViewController.swift */; };
 		4B7CF3FA256B82C7001191A7 /* SearchModelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7CF3F9256B82C7001191A7 /* SearchModelViewController.swift */; };
 		4B7CF3FD256B84FB001191A7 /* CompanyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7CF3FC256B84FB001191A7 /* CompanyTableViewCell.swift */; };
 		4B7CF400256B8A2A001191A7 /* MaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7CF3FF256B8A2A001191A7 /* MaskTableViewCell.swift */; };
+		4B7CF405256B8D56001191A7 /* data.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B7CF404256B8D56001191A7 /* data.txt */; };
 		4BA2EDA12569F8C00014D864 /* IMG_4409.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 4BA2EDA02569F8C00014D864 /* IMG_4409.JPG */; };
 		4BC6B8AD256885830075D1AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8AC256885830075D1AD /* AppDelegate.swift */; };
 		4BC6B8AF256885830075D1AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8AE256885830075D1AD /* SceneDelegate.swift */; };
@@ -26,11 +26,11 @@
 
 /* Begin PBXFileReference section */
 		4B7CF3E4256A04E4001191A7 /* StringDistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringDistance.swift; sourceTree = "<group>"; };
-		4B7CF3E8256A1021001191A7 /* data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data.txt; sourceTree = "<group>"; };
 		4B7CF3F5256B800B001191A7 /* SearchCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyViewController.swift; sourceTree = "<group>"; };
 		4B7CF3F9256B82C7001191A7 /* SearchModelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModelViewController.swift; sourceTree = "<group>"; };
 		4B7CF3FC256B84FB001191A7 /* CompanyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyTableViewCell.swift; sourceTree = "<group>"; };
 		4B7CF3FF256B8A2A001191A7 /* MaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskTableViewCell.swift; sourceTree = "<group>"; };
+		4B7CF404256B8D56001191A7 /* data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data.txt; sourceTree = "<group>"; };
 		4BA2EDA02569F8C00014D864 /* IMG_4409.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_4409.JPG; sourceTree = "<group>"; };
 		4BC6B8A9256885830075D1AD /* TheMaskedMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMaskedMan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BC6B8AC256885830075D1AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,7 +88,7 @@
 		4BC6B8AB256885830075D1AD /* TheMaskedMan */ = {
 			isa = PBXGroup;
 			children = (
-				4B7CF3E8256A1021001191A7 /* data.txt */,
+				4B7CF404256B8D56001191A7 /* data.txt */,
 				4BA2EDA02569F8C00014D864 /* IMG_4409.JPG */,
 				4BC6B8AC256885830075D1AD /* AppDelegate.swift */,
 				4BC6B8AE256885830075D1AD /* SceneDelegate.swift */,
@@ -178,7 +178,7 @@
 				4BA2EDA12569F8C00014D864 /* IMG_4409.JPG in Resources */,
 				4BC6B8B6256885850075D1AD /* Assets.xcassets in Resources */,
 				4BC6B8B4256885830075D1AD /* Main.storyboard in Resources */,
-				4B7CF3E9256A1021001191A7 /* data.txt in Resources */,
+				4B7CF405256B8D56001191A7 /* data.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

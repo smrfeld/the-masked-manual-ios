@@ -81,7 +81,7 @@ class Mask : Decodable, CustomStringConvertible {
     let valve_type : String
     
     var description: String {
-        return company + " : " + model
+        return company + " : " + model + " - " + respirator_type
     }
 
     func distance(to_mask: Mask) -> Double {
