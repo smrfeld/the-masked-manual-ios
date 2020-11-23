@@ -6,5 +6,6 @@ target 'TheMaskedMan' do
   use_frameworks!
 
   pod 'Fuzzywuzzy_swift', :git=> 'https://github.com/lxian/Fuzzywuzzy_swift.git'
+  pod 'Eureka'
 
 end

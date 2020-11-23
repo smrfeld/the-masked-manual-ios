@@ -76,8 +76,6 @@ class Company : CustomStringConvertible {
 class Mask : Decodable, CustomStringConvertible {
     var company : String = ""
     var model : String = ""
-    let niosh_approved : Bool
-    let eua_authorized : Bool
     let countries_of_origin : [String]
     let respirator_type : String
     let valve_type : String

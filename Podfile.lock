@@ -1,8 +1,14 @@
 PODS:
+  - Eureka (5.3.2)
   - Fuzzywuzzy_swift (0.0.2)
 
 DEPENDENCIES:
+  - Eureka
   - Fuzzywuzzy_swift (from `https://github.com/lxian/Fuzzywuzzy_swift.git`)
+
+SPEC REPOS:
+  trunk:
+    - Eureka
 
 EXTERNAL SOURCES:
   Fuzzywuzzy_swift:
@@ -14,8 +20,9 @@ CHECKOUT OPTIONS:
     :git: https://github.com/lxian/Fuzzywuzzy_swift.git
 
 SPEC CHECKSUMS:
+  Eureka: 1c2b8b5892bfb0e972d0fe05f8c09fd89f8625ec
   Fuzzywuzzy_swift: a2f9a77bb6d3f1d99dc6364eda541254124e393d
 
-PODFILE CHECKSUM: d8759debe0e0cd2e81cf96793e9e1045a06fedac
+PODFILE CHECKSUM: 560f8f32c10fced12d24c033b420133349f0a659
 
 COCOAPODS: 1.9.3
