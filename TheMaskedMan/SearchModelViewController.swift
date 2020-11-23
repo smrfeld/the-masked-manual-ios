@@ -123,8 +123,17 @@ extension SearchModelViewController: UITableViewDelegate, UITableViewDataSource 
         // Deselect
         tableView.deselectRow(at: indexPath, animated: true)
         
-        // Segue
+        // Show
         let mask = masks_filtered[indexPath.row]
+        
+        let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "maskDetailViewController") as! MaskDetailViewController
+        alert.mask = mask
+        alert.providesPresentationContextTransitionStyle = true
+        alert.definesPresentationContext = true
+        alert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        self.present(alert, animated: true, completion: nil)
+        
         // performSegue(withIdentifier: "toMaskDetails", sender: mask)
     }
 }

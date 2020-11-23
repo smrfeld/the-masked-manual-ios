@@ -29,7 +29,7 @@ SOFTWARE.
 
 import UIKit
 
-class MaskTableViewCell: UITableViewCell {
+class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
 
     private let fda = " FDA-approved"
     private let niosh = " NIOSH-approved"
@@ -48,112 +48,57 @@ class MaskTableViewCell: UITableViewCell {
         self.model_label.text = mask.model
         self.company_label.text = mask.company
         
-        switch mask.respirator_type {
-        case "SURGICAL_MASK_EUA":
-            set_image_surgical_mask()
-            set_not_fda_approved()
-            set_niosh_not_applicable()
-            set_emergency_authorized()
-        case "SURGICAL_MASK_FDA":
-            set_image_surgical_mask()
-            set_fda_approved()
-            set_niosh_not_applicable()
-            hide_extra_label()
-        case "SURGICAL_MASK_FDA_POTENTIALLY_RECALLED":
-            set_image_surgical_mask()
-            set_not_fda_approved()
-            set_niosh_not_applicable()
-            set_recalled()
-        case "RESPIRATOR_EUA":
-            set_image_respirator()
-            set_not_fda_approved()
-            set_not_niosh_approved()
-            set_emergency_authorized()
-        case "RESPIRATOR_EUA_EXPIRED_AUTH":
-            set_image_respirator()
-            set_not_fda_approved()
-            set_not_niosh_approved()
-            set_revoked()
-        case "RESPIRATOR_N95_NIOSH":
-            set_image_respirator()
-            set_not_fda_approved()
-            set_niosh_approved()
-            hide_extra_label()
-        case "RESPIRATOR_N95_NIOSH_FDA":
-            set_image_respirator()
-            set_fda_approved()
-            set_niosh_approved()
-            hide_extra_label()
-        default:
-            print("Warning! Respirator type not recognized...")
+        mask.show_mask_details(delegate: self)
+    }
+    
+    func set_extra(_ val: MaskExtra) {
+        switch val {
+        case .emergency_authorized:
+            extra_label.attributedText = get_str_without_strikethrough(emergency)
+            extra_label.textColor = UIColor.okGreen
+            extra_label.isHidden = false
+        case .recalled:
+            extra_label.attributedText = get_str_without_strikethrough(recalled)
+            extra_label.textColor = UIColor.notOkRed
+            extra_label.isHidden = false
+        case .revoked:
+            extra_label.attributedText = get_str_without_strikethrough(revoked)
+            extra_label.textColor = UIColor.notOkRed
+            extra_label.isHidden = false
+        case .none:
+            extra_label.isHidden = true
         }
     }
     
-    private func set_emergency_authorized() {
-        extra_label.attributedText = get_str_without_strikethrough(emergency)
-        extra_label.textColor = UIColor.green
-    }
-
-    private func set_recalled() {
-        extra_label.attributedText = get_str_without_strikethrough(recalled)
-        extra_label.textColor = UIColor.red
-    }
-
-    private func set_revoked() {
-        extra_label.attributedText = get_str_without_strikethrough(revoked)
-        extra_label.textColor = UIColor.red
-    }
-    
-    private func hide_extra_label() {
-        extra_label.isHidden = true
+    func set_niosh(_ val: MaskNIOSH) {
+        switch val {
+        case .approved:
+            niosh_label.attributedText = get_str_without_strikethrough(niosh)
+            niosh_label.textColor = UIColor.okGreen
+        case .not_approved:
+            niosh_label.attributedText = get_str_with_strikethrough(niosh)
+            niosh_label.textColor = UIColor.notOkRed
+        case .not_applicable:
+            niosh_label.attributedText = get_str_with_strikethrough(niosh)
+            niosh_label.textColor = UIColor.mehGray
+        }
     }
     
-    private func set_niosh_approved() {
-        niosh_label.attributedText = get_str_without_strikethrough(niosh)
-        niosh_label.textColor = UIColor.green
+    func set_fda(_ val: MaskFDA) {
+        switch val {
+        case .approved:
+            fda_label.attributedText = get_str_without_strikethrough(fda)
+            fda_label.textColor = UIColor.okGreen
+        case .not_approved:
+            fda_label.attributedText = get_str_with_strikethrough(fda)
+            fda_label.textColor = UIColor.notOkRed
+        }
     }
     
-    private func set_not_niosh_approved() {
-        niosh_label.attributedText = get_str_with_strikethrough(niosh)
-        niosh_label.textColor = UIColor.red
-    }
-
-    private func set_niosh_not_applicable() {
-        niosh_label.attributedText = get_str_with_strikethrough(niosh)
-        niosh_label.textColor = UIColor.gray
+    func set_image(_ image: UIImage) {
+        image_view.image = image
     }
     
-    private func set_fda_approved() {
-        fda_label.attributedText = get_str_without_strikethrough(fda)
-
-        fda_label.textColor = UIColor.green
-    }
-    
-    private func set_not_fda_approved() {
-        fda_label.attributedText = get_str_with_strikethrough(fda)
-        fda_label.textColor = UIColor.red
-    }
-    
-    private func get_str_without_strikethrough(_ str: String) -> NSAttributedString {
-        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: str)
-        attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 0, range: NSMakeRange(0, attributeString.length))
-        return attributeString
-    }
-    
-    private func get_str_with_strikethrough(_ str: String) -> NSAttributedString {
-        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: str)
-        attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
-        return attributeString
-    }
-
-    private func set_image_surgical_mask() {
-        image_view.image = UIImage(named: "surgical_mask")
-    }
-    
-    private func set_image_respirator() {
-        image_view.image = UIImage(named: "respirator")
-    }
-
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

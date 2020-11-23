@@ -103,6 +103,87 @@ class Mask : Decodable, CustomStringConvertible {
     func distance_company_only(to_company: String) -> Double {
         return self.company.distance(between: to_company)
     }
+    
+    private func get_image_surgical_mask() -> UIImage {
+        return UIImage(named: "surgical_mask")!
+    }
+    
+    private func get_image_respirator() -> UIImage {
+        return UIImage(named: "respirator")!
+    }
+
+    func show_mask_details(delegate : ShowMaskDetailsProtocol) {
+        switch respirator_type {
+        case "SURGICAL_MASK_EUA":
+            delegate.set_image(get_image_surgical_mask())
+            delegate.set_fda(.approved)
+            delegate.set_niosh(.not_applicable)
+            delegate.set_extra(.emergency_authorized)
+        case "SURGICAL_MASK_FDA":
+            delegate.set_image(get_image_surgical_mask())
+            delegate.set_fda(.approved)
+            delegate.set_niosh(.not_applicable)
+            delegate.set_extra(.none)
+        case "SURGICAL_MASK_FDA_POTENTIALLY_RECALLED":
+            delegate.set_image(get_image_surgical_mask())
+            delegate.set_fda(.not_approved)
+            delegate.set_niosh(.not_approved) // extra bad for recalls
+            delegate.set_extra(.recalled)
+        case "RESPIRATOR_EUA":
+            delegate.set_image(get_image_respirator())
+            delegate.set_fda(.not_approved)
+            delegate.set_niosh(.not_approved)
+            delegate.set_extra(.emergency_authorized)
+        case "RESPIRATOR_EUA_EXPIRED_AUTH":
+            delegate.set_image(get_image_respirator())
+            delegate.set_fda(.not_approved)
+            delegate.set_niosh(.not_approved)
+            delegate.set_extra(.revoked)
+        case "RESPIRATOR_N95_NIOSH":
+            delegate.set_image(get_image_respirator())
+            delegate.set_fda(.not_approved)
+            delegate.set_niosh(.approved)
+            delegate.set_extra(.none)
+        case "RESPIRATOR_N95_NIOSH_FDA":
+            delegate.set_image(get_image_respirator())
+            delegate.set_fda(.approved)
+            delegate.set_niosh(.approved)
+            delegate.set_extra(.none)
+        default:
+            print("Warning! Respirator type not recognized...")
+        }
+    }
+}
+
+enum MaskExtra {
+    case emergency_authorized, recalled, revoked, none
+}
+
+enum MaskNIOSH {
+    case approved, not_approved, not_applicable
+}
+
+enum MaskFDA {
+    case approved, not_approved
+}
+
+protocol ShowMaskDetailsProtocol {
+    func set_extra(_ val : MaskExtra)
+    func set_niosh(_ val : MaskNIOSH)
+    func set_fda(_ val : MaskFDA)
+    func set_image(_ image : UIImage)
+}
+
+func get_str_without_strikethrough(_ str: String) -> NSAttributedString {
+    let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: str)
+    attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 0, range: NSMakeRange(0, attributeString.length))
+    return attributeString
+}
+
+func get_str_with_strikethrough(_ str: String) -> NSAttributedString {
+    let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: str)
+    attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
+    return attributeString
 }
 
 struct Masks : Decodable {
