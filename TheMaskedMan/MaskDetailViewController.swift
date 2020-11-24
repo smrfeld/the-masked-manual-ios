@@ -31,20 +31,28 @@ import UIKit
 
 class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
 
-    private let fda = "FDA-approved"
-    private let niosh = "NIOSH-approved"
-    private let emergency = "Emergency-authorized"
-    private let recalled = "Recalled"
-    private let revoked = "Revoked"
+    private let fda_approved = "FDA-approved"
+    private let fda_not_approved = "Not FDA-approved"
+    private let niosh_approved = "NIOSH-approved"
+    private let niosh_not_approved = "Not NIOSH-approved"
+    private let niosh_not_applicable = "NIOSH approval not applicable for surgical masks"
+    private let emergency = "Emergency-authorized for COVID-19"
+    private let recalled = "FDA-approval potentially recalled"
+    private let revoked = "Emergency authorization revoked"
     
     @IBOutlet weak var central_view: UIView!
     @IBOutlet weak var image_view: UIImageView!
     @IBOutlet weak var model_label: UILabel!
     @IBOutlet weak var company_label: UILabel!
-    @IBOutlet weak var fda_labl: UILabel!
+    @IBOutlet weak var fda_label: UILabel!
     @IBOutlet weak var niosh_label: UILabel!
     @IBOutlet weak var extra_label: UILabel!
     @IBOutlet weak var extra_stack: UIStackView!
+    @IBOutlet weak var fda_image: UIImageView!
+    @IBOutlet weak var niosh_image: UIImageView!
+    @IBOutlet weak var extra_image: UIImageView!
+    @IBOutlet weak var niosh_stack: UIStackView!
+    @IBOutlet weak var fda_stack: UIStackView!
     
     var mask : Mask!
     
@@ -84,41 +92,52 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
             extra_stack.isHidden = true
         case .emergency_authorized:
             extra_stack.isHidden = false
-            extra_label.attributedText = get_str_without_strikethrough("Emergency-authorized")
+            set_text_to_wrap(label: extra_label, text: emergency)
             extra_label.textColor = UIColor.okGreen
+            set_checkmark_ok(extra_image)
         case .recalled:
             extra_stack.isHidden = false
-            extra_label.attributedText = get_str_without_strikethrough("Recalled emergency auth.")
+            extra_label.text = recalled
             extra_label.textColor = UIColor.notOkRed
+            set_checkmark_not_ok(extra_image)
         case .revoked:
             extra_stack.isHidden = false
-            extra_label.attributedText = get_str_without_strikethrough("Revoked FDA approval")
+            extra_label.text = revoked
             extra_label.textColor = UIColor.notOkRed
+            set_checkmark_not_ok(extra_image)
         }
     }
     
     func set_niosh(_ val: MaskNIOSH) {
+        print(val)
+
         switch val {
         case .approved:
-            niosh_label.attributedText = get_str_without_strikethrough("NIOSH-approved")
+            set_text_to_wrap(label: niosh_label, text: niosh_approved)
+            // niosh_label.text = niosh_approved
             niosh_label.textColor = UIColor.okGreen
+            set_checkmark_ok(niosh_image)
         case .not_applicable:
-            niosh_label.attributedText = get_str_without_strikethrough("NIOSH approval not applicable")
+            niosh_label.text = niosh_not_applicable
             niosh_label.textColor = UIColor.mehGray
+            set_checkmark_not_applicable(niosh_image)
         case .not_approved:
-            niosh_label.attributedText = get_str_without_strikethrough("Not NIOSH-approved")
+            niosh_label.text = niosh_not_approved
             niosh_label.textColor = UIColor.notOkRed
+            set_checkmark_not_ok(niosh_image)
         }
     }
     
     func set_fda(_ val: MaskFDA) {
         switch val {
         case .approved:
-            fda_labl.attributedText = get_str_without_strikethrough("FDA-approved")
-            fda_labl.textColor = UIColor.okGreen
+            fda_label.text = fda_approved
+            fda_label.textColor = UIColor.okGreen
+            set_checkmark_ok(fda_image)
         case .not_approved:
-            fda_labl.attributedText = get_str_without_strikethrough("Not FDA-approved")
-            fda_labl.textColor = UIColor.notOkRed
+            fda_label.text = fda_not_approved
+            fda_label.textColor = UIColor.notOkRed
+            set_checkmark_not_ok(fda_image)
         }
     }
     

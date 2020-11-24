@@ -476,7 +476,7 @@
                                 <blurEffect style="light"/>
                             </visualEffectView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4a4-Ao-DS5">
-                                <rect key="frame" x="30" y="308" width="354" height="280"/>
+                                <rect key="frame" x="30" y="279" width="354" height="338.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2pJ-qu-o6W">
                                         <rect key="frame" x="102" y="-75" width="150" height="150"/>
@@ -486,7 +486,7 @@
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bUA-Ca-XBg">
-                                        <rect key="frame" x="10" y="85" width="334" height="135"/>
+                                        <rect key="frame" x="10" y="85" width="334" height="193.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Model" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hZq-ss-O7U">
                                                 <rect key="frame" x="0.0" y="0.0" width="334" height="26.5"/>
@@ -510,68 +510,117 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GfY-22-861">
-                                                <rect key="frame" x="0.0" y="73.5" width="334" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="73.5" width="334" height="40"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FDA-approved" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G6a-vc-JAm">
-                                                        <rect key="frame" x="0.0" y="0.0" width="314" height="20.5"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="23U-Pd-VEq">
+                                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="23U-Pd-VEq" secondAttribute="height" multiplier="1:1" id="Z8T-0K-hy0"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="738-8X-Avq">
+                                                        <rect key="frame" x="40" y="0.0" width="5" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="5" id="Pbl-h6-OVo"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FDA-approved" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G6a-vc-JAm">
+                                                        <rect key="frame" x="45" y="0.0" width="259" height="40"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="questionmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="chJ-mq-FYX">
-                                                        <rect key="frame" x="314" y="0.5" width="20" height="19.5"/>
+                                                        <rect key="frame" x="304" y="0.5" width="30" height="39"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="20" id="Tfj-Sd-MrU"/>
-                                                            <constraint firstAttribute="height" constant="20.5" id="its-gu-DCs"/>
+                                                            <constraint firstAttribute="width" constant="30" id="DlZ-kp-pOq"/>
                                                         </constraints>
                                                     </imageView>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="6VC-SW-nTO"/>
+                                                </constraints>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ctJ-MR-Y4x">
-                                                <rect key="frame" x="0.0" y="94" width="334" height="20.5"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ohj-eO-VJL">
+                                                <rect key="frame" x="0.0" y="113.5" width="334" height="40"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NIOSH-approved" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNr-lb-tzb">
-                                                        <rect key="frame" x="0.0" y="0.0" width="314" height="20.5"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2fp-iB-pPj">
+                                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="2fp-iB-pPj" secondAttribute="height" multiplier="1:1" id="AQZ-ac-vTO"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pZA-sh-Ohf">
+                                                        <rect key="frame" x="40" y="0.0" width="5" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="5" id="pIB-v8-oxd"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="questionmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="asr-ob-Gnw">
-                                                        <rect key="frame" x="314" y="0.5" width="20" height="19.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FDA-approved" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="179-nM-3jt">
+                                                        <rect key="frame" x="45" y="0.0" width="259" height="40"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="questionmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Iow-iS-FjQ">
+                                                        <rect key="frame" x="304" y="0.5" width="30" height="39"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="20.5" id="YSv-DP-LFb"/>
-                                                            <constraint firstAttribute="width" constant="20" id="m8S-dE-iBI"/>
+                                                            <constraint firstAttribute="width" constant="30" id="Rcc-dU-jQS"/>
                                                         </constraints>
                                                     </imageView>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="dJS-UB-pFO"/>
+                                                </constraints>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tcP-PD-SiE">
-                                                <rect key="frame" x="0.0" y="114.5" width="334" height="20.5"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ei-rN-KXF">
+                                                <rect key="frame" x="0.0" y="153.5" width="334" height="40"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Extra" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vsu-sT-l5f">
-                                                        <rect key="frame" x="0.0" y="0.0" width="314" height="20.5"/>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dCO-rK-qKa">
+                                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="dCO-rK-qKa" secondAttribute="height" multiplier="1:1" id="xug-BL-uBY"/>
+                                                        </constraints>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p7B-jw-t3p">
+                                                        <rect key="frame" x="40" y="0.0" width="5" height="40"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="5" id="Pdl-AY-roy"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="questionmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="9vy-t0-6zh">
-                                                        <rect key="frame" x="314" y="0.5" width="20" height="19.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FDA-approved" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7La-FG-oSg">
+                                                        <rect key="frame" x="45" y="0.0" width="259" height="40"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="questionmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="vMx-ul-enj">
+                                                        <rect key="frame" x="304" y="0.5" width="30" height="39"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="20" id="OfQ-pD-uR8"/>
-                                                            <constraint firstAttribute="height" constant="20.5" id="x8E-G5-hYo"/>
+                                                            <constraint firstAttribute="width" constant="30" id="RGK-Bx-ozZ"/>
                                                         </constraints>
                                                     </imageView>
                                                 </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="J6T-iL-xYR"/>
+                                                </constraints>
                                             </stackView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="ctJ-MR-Y4x" firstAttribute="height" secondItem="tcP-PD-SiE" secondAttribute="height" id="PEd-pR-yAn"/>
                                             <constraint firstItem="hZq-ss-O7U" firstAttribute="height" secondItem="S4m-Wx-nPf" secondAttribute="height" id="aeA-yU-GO8"/>
-                                            <constraint firstItem="GfY-22-861" firstAttribute="height" secondItem="ctJ-MR-Y4x" secondAttribute="height" id="ahR-S7-44f"/>
                                         </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n2n-xI-tTo" customClass="Button" customModule="TheMaskedMan" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="230" width="354" height="50"/>
+                                        <rect key="frame" x="0.0" y="288.5" width="354" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="ah8-SU-isL"/>
                                         </constraints>
@@ -610,12 +659,17 @@
                     <connections>
                         <outlet property="central_view" destination="4a4-Ao-DS5" id="vBc-LS-ApL"/>
                         <outlet property="company_label" destination="S4m-Wx-nPf" id="GcD-w2-0bk"/>
-                        <outlet property="extra_label" destination="Vsu-sT-l5f" id="DJf-KM-E9X"/>
-                        <outlet property="extra_stack" destination="tcP-PD-SiE" id="HXB-Qq-wfy"/>
-                        <outlet property="fda_labl" destination="G6a-vc-JAm" id="hbo-U2-zx5"/>
+                        <outlet property="extra_image" destination="dCO-rK-qKa" id="dtB-gb-JVU"/>
+                        <outlet property="extra_label" destination="7La-FG-oSg" id="9oY-C0-OKD"/>
+                        <outlet property="extra_stack" destination="6ei-rN-KXF" id="SkK-wh-OKx"/>
+                        <outlet property="fda_image" destination="23U-Pd-VEq" id="pXe-SG-DBp"/>
+                        <outlet property="fda_label" destination="G6a-vc-JAm" id="nht-Qx-xWq"/>
+                        <outlet property="fda_stack" destination="GfY-22-861" id="wuk-EH-DPC"/>
                         <outlet property="image_view" destination="2pJ-qu-o6W" id="0sC-dq-baD"/>
                         <outlet property="model_label" destination="hZq-ss-O7U" id="CFn-bv-ZF5"/>
-                        <outlet property="niosh_label" destination="oNr-lb-tzb" id="X4X-he-u7a"/>
+                        <outlet property="niosh_image" destination="2fp-iB-pPj" id="LLL-W8-qTf"/>
+                        <outlet property="niosh_label" destination="179-nM-3jt" id="faq-Ux-CCd"/>
+                        <outlet property="niosh_stack" destination="ohj-eO-VJL" id="a3p-rt-0cN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xzo-XF-nEI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -29,6 +29,21 @@ SOFTWARE.
 
 import UIKit
 
+func set_checkmark_not_applicable(_ label : UIImageView) {
+    label.image = UIImage(systemName: "minus.circle")
+    label.tintColor = UIColor.mehGray
+}
+
+func set_checkmark_ok(_ label : UIImageView) {
+    label.image = UIImage(systemName: "checkmark.circle")
+    label.tintColor = UIColor.okGreen
+}
+
+func set_checkmark_not_ok(_ label : UIImageView) {
+    label.image = UIImage(systemName: "multiply.circle")
+    label.tintColor = UIColor.notOkRed
+}
+
 class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
 
     private let fda_approved = "FDA"
@@ -125,22 +140,7 @@ class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
     func set_image(_ image: UIImage) {
         image_view.image = image
     }
-    
-    private func set_checkmark_not_applicable(_ label : UIImageView) {
-        label.image = UIImage(systemName: "minus.circle")
-        label.tintColor = UIColor.mehGray
-    }
-    
-    private func set_checkmark_ok(_ label : UIImageView) {
-        label.image = UIImage(systemName: "checkmark.circle")
-        label.tintColor = UIColor.okGreen
-    }
-    
-    private func set_checkmark_not_ok(_ label : UIImageView) {
-        label.image = UIImage(systemName: "multiply.circle")
-        label.tintColor = UIColor.notOkRed
-    }
-    
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
