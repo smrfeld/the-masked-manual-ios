@@ -63,6 +63,10 @@ class SearchCompanyViewController : UIViewController {
         searchController.searchBar.placeholder = "Search companies"
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        
+        // Show by default, do not hide when scrolling
+        searchController.searchBar.becomeFirstResponder()
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     // ***************
@@ -106,9 +110,13 @@ class SearchCompanyViewController : UIViewController {
     // ***************
     
     func filterContentForSearchText(_ searchText: String, company_name: String? = nil) {
-        companies_filtered = companies.filter({ (company) -> Bool in
-            return company.name.lowercased().contains(searchText.lowercased())
-        })
+        if searchText == "" {
+            companies_filtered = companies
+        } else {
+            companies_filtered = companies.filter({ (company) -> Bool in
+                return company.name.lowercased().contains(searchText.lowercased())
+            })
+        }
         
         tableView.reloadData()
     }
