@@ -123,9 +123,13 @@ class Mask : Decodable, CustomStringConvertible {
     let countries_of_origin : [String]
     let respirator_type : String
     let valve_type : String
+    let url_company : String
+    let url_instructions : String
+    let url_source : String
+    let date_last_updated : String
     
     var description: String {
-        return company + " : " + model + " - " + respirator_type
+        return company + " : " + model + " - " + respirator_type + " - " + url_company + " - " + url_instructions + " - " + date_last_updated
     }
 
     func is_surgical_mask() -> Bool {

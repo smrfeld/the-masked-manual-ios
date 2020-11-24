@@ -51,6 +51,9 @@ class SearchCompanyViewController : UIViewController {
                         
         // Load masks
         masks = load_masks()
+        for mask in masks {
+            print(mask)
+        }
         companies = organize_masks_by_company(masks)
         companies.sort { (c1, c2) -> Bool in
             return c1.name < c2.name

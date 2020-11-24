@@ -53,6 +53,13 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
     @IBOutlet weak var extra_image: UIImageView!
     @IBOutlet weak var niosh_stack: UIStackView!
     @IBOutlet weak var fda_stack: UIStackView!
+    @IBOutlet weak var company_website_stack: UIStackView!
+    
+    @IBOutlet weak var source_label: UILabel!
+    @IBOutlet weak var source_label_image: UIImageView!
+    @IBOutlet weak var instructions_label: UILabel!
+    @IBOutlet weak var instructions_label_image: UIImageView!
+    @IBOutlet weak var links_stack: UIStackView!
     
     var mask : Mask!
     
@@ -76,6 +83,60 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
         set_text_to_wrap(label: model_label, text: mask.model)
         set_text_to_wrap(label: company_label, text: mask.company)
         mask.show_mask_details(delegate: self, image_zoom: false)
+        
+        if mask.url_company != "" {
+            company_website_stack.isHidden = false
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.open_url_company(recognizer:)))
+            company_website_stack.addGestureRecognizer(tapGestureRecognizer)
+        } else {
+            company_website_stack.isHidden = true
+        }
+        
+        if mask.url_instructions != "" {
+            instructions_label.isHidden = false
+            instructions_label_image.isHidden = false
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.open_url_instructions(recognizer:)))
+            instructions_label.addGestureRecognizer(tapGestureRecognizer)
+            instructions_label_image.addGestureRecognizer(tapGestureRecognizer)
+        } else {
+            instructions_label.isHidden = true
+            instructions_label_image.isHidden = true
+        }
+
+        if mask.url_source != "" {
+            source_label.isHidden = false
+            source_label_image.isHidden = false
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.open_url_source(recognizer:)))
+            source_label.addGestureRecognizer(tapGestureRecognizer)
+            source_label_image.addGestureRecognizer(tapGestureRecognizer)
+        } else {
+            source_label.isHidden = true
+            source_label_image.isHidden = true
+        }
+        
+        if mask.url_instructions == "" && mask.url_source == "" {
+            links_stack.isHidden = true
+        } else {
+            links_stack.isHidden = false
+        }
+    }
+    
+    @objc func open_url_source(recognizer : UITapGestureRecognizer) {
+        if let url = URL(string: mask.url_source) {
+            UIApplication.shared.open(url)
+        }
+    }
+
+    @objc func open_url_instructions(recognizer : UITapGestureRecognizer) {
+        if let url = URL(string: mask.url_instructions) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    @objc func open_url_company(recognizer : UITapGestureRecognizer) {
+        if let url = URL(string: mask.url_company) {
+            UIApplication.shared.open(url)
+        }
     }
     
     private func set_text_to_wrap(label : UILabel, text: String) {
