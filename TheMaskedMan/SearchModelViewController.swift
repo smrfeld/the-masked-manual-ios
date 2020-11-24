@@ -63,6 +63,10 @@ class SearchModelViewController: UIViewController {
         searchController.searchBar.placeholder = "Search models"
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        
+        // Show by default, do not hide when scrolling
+        searchController.searchBar.becomeFirstResponder()
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     // ***************

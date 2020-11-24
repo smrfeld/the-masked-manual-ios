@@ -31,9 +31,12 @@ import UIKit
 
 extension UIColor {
 
+    class var backgroundColor: UIColor {
+        return UIColor(red: 9/256.0, green: 219/256.0, blue: 202/256.0, alpha: 1.0)
+    }
+    
     class var notOkRed: UIColor {
         return UIColor(red: 150/256.0, green: 0/256.0, blue: 20/256.0, alpha: 1.0)
-
     }
     
     class var okGreen: UIColor {

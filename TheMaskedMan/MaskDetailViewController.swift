@@ -63,9 +63,19 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
         central_view.layer.cornerRadius = 5
         
         // Load mask details
-        model_label.text = mask.model
-        company_label.text = mask.company
-        mask.show_mask_details(delegate: self)
+        // model_label.text = mask.model
+        // company_label.text = mask.company
+        set_text_to_wrap(label: model_label, text: mask.model)
+        set_text_to_wrap(label: company_label, text: mask.company)
+        mask.show_mask_details(delegate: self, image_zoom: false)
+    }
+    
+    private func set_text_to_wrap(label : UILabel, text: String) {
+        label.frame = CGRect(x: 0, y: 0, width: label.frame.width, height: CGFloat.greatestFiniteMagnitude)
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.text = text
+        label.sizeToFit()
     }
     
     func set_extra(_ val: MaskExtra) {

@@ -46,10 +46,51 @@ extension String {
     }
 }
 */
+
+private func get_search_name(_ name : String) -> String {
+    var ret = name
+    
+    // Lowercase
+    ret = ret.lowercased()
+    
+    // Remove commas and periods
+    ret = ret.replacingOccurrences(of: ".", with: "")
+    ret = ret.replacingOccurrences(of: ",", with: "")
+    ret = ret.replacingOccurrences(of: "(", with: "")
+    ret = ret.replacingOccurrences(of: ")", with: "")
+    ret = ret.replacingOccurrences(of: "[", with: "")
+    ret = ret.replacingOccurrences(of: "]", with: "")
+    ret = ret.replacingOccurrences(of: "&", with: "")
+    ret = ret.replacingOccurrences(of: "®", with: "")
+
+    // Remove bad words
+    let bad_words = [
+        "co",
+        "ltd",
+        "ltda",
+        "limited",
+        "coltd",
+        "inc",
+        "intl",
+        "llc",
+        "corp",
+        "and",
+        "ag",
+        "kgaa"
+    ]
+    let ret_words = ret.components(separatedBy: " ")
+    ret = ret_words.filter { !bad_words.contains($0) }.joined(separator: " ")
+    
+    print("Search name for: <", name, "> is: <", ret, ">")
+    
+    return ret
+}
  
 class Company : CustomStringConvertible {
     var name : String = ""
     var masks : [Mask] = []
+    
+    var search_name : String
     
     var description: String {
         return name
@@ -57,6 +98,9 @@ class Company : CustomStringConvertible {
     
     init(name : String) {
         self.name = name
+        
+        // Construct search name
+        self.search_name = get_search_name(name)
     }
 
     convenience init(mask : Mask) {
@@ -126,48 +170,56 @@ class Mask : Decodable, CustomStringConvertible {
         return self.company.distance(between: to_company)
     }
     
-    private func get_image_surgical_mask() -> UIImage {
-        return UIImage(named: "surgical_mask")!
+    private func get_image_surgical_mask(_ image_zoom : Bool) -> UIImage {
+        if image_zoom {
+            return UIImage(named: "surgical_mask_zoom")!
+        } else {
+            return UIImage(named: "surgical_mask")!
+        }
     }
     
-    private func get_image_respirator() -> UIImage {
-        return UIImage(named: "respirator")!
+    private func get_image_respirator(_ image_zoom : Bool) -> UIImage {
+        if image_zoom {
+            return UIImage(named: "respirator_zoom")!
+        } else {
+            return UIImage(named: "respirator")!
+        }
     }
 
-    func show_mask_details(delegate : ShowMaskDetailsProtocol) {
+    func show_mask_details(delegate : ShowMaskDetailsProtocol, image_zoom : Bool) {
         switch respirator_type {
         case "SURGICAL_MASK_EUA":
-            delegate.set_image(get_image_surgical_mask())
+            delegate.set_image(get_image_surgical_mask(image_zoom))
             delegate.set_fda(.approved)
             delegate.set_niosh(.not_applicable)
             delegate.set_extra(.emergency_authorized)
         case "SURGICAL_MASK_FDA":
-            delegate.set_image(get_image_surgical_mask())
+            delegate.set_image(get_image_surgical_mask(image_zoom))
             delegate.set_fda(.approved)
             delegate.set_niosh(.not_applicable)
             delegate.set_extra(.none)
         case "SURGICAL_MASK_FDA_POTENTIALLY_RECALLED":
-            delegate.set_image(get_image_surgical_mask())
+            delegate.set_image(get_image_surgical_mask(image_zoom))
             delegate.set_fda(.not_approved)
             delegate.set_niosh(.not_approved) // extra bad for recalls
             delegate.set_extra(.recalled)
         case "RESPIRATOR_EUA":
-            delegate.set_image(get_image_respirator())
+            delegate.set_image(get_image_respirator(image_zoom))
             delegate.set_fda(.not_approved)
             delegate.set_niosh(.not_approved)
             delegate.set_extra(.emergency_authorized)
         case "RESPIRATOR_EUA_EXPIRED_AUTH":
-            delegate.set_image(get_image_respirator())
+            delegate.set_image(get_image_respirator(image_zoom))
             delegate.set_fda(.not_approved)
             delegate.set_niosh(.not_approved)
             delegate.set_extra(.revoked)
         case "RESPIRATOR_N95_NIOSH":
-            delegate.set_image(get_image_respirator())
+            delegate.set_image(get_image_respirator(image_zoom))
             delegate.set_fda(.not_approved)
             delegate.set_niosh(.approved)
             delegate.set_extra(.none)
         case "RESPIRATOR_N95_NIOSH_FDA":
-            delegate.set_image(get_image_respirator())
+            delegate.set_image(get_image_respirator(image_zoom))
             delegate.set_fda(.approved)
             delegate.set_niosh(.approved)
             delegate.set_extra(.none)

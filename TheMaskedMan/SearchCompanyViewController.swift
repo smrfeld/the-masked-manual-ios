@@ -48,7 +48,7 @@ class SearchCompanyViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                        
         // Load masks
         masks = load_masks()
         companies = organize_masks_by_company(masks)

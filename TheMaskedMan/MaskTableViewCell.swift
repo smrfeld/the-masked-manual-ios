@@ -55,7 +55,7 @@ class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
         self.model_label.text = mask.model
         self.company_label.text = mask.company
         
-        mask.show_mask_details(delegate: self)
+        mask.show_mask_details(delegate: self, image_zoom: true)
     }
     
     func set_extra(_ val: MaskExtra) {
