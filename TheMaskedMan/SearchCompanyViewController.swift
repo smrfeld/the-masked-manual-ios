@@ -64,6 +64,9 @@ class SearchCompanyViewController : UIViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
+        // White text for search
+        searchController.searchBar.compatibleSearchTextField.textColor = UIColor.white
+
         // Show by default, do not hide when scrolling
         searchController.searchBar.becomeFirstResponder()
         navigationItem.hidesSearchBarWhenScrolling = false

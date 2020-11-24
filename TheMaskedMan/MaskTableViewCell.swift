@@ -31,6 +31,16 @@ import UIKit
 
 class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
 
+    private let fda_approved = "FDA"
+    private let fda_not_approved = "FDA"
+    private let niosh_approved = "NIOSH"
+    private let niosh_not_approved = "NIOSH"
+    private let niosh_not_applicable = "NIOSH"
+    private let emergency = "Emergency"
+    private let recalled = "Recalled"
+    private let revoked = "Revoked"
+
+    /*
     private let fda_approved = "FDA-approved  "
     private let fda_not_approved = "Not FDA-approved  "
     private let niosh_approved = "NIOSH-approved  "
@@ -39,6 +49,7 @@ class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
     private let emergency = "Emergency-authorized  "
     private let recalled = "Recalled  "
     private let revoked = "Revoked  "
+     */
 
     @IBOutlet weak var model_label: UILabel!
     @IBOutlet weak var company_label: UILabel!
@@ -65,25 +76,19 @@ class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
         switch val {
         case .emergency_authorized:
             extra_label.text = emergency
-            extra_label.textColor = UIColor.okGreen
-            // extra_label.isHidden = false
-            // extra_image.isHidden = false
+            // extra_label.textColor = UIColor.okGreen
             set_checkmark_ok(extra_image)
         case .recalled:
             extra_label.text = recalled
-            extra_label.textColor = UIColor.notOkRed
-            // extra_label.isHidden = false
-            // extra_image.isHidden = false
+            // extra_label.textColor = UIColor.notOkRed
             set_checkmark_not_ok(extra_image)
         case .revoked:
             extra_label.text = revoked
-            extra_label.textColor = UIColor.notOkRed
+            // extra_label.textColor = UIColor.notOkRed
             set_checkmark_not_ok(extra_image)
         case .none:
             extra_label.text = ""
             extra_image.image = nil
-//            extra_label.isHidden = true
-//            extra_image.isHidden = true
         }
     }
     
@@ -91,15 +96,15 @@ class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
         switch val {
         case .approved:
             niosh_label.text = niosh_approved
-            niosh_label.textColor = UIColor.okGreen
+            // niosh_label.textColor = UIColor.okGreen
             set_checkmark_ok(niosh_image)
         case .not_approved:
             niosh_label.text = niosh_not_approved
-            niosh_label.textColor = UIColor.notOkRed
+            // niosh_label.textColor = UIColor.notOkRed
             set_checkmark_not_ok(niosh_image)
         case .not_applicable:
             niosh_label.text = niosh_not_applicable
-            niosh_label.textColor = UIColor.mehGray
+            // niosh_label.textColor = UIColor.mehGray
             set_checkmark_not_applicable(niosh_image)
         }
     }
@@ -108,11 +113,11 @@ class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
         switch val {
         case .approved:
             fda_label.text = fda_approved
-            fda_label.textColor = UIColor.okGreen
+            // fda_label.textColor = UIColor.okGreen
             set_checkmark_ok(fda_image)
         case .not_approved:
             fda_label.text = fda_not_approved
-            fda_label.textColor = UIColor.notOkRed
+            // fda_label.textColor = UIColor.notOkRed
             set_checkmark_not_ok(fda_image)
         }
     }

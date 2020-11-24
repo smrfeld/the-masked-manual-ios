@@ -49,10 +49,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        UITabBar.appearance().backgroundColor = UIColor.backgroundColor
 
         // Text colors
+        UINavigationBar.appearance().tintColor = UIColor.white
          UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
          UITabBar.appearance().tintColor = UIColor.white
 //        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.black]
 //        UITabBar.appearance().tintColor = UIColor.black
+                
+        // Search field
+        UISearchBar.appearance().compatibleSearchTextField.textColor = UIColor.white
         
         return true
     }

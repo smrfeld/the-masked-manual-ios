@@ -48,7 +48,7 @@ class SearchModelViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         // Sort
         masks.sort { (m1, m2) -> Bool in
             return m1.model < m2.model
@@ -64,6 +64,9 @@ class SearchModelViewController: UIViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
+        // White text for search
+        searchController.searchBar.compatibleSearchTextField.textColor = UIColor.white
+
         // Show by default, do not hide when scrolling
         searchController.searchBar.becomeFirstResponder()
         navigationItem.hidesSearchBarWhenScrolling = false
@@ -151,7 +154,7 @@ extension SearchModelViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "maskTableViewCell") as! MaskTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "maskTableViewCell2") as! MaskTableViewCell
         cell.reload(mask: masks_filtered[indexPath.row])
         
         return cell
@@ -170,8 +173,13 @@ extension SearchModelViewController: UITableViewDelegate, UITableViewDataSource 
         alert.definesPresentationContext = true
         alert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
-        self.present(alert, animated: true, completion: nil)
         
-        // performSegue(withIdentifier: "toMaskDetails", sender: mask)
+        DispatchQueue.main.async {
+            if self.searchController.isActive {
+                self.searchController.present(alert, animated: true, completion: nil)
+            } else {
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
 }
