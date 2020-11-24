@@ -16,6 +16,7 @@
 		4B7CF40B256BA09F001191A7 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7CF40A256BA09F001191A7 /* Button.swift */; };
 		4B7CF40E256BA50D001191A7 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7CF40D256BA50D001191A7 /* Colors.swift */; };
 		4BA2EDA12569F8C00014D864 /* IMG_4409.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 4BA2EDA02569F8C00014D864 /* IMG_4409.JPG */; };
+		4BB17411256D93A4005EAC86 /* data.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4BB17410256D93A4005EAC86 /* data.txt */; };
 		4BC6B8AD256885830075D1AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8AC256885830075D1AD /* AppDelegate.swift */; };
 		4BC6B8AF256885830075D1AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8AE256885830075D1AD /* SceneDelegate.swift */; };
 		4BC6B8B1256885830075D1AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8B0256885830075D1AD /* ViewController.swift */; };
@@ -24,7 +25,6 @@
 		4BC6B8B9256885850075D1AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BC6B8B7256885850075D1AD /* LaunchScreen.storyboard */; };
 		4BC6B8DC2568A93C0075D1AD /* ClosestMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8DB2568A93C0075D1AD /* ClosestMask.swift */; };
 		4BFF3D15256CB53400ACBAD9 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF3D14256CB53400ACBAD9 /* SearchBar.swift */; };
-		4BFF3D19256CEF6C00ACBAD9 /* data.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4BFF3D18256CEF6C00ACBAD9 /* data.txt */; };
 		71A91E57CEEFB28F98580A49 /* Pods_TheMaskedMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6608149DC866C530286A75C /* Pods_TheMaskedMan.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +38,7 @@
 		4B7CF40A256BA09F001191A7 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		4B7CF40D256BA50D001191A7 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		4BA2EDA02569F8C00014D864 /* IMG_4409.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_4409.JPG; sourceTree = "<group>"; };
+		4BB17410256D93A4005EAC86 /* data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data.txt; sourceTree = "<group>"; };
 		4BC6B8A9256885830075D1AD /* TheMaskedMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMaskedMan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BC6B8AC256885830075D1AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4BC6B8AE256885830075D1AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -48,7 +49,6 @@
 		4BC6B8BA256885850075D1AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4BC6B8DB2568A93C0075D1AD /* ClosestMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosestMask.swift; sourceTree = "<group>"; };
 		4BFF3D14256CB53400ACBAD9 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
-		4BFF3D18256CEF6C00ACBAD9 /* data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data.txt; sourceTree = "<group>"; };
 		77F47A0E998DA15209E67309 /* Pods-TheMaskedMan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMaskedMan.release.xcconfig"; path = "Target Support Files/Pods-TheMaskedMan/Pods-TheMaskedMan.release.xcconfig"; sourceTree = "<group>"; };
 		7910A0699914C99A1DA7B4D3 /* Pods-TheMaskedMan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMaskedMan.debug.xcconfig"; path = "Target Support Files/Pods-TheMaskedMan/Pods-TheMaskedMan.debug.xcconfig"; sourceTree = "<group>"; };
 		C6608149DC866C530286A75C /* Pods_TheMaskedMan.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TheMaskedMan.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,7 +96,7 @@
 		4BC6B8AB256885830075D1AD /* TheMaskedMan */ = {
 			isa = PBXGroup;
 			children = (
-				4BFF3D18256CEF6C00ACBAD9 /* data.txt */,
+				4BB17410256D93A4005EAC86 /* data.txt */,
 				4BA2EDA02569F8C00014D864 /* IMG_4409.JPG */,
 				4BC6B8AC256885830075D1AD /* AppDelegate.swift */,
 				4BC6B8AE256885830075D1AD /* SceneDelegate.swift */,
@@ -190,7 +190,7 @@
 				4BA2EDA12569F8C00014D864 /* IMG_4409.JPG in Resources */,
 				4BC6B8B6256885850075D1AD /* Assets.xcassets in Resources */,
 				4BC6B8B4256885830075D1AD /* Main.storyboard in Resources */,
-				4BFF3D19256CEF6C00ACBAD9 /* data.txt in Resources */,
+				4BB17411256D93A4005EAC86 /* data.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

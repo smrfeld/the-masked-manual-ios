@@ -127,11 +127,34 @@ class Mask : Decodable, CustomStringConvertible {
     let url_instructions : String
     let url_source : String
     let date_last_updated : String
-    
+        
     var description: String {
         return company + " : " + model + " - " + respirator_type + " - " + url_company + " - " + url_instructions + " - " + date_last_updated
     }
 
+    func get_date_last_updated_str() -> String {
+        if let date = get_date_last_updated() {
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            return dateFormatter.string(from: date)
+        }
+        
+        return "Unknown"
+    }
+    
+    func get_date_last_updated() -> Date? {
+        print(date_last_updated)
+        if date_last_updated == "" {
+            return nil
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter.date(from: date_last_updated)
+    }
+    
     func is_surgical_mask() -> Bool {
         switch respirator_type {
         case "SURGICAL_MASK_EUA":

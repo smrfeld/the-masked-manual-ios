@@ -55,11 +55,10 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
     @IBOutlet weak var fda_stack: UIStackView!
     @IBOutlet weak var company_website_stack: UIStackView!
     
-    @IBOutlet weak var source_label: UILabel!
-    @IBOutlet weak var source_label_image: UIImageView!
-    @IBOutlet weak var instructions_label: UILabel!
-    @IBOutlet weak var instructions_label_image: UIImageView!
     @IBOutlet weak var links_stack: UIStackView!
+    @IBOutlet weak var instructions_stack: UIStackView!
+    @IBOutlet weak var source_stack: UIStackView!
+    @IBOutlet weak var date_label: UILabel!
     
     var mask : Mask!
     
@@ -93,25 +92,19 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
         }
         
         if mask.url_instructions != "" {
-            instructions_label.isHidden = false
-            instructions_label_image.isHidden = false
+            instructions_stack.isHidden = false
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.open_url_instructions(recognizer:)))
-            instructions_label.addGestureRecognizer(tapGestureRecognizer)
-            instructions_label_image.addGestureRecognizer(tapGestureRecognizer)
+            instructions_stack.addGestureRecognizer(tapGestureRecognizer)
         } else {
-            instructions_label.isHidden = true
-            instructions_label_image.isHidden = true
+            instructions_stack.isHidden = true
         }
 
         if mask.url_source != "" {
-            source_label.isHidden = false
-            source_label_image.isHidden = false
+            source_stack.isHidden = false
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.open_url_source(recognizer:)))
-            source_label.addGestureRecognizer(tapGestureRecognizer)
-            source_label_image.addGestureRecognizer(tapGestureRecognizer)
+            source_stack.addGestureRecognizer(tapGestureRecognizer)
         } else {
-            source_label.isHidden = true
-            source_label_image.isHidden = true
+            source_stack.isHidden = true
         }
         
         if mask.url_instructions == "" && mask.url_source == "" {
@@ -119,6 +112,8 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
         } else {
             links_stack.isHidden = false
         }
+        
+        date_label.text = "Information last updated on: " + mask.get_date_last_updated_str()
     }
     
     @objc func open_url_source(recognizer : UITapGestureRecognizer) {
