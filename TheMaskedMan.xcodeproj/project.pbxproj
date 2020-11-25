@@ -17,6 +17,11 @@
 		4B7CF40E256BA50D001191A7 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7CF40D256BA50D001191A7 /* Colors.swift */; };
 		4BA2EDA12569F8C00014D864 /* IMG_4409.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 4BA2EDA02569F8C00014D864 /* IMG_4409.JPG */; };
 		4BB17411256D93A4005EAC86 /* data.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4BB17410256D93A4005EAC86 /* data.txt */; };
+		4BB17414256D9603005EAC86 /* MaskNotFoundHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB17413256D9603005EAC86 /* MaskNotFoundHeaderView.swift */; };
+		4BB1741B256D979D005EAC86 /* MaskNotFoundHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BB1741A256D979D005EAC86 /* MaskNotFoundHeaderView.xib */; };
+		4BB1741E256D9F76005EAC86 /* MaskNotFoundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB1741D256D9F76005EAC86 /* MaskNotFoundViewController.swift */; };
+		4BB17421256DD922005EAC86 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB17420256DD922005EAC86 /* CameraViewController.swift */; };
+		4BB17424256DDD4A005EAC86 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB17423256DDD4A005EAC86 /* TabBarController.swift */; };
 		4BC6B8AD256885830075D1AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8AC256885830075D1AD /* AppDelegate.swift */; };
 		4BC6B8AF256885830075D1AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8AE256885830075D1AD /* SceneDelegate.swift */; };
 		4BC6B8B1256885830075D1AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8B0256885830075D1AD /* ViewController.swift */; };
@@ -39,6 +44,11 @@
 		4B7CF40D256BA50D001191A7 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		4BA2EDA02569F8C00014D864 /* IMG_4409.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_4409.JPG; sourceTree = "<group>"; };
 		4BB17410256D93A4005EAC86 /* data.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data.txt; sourceTree = "<group>"; };
+		4BB17413256D9603005EAC86 /* MaskNotFoundHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskNotFoundHeaderView.swift; sourceTree = "<group>"; };
+		4BB1741A256D979D005EAC86 /* MaskNotFoundHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MaskNotFoundHeaderView.xib; sourceTree = "<group>"; };
+		4BB1741D256D9F76005EAC86 /* MaskNotFoundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskNotFoundViewController.swift; sourceTree = "<group>"; };
+		4BB17420256DD922005EAC86 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		4BB17423256DDD4A005EAC86 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		4BC6B8A9256885830075D1AD /* TheMaskedMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMaskedMan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BC6B8AC256885830075D1AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4BC6B8AE256885830075D1AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,11 +115,16 @@
 				4BC6B8DB2568A93C0075D1AD /* ClosestMask.swift */,
 				4B7CF3E4256A04E4001191A7 /* StringDistance.swift */,
 				4BC6B8B2256885830075D1AD /* Main.storyboard */,
+				4BB17423256DDD4A005EAC86 /* TabBarController.swift */,
+				4BB17420256DD922005EAC86 /* CameraViewController.swift */,
+				4BB1741D256D9F76005EAC86 /* MaskNotFoundViewController.swift */,
+				4BB1741A256D979D005EAC86 /* MaskNotFoundHeaderView.xib */,
 				4B7CF40A256BA09F001191A7 /* Button.swift */,
 				4B7CF407256B9ECA001191A7 /* MaskDetailViewController.swift */,
 				4B7CF3FF256B8A2A001191A7 /* MaskTableViewCell.swift */,
 				4B7CF3FC256B84FB001191A7 /* CompanyTableViewCell.swift */,
 				4B7CF3F5256B800B001191A7 /* SearchCompanyViewController.swift */,
+				4BB17413256D9603005EAC86 /* MaskNotFoundHeaderView.swift */,
 				4BFF3D14256CB53400ACBAD9 /* SearchBar.swift */,
 				4B7CF3F9256B82C7001191A7 /* SearchModelViewController.swift */,
 				4BC6B8B5256885850075D1AD /* Assets.xcassets */,
@@ -188,6 +203,7 @@
 			files = (
 				4BC6B8B9256885850075D1AD /* LaunchScreen.storyboard in Resources */,
 				4BA2EDA12569F8C00014D864 /* IMG_4409.JPG in Resources */,
+				4BB1741B256D979D005EAC86 /* MaskNotFoundHeaderView.xib in Resources */,
 				4BC6B8B6256885850075D1AD /* Assets.xcassets in Resources */,
 				4BC6B8B4256885830075D1AD /* Main.storyboard in Resources */,
 				4BB17411256D93A4005EAC86 /* data.txt in Resources */,
@@ -249,11 +265,15 @@
 				4BC6B8B1256885830075D1AD /* ViewController.swift in Sources */,
 				4B7CF3FA256B82C7001191A7 /* SearchModelViewController.swift in Sources */,
 				4BC6B8AD256885830075D1AD /* AppDelegate.swift in Sources */,
+				4BB17424256DDD4A005EAC86 /* TabBarController.swift in Sources */,
 				4BC6B8DC2568A93C0075D1AD /* ClosestMask.swift in Sources */,
 				4B7CF3E5256A04E4001191A7 /* StringDistance.swift in Sources */,
 				4BC6B8AF256885830075D1AD /* SceneDelegate.swift in Sources */,
 				4B7CF400256B8A2A001191A7 /* MaskTableViewCell.swift in Sources */,
+				4BB17414256D9603005EAC86 /* MaskNotFoundHeaderView.swift in Sources */,
 				4B7CF3FD256B84FB001191A7 /* CompanyTableViewCell.swift in Sources */,
+				4BB1741E256D9F76005EAC86 /* MaskNotFoundViewController.swift in Sources */,
+				4BB17421256DD922005EAC86 /* CameraViewController.swift in Sources */,
 				4B7CF408256B9ECA001191A7 /* MaskDetailViewController.swift in Sources */,
 				4B7CF40B256BA09F001191A7 /* Button.swift in Sources */,
 			);

@@ -65,16 +65,17 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        view.backgroundColor = UIColor(white: 1.0, alpha: 0.8)
+        
+        // Bring view to front on top of blurr
+        self.view.bringSubviewToFront(central_view)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        view.backgroundColor = UIColor.clear
-        
+                
         // Round corners
-        central_view.layer.cornerRadius = 5
+        central_view.layer.cornerRadius = 15
         
         // Load mask details
         // model_label.text = mask.model
