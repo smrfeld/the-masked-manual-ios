@@ -45,8 +45,10 @@ class TabBarController: UITabBarController {
         }
         
         // Send to VCs
-        if let vc = self.viewControllers?[0] as? CameraViewController {
-            vc.masks = masks
+        if let nvc = self.viewControllers?[0] as? UINavigationController {
+            if let vc = nvc.topViewController as? CameraViewController {
+                vc.masks = masks
+            }
         }
         if let nvc = self.viewControllers?[2] as? UINavigationController {
             if let vc = nvc.topViewController as? SearchCompanyViewController {

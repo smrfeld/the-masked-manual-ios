@@ -159,18 +159,18 @@ class Company : CustomStringConvertible {
     }
 }
 
-class Mask : Codable, CustomStringConvertible {
-    
+class Mask : Codable, CustomStringConvertible, Equatable {
+
     // Fields from JSON
     var company : String = ""
     var model : String = ""
-    let countries_of_origin : [String] = []
-    let respirator_type : String = ""
-    let valve_type : String = ""
-    let url_company : String = ""
-    let url_instructions : String = ""
-    let url_source : String = ""
-    let date_last_updated : String = ""
+    var countries_of_origin : [String] = []
+    var respirator_type : String = ""
+    var valve_type : String = ""
+    var url_company : String = ""
+    var url_instructions : String = ""
+    var url_source : String = ""
+    var date_last_updated : String = ""
     
     // Fields added later
     // MUST provide default value! Else JSON will fail
@@ -180,6 +180,15 @@ class Mask : Codable, CustomStringConvertible {
         return company + " : " + model
     }
     
+    static func == (lhs: Mask, rhs: Mask) -> Bool {
+        return lhs.company == rhs.company
+            && lhs.model == rhs.model
+            && lhs.countries_of_origin == rhs.countries_of_origin
+            && lhs.respirator_type == rhs.respirator_type
+            && lhs.valve_type == rhs.valve_type
+    }
+    
+    // Keys for decoding JSON
     private enum CodingKeys : String, CodingKey {
         case company = "company"
         case model = "model"

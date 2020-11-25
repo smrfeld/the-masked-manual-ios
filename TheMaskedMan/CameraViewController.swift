@@ -35,9 +35,10 @@ import AVFoundation
 class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     var masks : [Mask] = []
+    var camera_search : CameraSearch!
+    var mask_best_guess : Mask? = nil
     
-    @IBOutlet weak var text_view: UITextView!
-    // @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
     
     // var is_search_in_progress : Bool = false
@@ -47,6 +48,17 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Camera search
+        camera_search = CameraSearch(masks)
+        
+        // Header
+        let headerNib = UINib.init(nibName: "MaskNotFoundHeaderView", bundle: Bundle.main)
+        tableView.register(headerNib, forHeaderFooterViewReuseIdentifier: "maskNotFoundHeaderView")
+
+        // Mask
+        let maskNib = UINib.init(nibName: "MaskTableViewCell", bundle: Bundle.main)
+        tableView.register(maskNib, forCellReuseIdentifier: "maskTableViewCell2")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,79 +68,16 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         startTextDetection()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        stopLiveVideo()
+        stopTextDetection()
+    }
+    
     override func viewDidLayoutSubviews() {
         // Fix the fact that view is not finished in viewDidAppear
         imageView.layer.sublayers?[0].frame = imageView.bounds
-    }
-    
-    private func ammend_candidates(raw_candidates : [String]) -> [String] {
-        var candidates = raw_candidates
-        
-        // Get search words
-        // Removes nonsense characters and trivial phrases
-        candidates = candidates.map({ (c) -> String in
-            return get_search_name(c)
-        })
-        
-        // Remove anything less than 2 characters
-        var i = 0
-        while i < candidates.count {
-            if candidates[i].count < 2 {
-                candidates.remove(at: i)
-            } else {
-                i += 1
-            }
-        }
-        
-        // Add all words
-        for i in 0..<candidates.count {
-            let words = candidates[i].components(separatedBy: " ")
-            
-            // Only add words if more than one word
-            if words.count != 1 {
-                for word in words {
-                    // Only add if the word has more than 2 characters
-                    if word.count >= 2 {
-                        candidates.append(word)
-                    }
-                }
-            }
-        }
-        
-        // For every candidate, also try stripping any leading or trailing zeros if they exist
-        for i in 0..<candidates.count {
-            if candidates[i].first! == "0" {
-                candidates.append(String(candidates[i].dropFirst()))
-            }
-            
-            if candidates[i].last! == "0" {
-                candidates.append(String(candidates[i].dropLast()))
-            }
-        }
-        
-        // Remove duplicates (ruins ordering!)
-        candidates = Array(Set(candidates))
-        
-        return candidates
-    }
-    
-    private func search_for_model(raw_candidates : [String]) {
-        
-        // Ammend and fix list of candidates
-        let candidates = ammend_candidates(raw_candidates: raw_candidates)
-        
-        print("Candidates")
-        print(candidates)
-        
-        for candidate in candidates {
-            
-            let masks_filtered = masks.filter({ (mask) -> Bool in
-                return mask.search_model.contains(candidate)
-            })
-            print(candidate, " ", masks_filtered.map({ (m) -> String in
-                return m.search_model
-            }))
-        }
     }
     
     func detectTextHandler(request: VNRequest, error: Error?) {
@@ -138,22 +87,27 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             return
         }
         
-        var candidates : [String] = []
+        var raw_observed_texts : [String] = []
         
-        print("--- Found: ---")
-        var text = ""
         for observation in observations {
             guard let topCandidate = observation.topCandidates(1).first else { return }
-            print(topCandidate.string)
-            text += topCandidate.string + "\n"
-            candidates.append(topCandidate.string)
-        }
-        DispatchQueue.main.async() {
-            self.text_view.text = text
+            raw_observed_texts.append(topCandidate.string)
         }
         
         // Search for the model
-        search_for_model(raw_candidates: candidates)
+        camera_search.update_candidates_with_observations(raw_observed_texts: raw_observed_texts)
+        
+        // Set best mask
+        if let new_best_guess = camera_search.get_top_mask() {
+            if new_best_guess != mask_best_guess {
+                mask_best_guess = new_best_guess
+                
+                // Reload table
+                DispatchQueue.main.async() {
+                    self.tableView.reloadData()
+                }
+            }
+        }
         
         DispatchQueue.main.async() {
             self.imageView.layer.sublayers?.removeSubrange(1...)
@@ -207,6 +161,14 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         imageView.layer.addSublayer(outline)
     }
     
+    func stopTextDetection() {
+        self.requests = []
+    }
+    
+    func stopLiveVideo() {
+        session.stopRunning()
+    }
+    
     func startTextDetection() {
         // Find text
         let textRequest = VNRecognizeTextRequest(completionHandler: self.detectTextHandler)
@@ -234,7 +196,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
            
         // Set image
         let imageLayer = AVCaptureVideoPreviewLayer(session: session)
-        imageLayer.frame = imageView.bounds
+        imageLayer.bounds = imageView.bounds
         imageView.layer.addSublayer(imageLayer)
             
         session.startRunning()
@@ -261,6 +223,23 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         }
     }
     
+    // ***************
+    // MARK: - Tap not found header
+    // ***************
+    
+    @objc func handleTapMaskNotFound(_ sender: UITapGestureRecognizer) {
+        
+        let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "maskNotFoundViewController") as! MaskNotFoundViewController
+        alert.providesPresentationContextTransitionStyle = true
+        alert.definesPresentationContext = true
+        alert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+
     /*
     // MARK: - Navigation
 
@@ -271,4 +250,73 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     }
     */
 
+}
+
+extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        // Only show header if no best guess
+        if mask_best_guess == nil {
+            return 60.0
+        } else {
+            return 0.0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        // Only show header if no best guess
+        if mask_best_guess == nil {
+            let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "maskNotFoundHeaderView") as! MaskNotFoundHeaderView
+            
+            // Add tap
+            let tap = UITapGestureRecognizer(target: self, action:#selector(self.handleTapMaskNotFound(_:)))
+            view.addGestureRecognizer(tap)
+            
+            return view
+        } else {
+            return nil
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // Only show rows if best guess
+        if mask_best_guess == nil {
+            return 0
+        } else {
+            return 1
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "maskTableViewCell2") as! MaskTableViewCell
+        if let mask = mask_best_guess {
+            cell.reload(mask: mask)
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Deselect
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        // Show
+        if let mask = mask_best_guess {
+        
+            let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "maskDetailViewController") as! MaskDetailViewController
+            alert.mask = mask
+            alert.providesPresentationContextTransitionStyle = true
+            alert.definesPresentationContext = true
+            alert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+            alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+            
+            DispatchQueue.main.async {
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+    }
 }

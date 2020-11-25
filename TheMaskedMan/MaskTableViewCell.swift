@@ -45,7 +45,7 @@ func set_checkmark_not_ok(_ label : UIImageView) {
 }
 
 class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
-
+    
     private let fda_approved = "FDA"
     private let fda_not_approved = "FDA"
     private let niosh_approved = "NIOSH"
@@ -77,7 +77,8 @@ class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
     @IBOutlet weak var niosh_image: UIImageView!
     @IBOutlet weak var extra_image: UIImageView!
     
-    func reload(mask: Mask) {
+    func reload(mask : Mask) {
+        
         self.model_label.text = mask.model
         self.company_label.text = mask.company
         
@@ -143,7 +144,6 @@ class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
         
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

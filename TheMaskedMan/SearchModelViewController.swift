@@ -70,6 +70,35 @@ class SearchModelViewController: UIViewController {
         // Show by default, do not hide when scrolling
         searchController.searchBar.becomeFirstResponder()
         navigationItem.hidesSearchBarWhenScrolling = false
+        
+        // Header
+        let headerNib = UINib.init(nibName: "MaskNotFoundHeaderView", bundle: Bundle.main)
+        tableView.register(headerNib, forHeaderFooterViewReuseIdentifier: "maskNotFoundHeaderView")
+        
+        // Mask
+        let maskNib = UINib.init(nibName: "MaskTableViewCell", bundle: Bundle.main)
+        tableView.register(maskNib, forCellReuseIdentifier: "maskTableViewCell2")
+    }
+    
+    // ***************
+    // MARK: - Tap header
+    // ***************
+    
+    @objc func handleTapMaskNotFound(_ sender: UITapGestureRecognizer) {
+        
+        let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "maskNotFoundViewController") as! MaskNotFoundViewController
+        alert.providesPresentationContextTransitionStyle = true
+        alert.definesPresentationContext = true
+        alert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        
+        DispatchQueue.main.async {
+            if self.searchController.isActive {
+                self.searchController.present(alert, animated: true, completion: nil)
+            } else {
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     // ***************
@@ -149,6 +178,20 @@ extension SearchModelViewController: UITableViewDelegate, UITableViewDataSource 
         return 1
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 60.0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "maskNotFoundHeaderView") as! MaskNotFoundHeaderView
+        
+        // Add tap
+        let tap = UITapGestureRecognizer(target: self, action:#selector(self.handleTapMaskNotFound(_:)))
+        view.addGestureRecognizer(tap)
+        
+        return view
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return masks_filtered.count
     }
@@ -159,7 +202,7 @@ extension SearchModelViewController: UITableViewDelegate, UITableViewDataSource 
         
         return cell
     }
-    
+        
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Deselect
         tableView.deselectRow(at: indexPath, animated: true)
