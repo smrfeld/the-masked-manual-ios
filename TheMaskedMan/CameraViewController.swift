@@ -34,8 +34,14 @@ import AVFoundation
 
 class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
-    @IBOutlet weak var tableView: UITableView!
+    var masks : [Mask] = []
+    
+    @IBOutlet weak var text_view: UITextView!
+    // @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
+    
+    // var is_search_in_progress : Bool = false
+    
     var session = AVCaptureSession()
     var requests = [VNRequest]()
     
@@ -55,20 +61,115 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         imageView.layer.sublayers?[0].frame = imageView.bounds
     }
     
+    private func ammend_candidates(raw_candidates : [String]) -> [String] {
+        var candidates = raw_candidates
+        
+        // Get search words
+        // Removes nonsense characters and trivial phrases
+        candidates = candidates.map({ (c) -> String in
+            return get_search_name(c)
+        })
+        
+        // Remove anything less than 2 characters
+        var i = 0
+        while i < candidates.count {
+            if candidates[i].count < 2 {
+                candidates.remove(at: i)
+            } else {
+                i += 1
+            }
+        }
+        
+        // Add all words
+        for i in 0..<candidates.count {
+            let words = candidates[i].components(separatedBy: " ")
+            
+            // Only add words if more than one word
+            if words.count != 1 {
+                for word in words {
+                    // Only add if the word has more than 2 characters
+                    if word.count >= 2 {
+                        candidates.append(word)
+                    }
+                }
+            }
+        }
+        
+        // For every candidate, also try stripping any leading or trailing zeros if they exist
+        for i in 0..<candidates.count {
+            if candidates[i].first! == "0" {
+                candidates.append(String(candidates[i].dropFirst()))
+            }
+            
+            if candidates[i].last! == "0" {
+                candidates.append(String(candidates[i].dropLast()))
+            }
+        }
+        
+        // Remove duplicates (ruins ordering!)
+        candidates = Array(Set(candidates))
+        
+        return candidates
+    }
+    
+    private func search_for_model(raw_candidates : [String]) {
+        
+        // Ammend and fix list of candidates
+        let candidates = ammend_candidates(raw_candidates: raw_candidates)
+        
+        print("Candidates")
+        print(candidates)
+        
+        for candidate in candidates {
+            
+            let masks_filtered = masks.filter({ (mask) -> Bool in
+                return mask.search_model.contains(candidate)
+            })
+            print(candidate, " ", masks_filtered.map({ (m) -> String in
+                return m.search_model
+            }))
+        }
+    }
+    
     func detectTextHandler(request: VNRequest, error: Error?) {
+        
+        guard let observations = request.results as? [VNRecognizedTextObservation] else {
+            print("No result")
+            return
+        }
+        
+        var candidates : [String] = []
+        
+        print("--- Found: ---")
+        var text = ""
+        for observation in observations {
+            guard let topCandidate = observation.topCandidates(1).first else { return }
+            print(topCandidate.string)
+            text += topCandidate.string + "\n"
+            candidates.append(topCandidate.string)
+        }
+        DispatchQueue.main.async() {
+            self.text_view.text = text
+        }
+        
+        // Search for the model
+        search_for_model(raw_candidates: candidates)
+        
+        DispatchQueue.main.async() {
+            self.imageView.layer.sublayers?.removeSubrange(1...)
+            for rg in observations {
+                self.highlightWord(box: rg)
+            }
+        }
+        
+        // Text boxes
+        /*
+         
         guard let observations = request.results else {
             print("no result")
             return
         }
-            
-        /*
-        for observation in observations {
-            if let observation = observation as? VNTextObservation {
-                print(observation)
-            }
-        }
-        */
-        
+
         let result = observations.map({$0 as? VNTextObservation})
         
         DispatchQueue.main.async() {
@@ -87,51 +188,16 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
                 }
             }
         }
+         */
     }
-    
-    func highlightLetters(box: VNRectangleObservation) {
-        let xCord = box.topLeft.x * imageView.frame.size.width
-        let yCord = (1 - box.topLeft.y) * imageView.frame.size.height
-        let width = (box.topRight.x - box.bottomLeft.x) * imageView.frame.size.width
-        let height = (box.topLeft.y - box.bottomLeft.y) * imageView.frame.size.height
-            
-        let outline = CALayer()
-        outline.frame = CGRect(x: xCord, y: yCord, width: width, height: height)
-        outline.borderWidth = 1.0
-        outline.borderColor = UIColor.blue.cgColor
         
-        imageView.layer.addSublayer(outline)
-    }
-    
-    func highlightWord(box: VNTextObservation) {
-        guard let boxes = box.characterBoxes else {
-            return
-        }
+    func highlightWord(box: VNRecognizedTextObservation) {
+        let rect = box.boundingBox
             
-        var maxX: CGFloat = 9999.0
-        var minX: CGFloat = 0.0
-        var maxY: CGFloat = 9999.0
-        var minY: CGFloat = 0.0
-            
-        for char in boxes {
-            if char.bottomLeft.x < maxX {
-                maxX = char.bottomLeft.x
-            }
-            if char.bottomRight.x > minX {
-                minX = char.bottomRight.x
-            }
-            if char.bottomRight.y < maxY {
-                maxY = char.bottomRight.y
-            }
-            if char.topRight.y > minY {
-                minY = char.topRight.y
-            }
-        }
-            
-        let xCord = maxX * imageView.frame.size.width
-        let yCord = (1 - minY) * imageView.frame.size.height
-        let width = (minX - maxX) * imageView.frame.size.width
-        let height = (minY - maxY) * imageView.frame.size.height
+        let xCord = rect.maxX * imageView.frame.size.width
+        let yCord = (1 - rect.minY) * imageView.frame.size.height
+        let width = (rect.minX - rect.maxX) * imageView.frame.size.width
+        let height = (rect.minY - rect.maxY) * imageView.frame.size.height
             
         let outline = CALayer()
         outline.frame = CGRect(x: xCord, y: yCord, width: width, height: height)
@@ -142,8 +208,14 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     }
     
     func startTextDetection() {
-        let textRequest = VNDetectTextRectanglesRequest(completionHandler: self.detectTextHandler)
-        textRequest.reportCharacterBoxes = true
+        // Find text
+        let textRequest = VNRecognizeTextRequest(completionHandler: self.detectTextHandler)
+        textRequest.recognitionLevel = .fast
+
+        // Find text rectangles
+        // let textRequest = VNDetectTextRectanglesRequest(completionHandler: self.detectTextHandler)
+        // textRequest.reportCharacterBoxes = true
+        
         self.requests = [textRequest]
     }
     
@@ -169,10 +241,11 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     }
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+                
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
         }
-            
+        
         var requestOptions:[VNImageOption : Any] = [:]
             
         if let camData = CMGetAttachment(sampleBuffer, key: kCMSampleBufferAttachmentKey_CameraIntrinsicMatrix, attachmentModeOut: nil) {

@@ -158,32 +158,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ig6-qg-clc">
-                                <rect key="frame" x="0.0" y="124" width="414" height="689"/>
+                                <rect key="frame" x="0.0" y="164" width="414" height="649"/>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cXO-Ze-Bup">
-                                <rect key="frame" x="0.0" y="54" width="414" height="60"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GEA-Vm-eF3">
+                                <rect key="frame" x="0.0" y="54" width="414" height="100"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="x6v-JK-ejR"/>
+                                    <constraint firstAttribute="height" constant="100" id="ge3-GH-Plv"/>
                                 </constraints>
-                            </tableView>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Y3c-Th-Y6m"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Ig6-qg-clc" firstAttribute="top" secondItem="cXO-Ze-Bup" secondAttribute="bottom" constant="10" id="YQe-81-5GY"/>
+                            <constraint firstItem="Y3c-Th-Y6m" firstAttribute="trailing" secondItem="GEA-Vm-eF3" secondAttribute="trailing" id="FhA-Gj-aci"/>
+                            <constraint firstItem="GEA-Vm-eF3" firstAttribute="leading" secondItem="Y3c-Th-Y6m" secondAttribute="leading" id="LXK-PM-Slc"/>
+                            <constraint firstItem="Ig6-qg-clc" firstAttribute="top" secondItem="GEA-Vm-eF3" secondAttribute="bottom" constant="10" id="b7L-mX-n7X"/>
+                            <constraint firstItem="GEA-Vm-eF3" firstAttribute="top" secondItem="Y3c-Th-Y6m" secondAttribute="top" constant="10" id="iCv-pi-L6l"/>
                             <constraint firstItem="Y3c-Th-Y6m" firstAttribute="bottom" secondItem="Ig6-qg-clc" secondAttribute="bottom" id="oHo-mr-4B2"/>
-                            <constraint firstItem="cXO-Ze-Bup" firstAttribute="top" secondItem="Y3c-Th-Y6m" secondAttribute="top" constant="10" id="oSB-IA-LfW"/>
-                            <constraint firstItem="Y3c-Th-Y6m" firstAttribute="trailing" secondItem="cXO-Ze-Bup" secondAttribute="trailing" id="rGD-jK-apN"/>
                             <constraint firstItem="Y3c-Th-Y6m" firstAttribute="trailing" secondItem="Ig6-qg-clc" secondAttribute="trailing" id="u8D-WV-hpc"/>
-                            <constraint firstItem="cXO-Ze-Bup" firstAttribute="leading" secondItem="Y3c-Th-Y6m" secondAttribute="leading" id="yls-sv-gdS"/>
                             <constraint firstItem="Ig6-qg-clc" firstAttribute="leading" secondItem="Y3c-Th-Y6m" secondAttribute="leading" id="zeW-9i-3SX"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Scan" image="camera" catalog="system" id="qtY-yj-YvG"/>
                     <connections>
                         <outlet property="imageView" destination="Ig6-qg-clc" id="8MF-O4-sBx"/>
-                        <outlet property="tableView" destination="cXO-Ze-Bup" id="nXh-af-m5P"/>
+                        <outlet property="text_view" destination="GEA-Vm-eF3" id="Fge-Tf-qu0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0JG-0R-qTa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1059,6 +1063,9 @@
         <image name="multiply.circle" catalog="system" width="128" height="121"/>
         <image name="multiply.circle.fill" catalog="system" width="128" height="121"/>
         <image name="questionmark.circle" catalog="system" width="128" height="121"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

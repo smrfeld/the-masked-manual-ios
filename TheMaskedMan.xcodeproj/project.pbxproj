@@ -29,6 +29,7 @@
 		4BC6B8B6256885850075D1AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BC6B8B5256885850075D1AD /* Assets.xcassets */; };
 		4BC6B8B9256885850075D1AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BC6B8B7256885850075D1AD /* LaunchScreen.storyboard */; };
 		4BC6B8DC2568A93C0075D1AD /* ClosestMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8DB2568A93C0075D1AD /* ClosestMask.swift */; };
+		4BDCED9F256DFC460035B51F /* Mask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDCED9E256DFC460035B51F /* Mask.swift */; };
 		4BFF3D15256CB53400ACBAD9 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF3D14256CB53400ACBAD9 /* SearchBar.swift */; };
 		71A91E57CEEFB28F98580A49 /* Pods_TheMaskedMan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6608149DC866C530286A75C /* Pods_TheMaskedMan.framework */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,8 @@
 		4BC6B8B8256885850075D1AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4BC6B8BA256885850075D1AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4BC6B8DB2568A93C0075D1AD /* ClosestMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosestMask.swift; sourceTree = "<group>"; };
+		4BDCED9E256DFC460035B51F /* Mask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mask.swift; sourceTree = "<group>"; };
+		4BDCEDA1256E138F0035B51F /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		4BFF3D14256CB53400ACBAD9 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		77F47A0E998DA15209E67309 /* Pods-TheMaskedMan.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMaskedMan.release.xcconfig"; path = "Target Support Files/Pods-TheMaskedMan/Pods-TheMaskedMan.release.xcconfig"; sourceTree = "<group>"; };
 		7910A0699914C99A1DA7B4D3 /* Pods-TheMaskedMan.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMaskedMan.debug.xcconfig"; path = "Target Support Files/Pods-TheMaskedMan/Pods-TheMaskedMan.debug.xcconfig"; sourceTree = "<group>"; };
@@ -106,11 +109,13 @@
 		4BC6B8AB256885830075D1AD /* TheMaskedMan */ = {
 			isa = PBXGroup;
 			children = (
+				4BDCEDA1256E138F0035B51F /* MyPlayground.playground */,
 				4BB17410256D93A4005EAC86 /* data.txt */,
 				4BA2EDA02569F8C00014D864 /* IMG_4409.JPG */,
 				4BC6B8AC256885830075D1AD /* AppDelegate.swift */,
 				4BC6B8AE256885830075D1AD /* SceneDelegate.swift */,
 				4BC6B8B0256885830075D1AD /* ViewController.swift */,
+				4BDCED9E256DFC460035B51F /* Mask.swift */,
 				4B7CF40D256BA50D001191A7 /* Colors.swift */,
 				4BC6B8DB2568A93C0075D1AD /* ClosestMask.swift */,
 				4B7CF3E4256A04E4001191A7 /* StringDistance.swift */,
@@ -270,6 +275,7 @@
 				4B7CF3E5256A04E4001191A7 /* StringDistance.swift in Sources */,
 				4BC6B8AF256885830075D1AD /* SceneDelegate.swift in Sources */,
 				4B7CF400256B8A2A001191A7 /* MaskTableViewCell.swift in Sources */,
+				4BDCED9F256DFC460035B51F /* Mask.swift in Sources */,
 				4BB17414256D9603005EAC86 /* MaskNotFoundHeaderView.swift in Sources */,
 				4B7CF3FD256B84FB001191A7 /* CompanyTableViewCell.swift in Sources */,
 				4BB1741E256D9F76005EAC86 /* MaskNotFoundViewController.swift in Sources */,

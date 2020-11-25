@@ -48,16 +48,8 @@ class SearchCompanyViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                        
-        // Load masks
-        masks = load_masks()
-        for mask in masks {
-            print(mask)
-        }
-        companies = organize_masks_by_company(masks)
-        companies.sort { (c1, c2) -> Bool in
-            return c1.name < c2.name
-        }
+                          
+        // Init companies filtered
         companies_filtered = companies
         
         // Setup search
@@ -99,43 +91,7 @@ class SearchCompanyViewController : UIViewController {
             }
         }
     }
-    
-    // ***************
-    // MARK: - Load masks
-    // ***************
-    
-    private func load_masks() -> [Mask] {
-        if let path = Bundle.main.path(forResource: "data", ofType: "txt") {
-            do {
-                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-                let masks = try JSONDecoder().decode(Masks.self, from: data)
-                return masks.masks
-            } catch {
-                // handle error
-                print("Error info: \(error)")
-            }
-        }
         
-        return []
-    }
-    
-    private func organize_masks_by_company(_ masks: [Mask]) -> [Company] {
-        var companies : [Company] = []
-        for mask in masks {
-            let cs = companies.filter { (c) -> Bool in
-                return c.name == mask.company
-            }
-            
-            if cs.count > 0 {
-                cs.first!.masks.append(mask)
-            } else {
-                companies.append(Company(mask: mask))
-            }
-        }
-        
-        return companies
-    }
-    
     // ***************
     // MARK: - Filter search
     // ***************
