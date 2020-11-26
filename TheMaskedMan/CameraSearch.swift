@@ -31,24 +31,19 @@ import Foundation
 
 private let no_observations = 10
 
-private class ModelCandidate : Hashable {
-    
-    func hash(into hasher: inout Hasher) {
+open class MyCandidate : Hashable {
+
+    let uuid = UUID().uuidString
+    var weights : [Float] = []
+
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(uuid)
     }
 
-    static func == (lhs: ModelCandidate, rhs: ModelCandidate) -> Bool {
+    public static func == (lhs: MyCandidate, rhs: MyCandidate) -> Bool {
         return lhs.uuid == rhs.uuid
     }
-    
-    let uuid = UUID().uuidString
-    let mask : Mask
-    var weights : [Float] = []
-    
-    init(_ mask : Mask) {
-        self.mask = mask
-    }
-    
+            
     func expire_observations_if_exist() {
         // All observations reduced by a factor
         if weights.count > 0 {
@@ -88,77 +83,99 @@ private class ModelCandidate : Hashable {
 }
 
 struct CameraSearch {
-        
-    private var mask_candidates : [ModelCandidate] = []
+    
+    private var masks : [Mask] = []
+    private var companies : [Company] = []
+    private var model_candidates : [Mask : MyCandidate] = [:]
+    private var company_candidates : [Company : MyCandidate] = [:]
 
-    init(_ masks : [Mask]) {
-        for mask in masks {
-            mask_candidates.append(ModelCandidate(mask))
-        }
+    init(masks : [Mask], companies : [Company]) {
+        self.masks = masks
+        self.companies = companies
     }
     
-    func update_candidates_with_observations(raw_observed_texts : [String]) {
+    mutating func update_candidates_with_observations(raw_observed_texts : [String]) {
         
         // Ammend and fix list of candidates
-        let observed_texts = ammend_candidates(raw_candidates: raw_observed_texts)
+        let observed_texts = ammend_raw_observed_texts(raw_observed_texts: raw_observed_texts)
         
         // print("Observed texts: ", observed_texts)
         
+        add_observations_for_model(observed_texts: observed_texts)
+    }
+    
+    private mutating func add_observations_for_model(observed_texts : [String]) {
+        
         // Collect weights
-        var weights : [ModelCandidate : Float] = [:]
+        var weights : [Mask : Float] = [:]
         for observed_text in observed_texts {
             
-            let candidates_filtered = mask_candidates.filter({ (mask) -> Bool in
-                return mask.mask.search_model.contains(observed_text)
+            let masks_filtered = masks.filter({ (mask) -> Bool in
+                return mask.search_model.contains(observed_text)
             })
             
-            for cf in candidates_filtered {
+            for mask in masks_filtered {
                 // Min weight = 0
                 // Max weight = 1 => all of the name was found, i.e. the two match exactly
                 // Square to skew the distribution
-                let weight = pow(Float(observed_text.count) / Float(cf.mask.search_model.count), 2)
-                if weights[cf] == nil {
-                    weights[cf] = 0.0
+                let weight = pow(Float(observed_text.count) / Float(mask.search_model.count), 2)
+                if weights[mask] == nil {
+                    weights[mask] = 0.0
                 }
-                weights[cf]! += weight
+                weights[mask]! += weight
             }
         }
         
-        // Add observations
-        for candidate in mask_candidates {
-            if let weight = weights[candidate] {
+        // Ensure all observed masks have a candidate
+        for (mask, _) in weights {
+            if model_candidates[mask] == nil {
+                model_candidates[mask] = MyCandidate()
+            }
+        }
+        
+        // Add observations for all candidates
+        for (mask_candidate, candidate) in model_candidates {
+            if let weight = weights[mask_candidate] {
+                // There exists an observation for this candidate
                 candidate.add_observation(weight)
             } else {
                 // No observation right now
-                // Check if there are any observations; if there are, these need to "expire" i.e. get smaller = less important
+                // "Expire" old observations i.e. get smaller = less important
                 candidate.expire_observations_if_exist()
             }
         }
     }
     
-    func get_top_mask() -> Mask? {
+    func get_top_mask_or_company() -> (Mask?, Company?) {
         
-        let ms = mask_candidates.sorted { (m1, m2) -> Bool in
-            return m1.get_weight() > m2.get_weight()
+        let ms = model_candidates.sorted { (m1, m2) -> Bool in
+            return m1.value.get_weight() > m2.value.get_weight()
         }
         print("Top 3 mask candidates:")
-        for i in 0..<3 {
-            print(ms[i].mask.company, ": ", ms[i].mask.model, " ~ ", ms[i].mask.search_model, ": ", ms[i].get_weight())
+        var i = 0
+        for (mask, candidate) in ms {
+            print(mask.company, ": ", mask.model, " ~ ", mask.search_model, ": ", candidate.get_weight())
+            
+            i += 1
+            if i == 3 {
+                break
+            }
         }
         
-        let top_mask = mask_candidates.max(by: { (m1, m2) -> Bool in
-            return m1.get_weight() < m2.get_weight()
+        // Find the top mask purely by both the mask factor and the company factor
+        let top_mask = model_candidates.max(by: { (m1, m2) -> Bool in
+            return m1.value.get_weight() < m2.value.get_weight()
         })
         
-        if let tm = top_mask, tm.get_weight() > 5.0 {
-            return tm.mask
+        if let tm = top_mask?.key, let tmc = top_mask?.value, tmc.get_weight() > 5.0 {
+            return (tm, nil)
         } else {
-            return nil
+            return (nil, nil)
         }
     }
     
-    private func ammend_candidates(raw_candidates : [String]) -> [String] {
-        var candidates = raw_candidates
+    private func ammend_raw_observed_texts(raw_observed_texts : [String]) -> [String] {
+        var candidates = raw_observed_texts
         
         // Get search words
         // Removes nonsense characters and trivial phrases

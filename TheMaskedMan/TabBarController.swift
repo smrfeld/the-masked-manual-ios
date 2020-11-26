@@ -48,6 +48,7 @@ class TabBarController: UITabBarController {
         if let nvc = self.viewControllers?[0] as? UINavigationController {
             if let vc = nvc.topViewController as? CameraViewController {
                 vc.masks = masks
+                vc.companies = companies
             }
         }
         if let nvc = self.viewControllers?[2] as? UINavigationController {

@@ -23,6 +23,8 @@
 		4BB17421256DD922005EAC86 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB17420256DD922005EAC86 /* CameraViewController.swift */; };
 		4BB17424256DDD4A005EAC86 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB17423256DDD4A005EAC86 /* TabBarController.swift */; };
 		4BB6FEFC256F6CA500A72429 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB6FEFB256F6CA500A72429 /* AboutViewController.swift */; };
+		4BB6FEFF256F7F9600A72429 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB6FEFE256F7F9600A72429 /* Company.swift */; };
+		4BB6FF04256F7FB900A72429 /* ModelSearchName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB6FF03256F7FB900A72429 /* ModelSearchName.swift */; };
 		4BC6B8AD256885830075D1AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8AC256885830075D1AD /* AppDelegate.swift */; };
 		4BC6B8AF256885830075D1AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8AE256885830075D1AD /* SceneDelegate.swift */; };
 		4BC6B8B4256885830075D1AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BC6B8B2256885830075D1AD /* Main.storyboard */; };
@@ -54,6 +56,8 @@
 		4BB17420256DD922005EAC86 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		4BB17423256DDD4A005EAC86 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		4BB6FEFB256F6CA500A72429 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		4BB6FEFE256F7F9600A72429 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
+		4BB6FF03256F7FB900A72429 /* ModelSearchName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSearchName.swift; sourceTree = "<group>"; };
 		4BC6B8A9256885830075D1AD /* TheMaskedMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMaskedMan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BC6B8AC256885830075D1AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4BC6B8AE256885830075D1AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +98,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		4BB6FF01256F7FA800A72429 /* DataStructures */ = {
+			isa = PBXGroup;
+			children = (
+				4BDCED9E256DFC460035B51F /* Mask.swift */,
+				4BB6FF03256F7FB900A72429 /* ModelSearchName.swift */,
+				4BB6FEFE256F7F9600A72429 /* Company.swift */,
+			);
+			path = DataStructures;
+			sourceTree = "<group>";
+		};
 		4BC6B8A0256885830075D1AD = {
 			isa = PBXGroup;
 			children = (
@@ -120,7 +134,7 @@
 				4BA2EDA02569F8C00014D864 /* IMG_4409.JPG */,
 				4BC6B8AC256885830075D1AD /* AppDelegate.swift */,
 				4BC6B8AE256885830075D1AD /* SceneDelegate.swift */,
-				4BDCED9E256DFC460035B51F /* Mask.swift */,
+				4BB6FF01256F7FA800A72429 /* DataStructures */,
 				4B7CF40D256BA50D001191A7 /* Colors.swift */,
 				4BC6B8DB2568A93C0075D1AD /* ClosestMask.swift */,
 				4B7CF3E4256A04E4001191A7 /* StringDistance.swift */,
@@ -282,9 +296,11 @@
 				4BB17424256DDD4A005EAC86 /* TabBarController.swift in Sources */,
 				4BC6B8DC2568A93C0075D1AD /* ClosestMask.swift in Sources */,
 				4B7CF3E5256A04E4001191A7 /* StringDistance.swift in Sources */,
+				4BB6FF04256F7FB900A72429 /* ModelSearchName.swift in Sources */,
 				4BC6B8AF256885830075D1AD /* SceneDelegate.swift in Sources */,
 				4B7CF400256B8A2A001191A7 /* MaskTableViewCell.swift in Sources */,
 				4BDCED9F256DFC460035B51F /* Mask.swift in Sources */,
+				4BB6FEFF256F7F9600A72429 /* Company.swift in Sources */,
 				4BB17414256D9603005EAC86 /* MaskNotFoundHeaderView.swift in Sources */,
 				4BDEA0A9256EF78C00659FAF /* DisclaimerViewController.swift in Sources */,
 				4BDCEDA7256E27E70035B51F /* CameraSearch.swift in Sources */,

@@ -35,6 +35,7 @@ import AVFoundation
 class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     var masks : [Mask] = []
+    var companies : [Company] = []
     var camera_search : CameraSearch!
     var mask_best_guess : Mask? = nil
     
@@ -50,7 +51,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         super.viewDidLoad()
         
         // Camera search
-        camera_search = CameraSearch(masks)
+        camera_search = CameraSearch(masks: masks, companies: companies)
         
         // Header
         let headerNib = UINib.init(nibName: "MaskNotFoundHeaderView", bundle: Bundle.main)
@@ -98,10 +99,11 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         camera_search.update_candidates_with_observations(raw_observed_texts: raw_observed_texts)
         
         // Set best mask
-        if let new_best_guess = camera_search.get_top_mask() {
+        let new_best_guess = camera_search.get_top_mask_or_company()
+        if let new_best_guess_mask = new_best_guess.0 {
                         
-            if new_best_guess != mask_best_guess {
-                mask_best_guess = new_best_guess
+            if new_best_guess_mask != mask_best_guess {
+                mask_best_guess = new_best_guess_mask
                 
                 // Reload table
                 DispatchQueue.main.async() {

@@ -30,163 +30,9 @@ SOFTWARE.
 import Foundation
 import UIKit
 
-struct ModelSearchName {
-
-    private static func remove_words_less_than_two_chars(_ word : String) -> String {
-        var ret = word
-        
-        var ret_words2 = ret.components(separatedBy: " ")
-        var i = 0
-        while i < ret_words2.count {
-            if ret_words2[i].count < 2 {
-                ret_words2.remove(at: i)
-            } else {
-                i += 1
-            }
-        }
-        ret = ret_words2.joined(separator: " ")
-        
-        return ret
-    }
-
-    private static func remove_bad_words(_ word : String) -> String {
-        let bad_words = [
-            "co",
-            "ltd",
-            "ltda",
-            "limited",
-            "coltd",
-            "inc",
-            "intl",
-            "llc",
-            "corp",
-            "and",
-            "ag",
-            "kgaa",
-            "part",
-            "number",
-            "surgical",
-            "face",
-            "mask",
-            "model",
-            "facemask",
-            "masks",
-            "models",
-            "professional",
-            "tm",
-            "safety",
-            "non-sterile",
-            "medical",
-            "surgical-disposable",
-            "protection",
-            "kit",
-            "personal",
-            "disposable"
-        ]
-        let ret_words = word.components(separatedBy: " ")
-        let ret = ret_words.filter { !bad_words.contains($0) }.joined(separator: " ")
-        
-        return ret
-    }
-
-    private static func replace_bad_chars_with_spaces(_ word : String) -> String {
-        var ret = word
-        
-        // Replace some things with spaces
-        let should_be_space = [",",".","/","(",")",";",":"]
-        for sbs in should_be_space {
-            ret = ret.replacingOccurrences(of: sbs, with: " ")
-        }
-        
-        // Fix double spaces
-        ret = ret.replacingOccurrences(of: "  ", with: " ")
-
-        return ret
-    }
-
-    static func mend_too_simple_model_names(search_model_name : String, search_company_name : String) -> String {
-        // Too simple
-        let too_simple = [
-            "surgical mask",
-            "mask surgical",
-            "mask",
-            "facemask",
-            "respirator",
-            "face-mask",
-            "surgical-mask",
-            "protective-mask",
-            "protective mask"
-        ]
-        
-        if too_simple.contains(search_model_name) || (search_model_name.count < 8 && search_model_name.contains("n95")) {
-            // Must fix!
-            let ret = search_company_name + " " + search_model_name
-            return ret
-        } else {
-            // OK!
-            return search_model_name
-        }
-    }
-
-    static func get_search_model_name(model_name : String) -> String {
-        var ret = model_name
-        
-        // Lowercase
-        ret = ret.lowercased()
-        
-        // Replace some things with spaces
-        ret = ModelSearchName.replace_bad_chars_with_spaces(ret)
-        
-        // Remove everything except:
-        // letters
-        // numbers
-        // space
-        ret = ret.filter("0123456789abcdefghijklmnopqrstuvwxyz -".contains)
-
-        // Remove bad words
-        ret = ModelSearchName.remove_bad_words(ret)
-        
-        // Remove anything less than 2 characters
-        ret = ModelSearchName.remove_words_less_than_two_chars(ret)
-        
-        // print("Search name for: <", name, "> is: <", ret, ">")
-        
-        return ret
-    }
-}
-
-class Company : CustomStringConvertible {
-    var name : String = ""
-    var masks : [Mask] = []
+class Mask : Codable, CustomStringConvertible, Equatable, Hashable {
     
-    // var search_name : String
-    
-    var description: String {
-        return name
-    }
-    
-    init(name : String) {
-        self.name = name
-        
-        // Construct search name
-        // self.search_name = get_search_name(name)
-    }
-
-    convenience init(mask : Mask) {
-        self.init(name: mask.company)
-        self.masks.append(mask)
-    }
-    
-    func distance(to_company: Company) -> Double {
-        return self.name.distance(between: to_company.name)
-    }
-
-    func distance(to_name: String) -> Double {
-        return self.name.distance(between: to_name)
-    }
-}
-
-class Mask : Codable, CustomStringConvertible, Equatable {
+    let uuid = UUID().uuidString
 
     // Fields from JSON
     var company : String = ""
@@ -203,16 +49,23 @@ class Mask : Codable, CustomStringConvertible, Equatable {
     // MUST provide default value! Else JSON will fail
     var search_model : String = ""
     
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(uuid)
+    }
+
     var description: String {
         return company + " : " + model
     }
     
     static func == (lhs: Mask, rhs: Mask) -> Bool {
+        return lhs.uuid == rhs.uuid
+        /*
         return lhs.company == rhs.company
             && lhs.model == rhs.model
             && lhs.countries_of_origin == rhs.countries_of_origin
             && lhs.respirator_type == rhs.respirator_type
             && lhs.valve_type == rhs.valve_type
+         */
     }
     
     // Keys for decoding JSON
