@@ -30,109 +30,136 @@ SOFTWARE.
 import Foundation
 import UIKit
 
-private func remove_words_less_than_two_chars(_ word : String) -> String {
-    var ret = word
-    
-    var ret_words2 = ret.components(separatedBy: " ")
-    var i = 0
-    while i < ret_words2.count {
-        if ret_words2[i].count < 2 {
-            ret_words2.remove(at: i)
+struct ModelSearchName {
+
+    private static func remove_words_less_than_two_chars(_ word : String) -> String {
+        var ret = word
+        
+        var ret_words2 = ret.components(separatedBy: " ")
+        var i = 0
+        while i < ret_words2.count {
+            if ret_words2[i].count < 2 {
+                ret_words2.remove(at: i)
+            } else {
+                i += 1
+            }
+        }
+        ret = ret_words2.joined(separator: " ")
+        
+        return ret
+    }
+
+    private static func remove_bad_words(_ word : String) -> String {
+        let bad_words = [
+            "co",
+            "ltd",
+            "ltda",
+            "limited",
+            "coltd",
+            "inc",
+            "intl",
+            "llc",
+            "corp",
+            "and",
+            "ag",
+            "kgaa",
+            "part",
+            "number",
+            "surgical",
+            "face",
+            "mask",
+            "model",
+            "facemask",
+            "masks",
+            "models",
+            "professional",
+            "tm",
+            "safety",
+            "non-sterile",
+            "medical",
+            "surgical-disposable",
+            "protection",
+            "kit",
+            "personal",
+            "disposable"
+        ]
+        let ret_words = word.components(separatedBy: " ")
+        let ret = ret_words.filter { !bad_words.contains($0) }.joined(separator: " ")
+        
+        return ret
+    }
+
+    private static func replace_bad_chars_with_spaces(_ word : String) -> String {
+        var ret = word
+        
+        // Replace some things with spaces
+        let should_be_space = [",",".","/","(",")",";",":"]
+        for sbs in should_be_space {
+            ret = ret.replacingOccurrences(of: sbs, with: " ")
+        }
+        
+        // Fix double spaces
+        ret = ret.replacingOccurrences(of: "  ", with: " ")
+
+        return ret
+    }
+
+    static func mend_too_simple_model_names(search_model_name : String, search_company_name : String) -> String {
+        // Too simple
+        let too_simple = [
+            "surgical mask",
+            "mask surgical",
+            "mask",
+            "facemask",
+            "respirator",
+            "face-mask",
+            "surgical-mask",
+            "protective-mask",
+            "protective mask"
+        ]
+        
+        if too_simple.contains(search_model_name) || (search_model_name.count < 8 && search_model_name.contains("n95")) {
+            // Must fix!
+            let ret = search_company_name + " " + search_model_name
+            return ret
         } else {
-            i += 1
+            // OK!
+            return search_model_name
         }
     }
-    ret = ret_words2.joined(separator: " ")
-    
-    return ret
-}
 
-private func remove_bad_words(_ word : String) -> String {
-    let bad_words = [
-        "co",
-        "ltd",
-        "ltda",
-        "limited",
-        "coltd",
-        "inc",
-        "intl",
-        "llc",
-        "corp",
-        "and",
-        "ag",
-        "kgaa",
-        "part",
-        "number",
-        "surgical",
-        "face",
-        "mask",
-        "model",
-        "facemask",
-        "masks",
-        "models",
-        "professional",
-        "tm",
-        "safety",
-        "non-sterile",
-        "medical",
-        "surgical-disposable",
-        "protection",
-        "kit",
-        "personal",
-        "disposable"
-    ]
-    let ret_words = word.components(separatedBy: " ")
-    let ret = ret_words.filter { !bad_words.contains($0) }.joined(separator: " ")
-    
-    return ret
-}
+    static func get_search_model_name(model_name : String) -> String {
+        var ret = model_name
+        
+        // Lowercase
+        ret = ret.lowercased()
+        
+        // Replace some things with spaces
+        ret = ModelSearchName.replace_bad_chars_with_spaces(ret)
+        
+        // Remove everything except:
+        // letters
+        // numbers
+        // space
+        ret = ret.filter("0123456789abcdefghijklmnopqrstuvwxyz -".contains)
 
-private func replace_bad_chars_with_spaces(_ word : String) -> String {
-    var ret = word
-    
-    // Replace some things with spaces
-    let should_be_space = [",",".","/","(",")",";",":"]
-    for sbs in should_be_space {
-        ret = ret.replacingOccurrences(of: sbs, with: " ")
+        // Remove bad words
+        ret = ModelSearchName.remove_bad_words(ret)
+        
+        // Remove anything less than 2 characters
+        ret = ModelSearchName.remove_words_less_than_two_chars(ret)
+        
+        // print("Search name for: <", name, "> is: <", ret, ">")
+        
+        return ret
     }
-    
-    // Fix double spaces
-    ret = ret.replacingOccurrences(of: "  ", with: " ")
-
-    return ret
-}
-
-func get_search_name(_ name : String) -> String {
-    var ret = name
-    
-    // Lowercase
-    ret = ret.lowercased()
-    
-    // Replace some things with spaces
-    ret = replace_bad_chars_with_spaces(ret)
-    
-    // Remove everything except:
-    // letters
-    // numbers
-    // space
-    ret = ret.filter("0123456789abcdefghijklmnopqrstuvwxyz -".contains)
-
-    // Remove bad words
-    ret = remove_bad_words(ret)
-    
-    // Remove anything less than 2 characters
-    ret = remove_words_less_than_two_chars(ret)
-    
-    // print("Search name for: <", name, "> is: <", ret, ">")
-    
-    return ret
 }
 
 class Company : CustomStringConvertible {
     var name : String = ""
     var masks : [Mask] = []
     
-    var search_name : String
+    // var search_name : String
     
     var description: String {
         return name
@@ -142,7 +169,7 @@ class Company : CustomStringConvertible {
         self.name = name
         
         // Construct search name
-        self.search_name = get_search_name(name)
+        // self.search_name = get_search_name(name)
     }
 
     convenience init(mask : Mask) {

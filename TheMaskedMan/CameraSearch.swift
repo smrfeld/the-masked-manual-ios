@@ -137,9 +137,24 @@ struct CameraSearch {
     }
     
     func get_top_mask() -> Mask? {
-        return mask_candidates.max(by: { (m1, m2) -> Bool in
+        
+        let ms = mask_candidates.sorted { (m1, m2) -> Bool in
+            return m1.get_weight() > m2.get_weight()
+        }
+        print("Top 3 mask candidates:")
+        for i in 0..<3 {
+            print(ms[i].mask.company, ": ", ms[i].mask.model, " ~ ", ms[i].mask.search_model, ": ", ms[i].get_weight())
+        }
+        
+        let top_mask = mask_candidates.max(by: { (m1, m2) -> Bool in
             return m1.get_weight() < m2.get_weight()
-        })?.mask
+        })
+        
+        if let tm = top_mask, tm.get_weight() > 5.0 {
+            return tm.mask
+        } else {
+            return nil
+        }
     }
     
     private func ammend_candidates(raw_candidates : [String]) -> [String] {
@@ -148,7 +163,7 @@ struct CameraSearch {
         // Get search words
         // Removes nonsense characters and trivial phrases
         candidates = candidates.map({ (c) -> String in
-            return get_search_name(c)
+            return ModelSearchName.get_search_model_name(model_name: c)
         })
         
         // Remove anything less than 2 characters

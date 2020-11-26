@@ -65,7 +65,7 @@ class TabBarController: UITabBarController {
         alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         
         DispatchQueue.main.async {
-            self.present(alert, animated: false, completion: nil)
+            // self.present(alert, animated: false, completion: nil)
         }
     }
     
@@ -86,7 +86,8 @@ class TabBarController: UITabBarController {
                 
                 // Search name for models
                 for mask in masks.masks {
-                    mask.search_model = get_search_name(mask.model)
+                    mask.search_model = ModelSearchName.get_search_model_name(model_name: mask.model)
+                    mask.search_model = ModelSearchName.mend_too_simple_model_names(search_model_name: mask.search_model, search_company_name: mask.company)
                     print("Search name for mask: ", mask.model, " -> ", mask.search_model)
                 }
                 

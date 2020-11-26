@@ -99,6 +99,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         
         // Set best mask
         if let new_best_guess = camera_search.get_top_mask() {
+                        
             if new_best_guess != mask_best_guess {
                 mask_best_guess = new_best_guess
                 
