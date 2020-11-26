@@ -161,6 +161,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         // Find text
         let textRequest = VNRecognizeTextRequest(completionHandler: self.detectTextHandler)
         textRequest.recognitionLevel = .fast
+        // textRequest.recognitionLevel = .accurate
 
         // Find text rectangles
         // let textRequest = VNDetectTextRectanglesRequest(completionHandler: self.detectTextHandler)

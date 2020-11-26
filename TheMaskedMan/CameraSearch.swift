@@ -97,7 +97,7 @@ struct CameraSearch {
     mutating func update_candidates_with_observations(raw_observed_texts : [String]) {
         
         // Ammend and fix list of candidates
-        let observed_texts = ObservedTexts.form_observed_text_patterns(raw_observed_texts: raw_observed_texts)
+        let observed_texts = ObservedTexts(raw_observed_texts: raw_observed_texts).observed_texts
         print(observed_texts)
         
         // print("Observed texts: ", observed_texts)
@@ -178,8 +178,10 @@ struct CameraSearch {
 
 struct ObservedTexts {
     
-    static func form_observed_text_patterns(raw_observed_texts : [String]) -> [String] {
-        var observed_texts = raw_observed_texts
+    var observed_texts : [String]
+    
+    init(raw_observed_texts : [String]) {
+        observed_texts = raw_observed_texts
         
         // Get search words
         // Removes nonsense characters and trivial phrases
@@ -188,6 +190,23 @@ struct ObservedTexts {
         })
         
         // Remove anything less than 2 characters
+        remove_small_words_less_than_two_chars()
+        
+        // Remove any nonsense words we can identify
+        remove_nonsense_words()
+                
+        // Add all words
+        add_all_words()
+        
+        // For every candidate, also try stripping any leading or trailing chars if they exist
+        add_texts_with_stripped_leading_trailing_bad_chars()
+
+        // Remove duplicates (ruins ordering!)
+        observed_texts = Array(Set(observed_texts))
+    }
+    
+    private mutating func remove_small_words_less_than_two_chars() {
+        
         var i = 0
         while i < observed_texts.count {
             if observed_texts[i].count < 2 {
@@ -196,24 +215,56 @@ struct ObservedTexts {
                 i += 1
             }
         }
-                
-        // Add all words
-        observed_texts += ObservedTexts.get_all_words(observed_texts: observed_texts)
+    }
+    
+    private mutating func remove_nonsense_words() {
+        let bad_strs = ["jj", "jjj", "ii", "iii"]
+        let bad_chars = ["i", "j"]
         
-        // For every candidate, also try stripping any leading or trailing chars if they exist
-        observed_texts += ObservedTexts.get_texts_with_stripped_leading_trailing_bad_chars(observed_texts: observed_texts)
-        // observed_texts += ObservedTexts.get_texts_with_stripped_leading_trailing(observed_texts: observed_texts)
+        // For some reason, many words have lots of "i" or "j" - these can be removed
+        var i = 0
+        while i < observed_texts.count {
+            
+            var remove = false
+            
+            // Remove bad strs
+            for bad_str in bad_strs {
+                if observed_texts[i].contains(bad_str) {
+                    remove = true
+                    break
+                }
+            }
 
-        // Remove duplicates (ruins ordering!)
-        observed_texts = Array(Set(observed_texts))
-        
-        return observed_texts
+            // Next if needed
+            if remove {
+                observed_texts.remove(at: i)
+                continue
+            }
+            
+            // Remove too many occurences of same char
+            for bad_char in bad_chars {
+                let no_occurences = observed_texts[i].components(separatedBy: bad_char).count - 1
+                if no_occurences >= 3 {
+                    remove = true
+                    break
+                }
+            }
+            
+            // Next if needed
+            if remove {
+                observed_texts.remove(at: i)
+                continue
+            }
+            
+            // Next
+            i += 1
+        }
     }
         
-    private static func get_all_words(observed_texts: [String]) -> [String] {
+    private mutating func add_all_words() {
                 
-        var ret : [String] = []
-        for i in 0..<observed_texts.count {
+        let no = observed_texts.count
+        for i in 0..<no {
             let words = observed_texts[i].components(separatedBy: [" ", "-", "/"])
             
             // Only add words if more than one word
@@ -221,39 +272,35 @@ struct ObservedTexts {
                 for word in words {
                     // Only add if the word has more than 2 characters
                     if word.count >= 2 {
-                        ret.append(word)
+                        observed_texts.append(word)
                     }
                 }
             }
         }
-        
-        return ret
     }
     
-    private static func get_texts_with_stripped_leading_trailing(observed_texts: [String]) -> [String] {
+    private mutating func add_texts_with_stripped_leading_trailing() {
                 
-        var ret : [String] = []
-        for i in 0..<observed_texts.count {
+        let no = observed_texts.count
+        for i in 0..<no {
             let s = String(observed_texts[i].dropFirst())
             if s.count > 2 {
-                ret.append(s)
+                observed_texts.append(s)
             }
               
             let r = String(observed_texts[i].dropLast())
             if r.count > 2 {
-                ret.append(r)
+                observed_texts.append(r)
             }
         }
-        
-        return ret
     }
     
-    private static func get_texts_with_stripped_leading_trailing_bad_chars(observed_texts: [String]) -> [String] {
+    private mutating func add_texts_with_stripped_leading_trailing_bad_chars() {
         
         let bad_chars = ["0", "*", "/", "-", "?"]
         
-        var ret : [String] = []
-        for i in 0..<observed_texts.count {
+        let no = observed_texts.count
+        for i in 0..<no {
             var s = observed_texts[i]
 
             // Remove all bad chars from the front
@@ -290,10 +337,8 @@ struct ObservedTexts {
             
             // Append if the string is changed
             if s != observed_texts[i] {
-                ret.append(s)
+                observed_texts.append(s)
             }
         }
-        
-        return ret
     }
 }
