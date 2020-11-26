@@ -24,7 +24,6 @@
 		4BB17424256DDD4A005EAC86 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB17423256DDD4A005EAC86 /* TabBarController.swift */; };
 		4BC6B8AD256885830075D1AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8AC256885830075D1AD /* AppDelegate.swift */; };
 		4BC6B8AF256885830075D1AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8AE256885830075D1AD /* SceneDelegate.swift */; };
-		4BC6B8B1256885830075D1AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8B0256885830075D1AD /* ViewController.swift */; };
 		4BC6B8B4256885830075D1AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BC6B8B2256885830075D1AD /* Main.storyboard */; };
 		4BC6B8B6256885850075D1AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BC6B8B5256885850075D1AD /* Assets.xcassets */; };
 		4BC6B8B9256885850075D1AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BC6B8B7256885850075D1AD /* LaunchScreen.storyboard */; };
@@ -56,7 +55,6 @@
 		4BC6B8A9256885830075D1AD /* TheMaskedMan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMaskedMan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BC6B8AC256885830075D1AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4BC6B8AE256885830075D1AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4BC6B8B0256885830075D1AD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4BC6B8B3256885830075D1AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4BC6B8B5256885850075D1AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4BC6B8B8256885850075D1AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -120,7 +118,6 @@
 				4BA2EDA02569F8C00014D864 /* IMG_4409.JPG */,
 				4BC6B8AC256885830075D1AD /* AppDelegate.swift */,
 				4BC6B8AE256885830075D1AD /* SceneDelegate.swift */,
-				4BC6B8B0256885830075D1AD /* ViewController.swift */,
 				4BDCED9E256DFC460035B51F /* Mask.swift */,
 				4B7CF40D256BA50D001191A7 /* Colors.swift */,
 				4BC6B8DB2568A93C0075D1AD /* ClosestMask.swift */,
@@ -277,7 +274,6 @@
 				4BFF3D15256CB53400ACBAD9 /* SearchBar.swift in Sources */,
 				4B7CF3F6256B800B001191A7 /* SearchCompanyViewController.swift in Sources */,
 				4B7CF40E256BA50D001191A7 /* Colors.swift in Sources */,
-				4BC6B8B1256885830075D1AD /* ViewController.swift in Sources */,
 				4B7CF3FA256B82C7001191A7 /* SearchModelViewController.swift in Sources */,
 				4BC6B8AD256885830075D1AD /* AppDelegate.swift in Sources */,
 				4BB17424256DDD4A005EAC86 /* TabBarController.swift in Sources */,

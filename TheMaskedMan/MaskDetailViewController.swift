@@ -65,7 +65,9 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor(white: 1.0, alpha: 0.8)
+        view.backgroundColor = UIColor(red: 244/256, green: 244/256, blue: 248/256, alpha: 0.95)
+        central_view.backgroundColor = UIColor.white
+        // view.backgroundColor = UIColor(white: 1.0, alpha: 0.8)
         
         // Bring view to front on top of blurr
         self.view.bringSubviewToFront(central_view)
