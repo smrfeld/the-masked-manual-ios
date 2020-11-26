@@ -80,7 +80,7 @@ class SearchCompanyViewController : UIViewController {
         let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "maskNotFoundViewController") as! MaskNotFoundViewController
         alert.providesPresentationContextTransitionStyle = true
         alert.definesPresentationContext = true
-        alert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        alert.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         
         DispatchQueue.main.async {

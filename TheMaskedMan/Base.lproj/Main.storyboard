@@ -111,91 +111,132 @@
         <!--About-->
         <scene sceneID="1b5-fx-E1P">
             <objects>
-                <viewController id="bn9-7Y-NjG" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="LLX-uj-Nc5">
+                <viewController id="bn9-7Y-NjG" customClass="AboutViewController" customModule="TheMaskedMan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LLX-uj-Nc5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wgu-8C-CSM">
-                                <rect key="frame" x="0.0" y="88" width="414" height="440"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wgu-8C-CSM">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disclaimer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dEn-Bp-mWF">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
-                                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="Ryd-U3-k2K"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="20"/>
-                                        <color key="textColor" systemColor="systemBlueColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DzC-zQ-RYP">
-                                        <rect key="frame" x="0.0" y="40" width="414" height="120"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="120" id="NS1-mg-JV4"/>
-                                        </constraints>
-                                        <string key="text">This application, including all data and information displayed and all external links, is not affiliated with and not endorsed by the U.S. government or any federal or state agency, including the Department of Health and Human Services, the Centers for Disease Control and Prevention, and the U.S. Food and Drug Administration.</string>
-                                        <color key="textColor" systemColor="labelColor"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Read full disclaimer and terms of use." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zPP-BJ-6om">
-                                        <rect key="frame" x="0.0" y="160" width="414" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="8Tc-dU-aes"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" systemColor="linkColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Get started" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8z6-YC-yoN">
-                                        <rect key="frame" x="0.0" y="200" width="414" height="40"/>
-                                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="Pas-l7-dO7"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" systemColor="systemBlueColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Poy-Uh-V5b">
-                                        <rect key="frame" x="0.0" y="240" width="414" height="100"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="JYK-uB-YOq">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="280"/>
                                         <subviews>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Scan your mask's packaging to quickly discover your mask's qualifications" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bx9-Aw-y08">
-                                                <rect key="frame" x="0.0" y="0.0" width="207" height="100"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disclaimer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dEn-Bp-mWF">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
+                                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="Ryd-U3-k2K"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="20"/>
+                                                <color key="textColor" systemColor="systemBlueColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DzC-zQ-RYP">
+                                                <rect key="frame" x="0.0" y="40" width="414" height="0.0"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <string key="text">This application is not affiliated with and not endorsed by the U.S. government or any federal or state agency, including the Department of Health and Human Services, the Centers for Disease Control and Prevention, and the U.S. Food and Drug Administration.</string>
                                                 <color key="textColor" systemColor="labelColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Search complete list of all masks by manufacturer and model name" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0Ur-mw-zLl">
-                                                <rect key="frame" x="207" y="0.0" width="207" height="100"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5AU-B6-8I9" customClass="Button" customModule="TheMaskedMan" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="40" width="414" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="slB-gV-GdW"/>
+                                                </constraints>
+                                                <state key="normal" title="Read full disclaimer, privacy policy and terms of use."/>
+                                                <connections>
+                                                    <action selector="disclaimer_button_pressed:" destination="bn9-7Y-NjG" eventType="touchUpInside" id="GRA-ZL-hDT"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oIE-Rt-MRl">
+                                                <rect key="frame" x="0.0" y="80" width="414" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="GOF-ua-AgO"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lnh-34-uk8">
+                                                <rect key="frame" x="0.0" y="100" width="414" height="40"/>
+                                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="Q1Z-bQ-baC"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="20"/>
+                                                <color key="textColor" systemColor="systemBlueColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SQQ-4J-aJ3">
+                                                <rect key="frame" x="0.0" y="140" width="414" height="0.0"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <string key="text">This application lets you easily search for a face mask's qualifications from federal agencies in the U.S. Both surgical masks and respirators are supported.</string>
                                                 <color key="textColor" systemColor="labelColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Developer? This is an open source project. Contribute on GitHub." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="a4e-RY-fZg">
+                                                <rect key="frame" x="0.0" y="140" width="414" height="0.0"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <color key="textColor" systemColor="labelColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get started" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8z6-YC-yoN">
+                                                <rect key="frame" x="0.0" y="140" width="414" height="40"/>
+                                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="Pas-l7-dO7"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <color key="textColor" systemColor="systemBlueColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Poy-Uh-V5b">
+                                                <rect key="frame" x="0.0" y="180" width="414" height="100"/>
+                                                <subviews>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Scan your mask's packaging to quickly discover your mask's qualifications" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bx9-Aw-y08">
+                                                        <rect key="frame" x="0.0" y="0.0" width="207" height="100"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <color key="textColor" systemColor="labelColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    </textView>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="Search complete list of all masks by manufacturer and model name" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="0Ur-mw-zLl">
+                                                        <rect key="frame" x="207" y="0.0" width="207" height="100"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <color key="textColor" systemColor="labelColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                    </textView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="bx9-Aw-y08" firstAttribute="width" secondItem="0Ur-mw-zLl" secondAttribute="width" id="I6e-OA-b0i"/>
+                                                    <constraint firstAttribute="height" constant="100" id="aA7-TJ-Tbo"/>
+                                                </constraints>
+                                            </stackView>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="bx9-Aw-y08" firstAttribute="width" secondItem="0Ur-mw-zLl" secondAttribute="width" id="I6e-OA-b0i"/>
-                                            <constraint firstAttribute="height" constant="100" id="aA7-TJ-Tbo"/>
-                                        </constraints>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MY3-h9-cW5">
-                                        <rect key="frame" x="0.0" y="340" width="414" height="100"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="16U-yw-CIX">
+                                        <rect key="frame" x="0.0" y="280" width="414" height="445"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_left_v2" translatesAutoresizingMaskIntoConstraints="NO" id="DEe-Q3-I9e">
-                                                <rect key="frame" x="0.0" y="0.0" width="207" height="100"/>
-                                            </imageView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right_v2" translatesAutoresizingMaskIntoConstraints="NO" id="Uwv-yD-1df">
-                                                <rect key="frame" x="207" y="0.0" width="207" height="100"/>
-                                            </imageView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MY3-h9-cW5">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="445"/>
+                                                <subviews>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_left_v2" translatesAutoresizingMaskIntoConstraints="NO" id="DEe-Q3-I9e">
+                                                        <rect key="frame" x="0.0" y="0.0" width="207" height="445"/>
+                                                    </imageView>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow_right_v2" translatesAutoresizingMaskIntoConstraints="NO" id="Uwv-yD-1df">
+                                                        <rect key="frame" x="207" y="0.0" width="207" height="445"/>
+                                                    </imageView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="DEe-Q3-I9e" firstAttribute="width" secondItem="Uwv-yD-1df" secondAttribute="width" id="HCy-JI-k32"/>
+                                                </constraints>
+                                            </stackView>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="DEe-Q3-I9e" firstAttribute="width" secondItem="Uwv-yD-1df" secondAttribute="width" id="HCy-JI-k32"/>
-                                            <constraint firstAttribute="height" constant="100" id="xI3-iw-kxj"/>
-                                        </constraints>
                                     </stackView>
                                 </subviews>
                             </stackView>
@@ -210,6 +251,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="About" id="9Hg-dx-PGW"/>
+                    <connections>
+                        <outlet property="content_stack" destination="wgu-8C-CSM" id="rn4-0b-rDp"/>
+                        <outlet property="text_about_1" destination="SQQ-4J-aJ3" id="IFi-9H-zao"/>
+                        <outlet property="text_about_2" destination="a4e-RY-fZg" id="gHd-70-7K5"/>
+                        <outlet property="text_disclaimer" destination="DzC-zQ-RYP" id="juN-pp-kBj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8iO-LW-OEg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -269,7 +316,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="piG-NB-Wmq">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="20" y="88" width="374" height="774"/>
                                 <viewLayoutGuide key="contentLayoutGuide" id="651-nj-lwy"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="Tea-5e-L7j"/>
                             </scrollView>
@@ -277,10 +324,10 @@
                         <viewLayoutGuide key="safeArea" id="bmR-wZ-niv"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="piG-NB-Wmq" firstAttribute="trailing" secondItem="bmR-wZ-niv" secondAttribute="trailing" id="4co-0s-kG3"/>
                             <constraint firstItem="bmR-wZ-niv" firstAttribute="bottom" secondItem="piG-NB-Wmq" secondAttribute="bottom" id="Axi-ba-Raj"/>
-                            <constraint firstItem="piG-NB-Wmq" firstAttribute="leading" secondItem="bmR-wZ-niv" secondAttribute="leading" id="Cgl-Qj-WXi"/>
+                            <constraint firstItem="piG-NB-Wmq" firstAttribute="leading" secondItem="bmR-wZ-niv" secondAttribute="leading" constant="5" id="Cgl-Qj-WXi"/>
                             <constraint firstItem="piG-NB-Wmq" firstAttribute="top" secondItem="bmR-wZ-niv" secondAttribute="top" id="sry-Ar-p9P"/>
+                            <constraint firstItem="bmR-wZ-niv" firstAttribute="trailing" secondItem="piG-NB-Wmq" secondAttribute="trailing" constant="5" id="zVS-d2-OWl"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Disclaimer and terms of use" id="7lG-bX-D0O"/>
@@ -469,14 +516,14 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" text="The material is otherwise available on the respective agency website for no charge." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gvK-4Z-mlu">
-                            <rect key="frame" x="0.0" y="532" width="414" height="28"/>
+                            <rect key="frame" x="0.0" y="532" width="414" height="8"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <color key="textColor" systemColor="labelColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text=" Privacy Policy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ATA-jI-wsY">
-                            <rect key="frame" x="0.0" y="560" width="414" height="30"/>
+                            <rect key="frame" x="0.0" y="540" width="414" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="bGv-0I-aBB"/>
                             </constraints>
@@ -485,21 +532,14 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" text="This application does not collect or store any personal data from you. We don't track or collect anything. Period." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="I3D-mq-NTY">
-                            <rect key="frame" x="0.0" y="590" width="414" height="0.0"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <color key="textColor" systemColor="labelColor"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                        </textView>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" text="By using this app, you agree to these terms and conditions." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="7Re-1i-59v">
-                            <rect key="frame" x="0.0" y="590" width="414" height="0.0"/>
+                            <rect key="frame" x="0.0" y="570" width="414" height="0.0"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <color key="textColor" systemColor="labelColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="0U9-iQ-kCX">
-                            <rect key="frame" x="0.0" y="590" width="414" height="0.0"/>
+                            <rect key="frame" x="0.0" y="570" width="414" height="0.0"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <string key="text">Here, the formal definition of what is meant by "personal data" is that of the European Union (EU) General Data Protection Regulation (GDPR). It can be found at: https://gdpr.eu, and is reproduced here for your convenience:</string>
                             <color key="textColor" systemColor="labelColor"/>
@@ -507,7 +547,7 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ls1-7r-XU0">
-                            <rect key="frame" x="0.0" y="590" width="414" height="0.0"/>
+                            <rect key="frame" x="0.0" y="570" width="414" height="0.0"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <string key="text">"‘Personal data’ means any information relating to an identified or identifiable natural person (‘data subject’); an identifiable natural person is one who can be identified, directly or indirectly, in particular by reference to an identifier such as a name, an identification number, location data, an online identifier or to one or more factors specific to the physical, physiological, genetic, mental, economic, cultural or social identity of that natural person."</string>
                             <color key="textColor" systemColor="labelColor"/>
@@ -515,15 +555,22 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="RZs-7S-G6V">
-                            <rect key="frame" x="0.0" y="590" width="414" height="0.0"/>
+                            <rect key="frame" x="0.0" y="570" width="414" height="0.0"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <string key="text">Camera images are used only for the sole purpose of identifying the name and manufacturer of a mask or respirator product. The images are not sent to any server and are not stored anywhere, including on your phone. </string>
                             <color key="textColor" systemColor="labelColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sDK-k0-B8t">
-                            <rect key="frame" x="0.0" y="590" width="414" height="40"/>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" text="By using this app, you agree to these terms and conditions." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="7Re-1i-59v">
+                            <rect key="frame" x="0.0" y="570" width="414" height="0.0"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="textColor" systemColor="labelColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sDK-k0-B8t" customClass="Button" customModule="TheMaskedMan" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="570" width="414" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="D1h-s1-yOZ"/>
                             </constraints>
@@ -532,6 +579,15 @@
                                 <action selector="agree_button_pressed:" destination="1ES-Mn-R2q" eventType="touchUpInside" id="i7P-RF-1R8"/>
                             </connections>
                         </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="61r-44-2yx">
+                            <rect key="frame" x="0.0" y="610" width="414" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="2zJ-gB-lmH"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <viewLayoutGuide key="safeArea" id="ymG-Tz-CR2"/>
                 </stackView>
@@ -1240,9 +1296,6 @@
         <image name="questionmark.circle" catalog="system" width="128" height="121"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

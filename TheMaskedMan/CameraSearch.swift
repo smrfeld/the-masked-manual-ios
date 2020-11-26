@@ -29,15 +29,33 @@ SOFTWARE.
 
 import Foundation
 
-private let no_observations = 5
+private let no_observations = 10
 
-private class ModelCandidate {
+private class ModelCandidate : Hashable {
     
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(uuid)
+    }
+
+    static func == (lhs: ModelCandidate, rhs: ModelCandidate) -> Bool {
+        return lhs.uuid == rhs.uuid
+    }
+    
+    let uuid = UUID().uuidString
     let mask : Mask
     var weights : [Float] = []
     
     init(_ mask : Mask) {
         self.mask = mask
+    }
+    
+    func expire_observations_if_exist() {
+        // All observations reduced by a factor
+        if weights.count > 0 {
+            weights = weights.map { (x) -> Float in
+                return 0.9 * x
+            }
+        }
     }
     
     private func ensure_less_than_max_no_observations() {
@@ -84,8 +102,10 @@ struct CameraSearch {
         // Ammend and fix list of candidates
         let observed_texts = ammend_candidates(raw_candidates: raw_observed_texts)
         
-        print("Observed texts: ", observed_texts)
+        // print("Observed texts: ", observed_texts)
         
+        // Collect weights
+        var weights : [ModelCandidate : Float] = [:]
         for observed_text in observed_texts {
             
             let candidates_filtered = mask_candidates.filter({ (mask) -> Bool in
@@ -97,7 +117,21 @@ struct CameraSearch {
                 // Max weight = 1 => all of the name was found, i.e. the two match exactly
                 // Square to skew the distribution
                 let weight = pow(Float(observed_text.count) / Float(cf.mask.search_model.count), 2)
-                cf.add_observation(weight)
+                if weights[cf] == nil {
+                    weights[cf] = 0.0
+                }
+                weights[cf]! += weight
+            }
+        }
+        
+        // Add observations
+        for candidate in mask_candidates {
+            if let weight = weights[candidate] {
+                candidate.add_observation(weight)
+            } else {
+                // No observation right now
+                // Check if there are any observations; if there are, these need to "expire" i.e. get smaller = less important
+                candidate.expire_observations_if_exist()
             }
         }
     }

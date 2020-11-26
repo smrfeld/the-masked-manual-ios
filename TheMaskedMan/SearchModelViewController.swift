@@ -89,7 +89,7 @@ class SearchModelViewController: UIViewController {
         let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "maskNotFoundViewController") as! MaskNotFoundViewController
         alert.providesPresentationContextTransitionStyle = true
         alert.definesPresentationContext = true
-        alert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        alert.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         
         DispatchQueue.main.async {
@@ -214,7 +214,7 @@ extension SearchModelViewController: UITableViewDelegate, UITableViewDataSource 
         alert.mask = mask
         alert.providesPresentationContextTransitionStyle = true
         alert.definesPresentationContext = true
-        alert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        alert.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         
         DispatchQueue.main.async {

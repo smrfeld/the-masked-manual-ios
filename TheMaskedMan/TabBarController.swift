@@ -56,21 +56,21 @@ class TabBarController: UITabBarController {
                 vc.companies = companies
            }
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         // Show disclaimer
         let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "disclaimerNavigationController") as! UINavigationController
         alert.providesPresentationContextTransitionStyle = true
         alert.definesPresentationContext = true
-        alert.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+        alert.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         
         DispatchQueue.main.async {
             self.present(alert, animated: false, completion: nil)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     // ***************

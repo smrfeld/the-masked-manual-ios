@@ -55,7 +55,10 @@ class DisclaimerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
+        // First text
+        text_disclaimer_1.attributedText = get_first_disclaimer_bf_text()
+        
         // Add stack to scroll view
         self.scroll_view.addSubview(content_stack)
         // Tell stack view we are adding constraints programmatically
@@ -68,7 +71,7 @@ class DisclaimerViewController: UIViewController {
         self.content_stack.bottomAnchor.constraint(equalTo: self.scroll_view.bottomAnchor).isActive = true
         
         // Set width of stack view to match scroll
-        self.content_stack.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        self.content_stack.widthAnchor.constraint(equalTo: self.scroll_view.widthAnchor).isActive = true
         
         // Links
         let tap_fda = UITapGestureRecognizer(target: self, action: #selector(self.open_fda_link(recognizer:)))
@@ -80,6 +83,15 @@ class DisclaimerViewController: UIViewController {
         
         // Fix height of text views to fit content
         set_text_views_size_to_fit_content()
+    }
+    
+    func get_first_disclaimer_bf_text() -> NSAttributedString {
+        let string = "This application is not affiliated with or endorsed by the U.S. government or any federal or state agency." as NSString
+        let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 14.0)])
+        let boldFontAttribute = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 14.0)]
+        attributedString.addAttributes(boldFontAttribute, range: string.range(of: "not affiliated with or endorsed by the U.S. government or any federal or state agency."))
+
+        return attributedString
     }
     
     @objc func open_fda_link(recognizer : UITapGestureRecognizer) {
