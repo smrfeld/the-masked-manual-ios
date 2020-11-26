@@ -61,6 +61,7 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
     @IBOutlet weak var date_label: UILabel!
     
     var mask : Mask!
+    var completion_on_close : () -> Void = {}
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -205,7 +206,7 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
     }
         
     @IBAction func close_button_pressed(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: completion_on_close)
     }
     
     /*

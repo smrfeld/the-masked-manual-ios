@@ -97,7 +97,8 @@ struct CameraSearch {
     mutating func update_candidates_with_observations(raw_observed_texts : [String]) {
         
         // Ammend and fix list of candidates
-        let observed_texts = ammend_raw_observed_texts(raw_observed_texts: raw_observed_texts)
+        let observed_texts = ObservedTexts.form_observed_text_patterns(raw_observed_texts: raw_observed_texts)
+        print(observed_texts)
         
         // print("Observed texts: ", observed_texts)
         
@@ -173,55 +174,126 @@ struct CameraSearch {
             return (nil, nil)
         }
     }
+}
+
+struct ObservedTexts {
     
-    private func ammend_raw_observed_texts(raw_observed_texts : [String]) -> [String] {
-        var candidates = raw_observed_texts
+    static func form_observed_text_patterns(raw_observed_texts : [String]) -> [String] {
+        var observed_texts = raw_observed_texts
         
         // Get search words
         // Removes nonsense characters and trivial phrases
-        candidates = candidates.map({ (c) -> String in
+        observed_texts = observed_texts.map({ (c) -> String in
             return ModelSearchName.get_search_model_name(model_name: c)
         })
         
         // Remove anything less than 2 characters
         var i = 0
-        while i < candidates.count {
-            if candidates[i].count < 2 {
-                candidates.remove(at: i)
+        while i < observed_texts.count {
+            if observed_texts[i].count < 2 {
+                observed_texts.remove(at: i)
             } else {
                 i += 1
             }
         }
-        
+                
         // Add all words
-        for i in 0..<candidates.count {
-            let words = candidates[i].components(separatedBy: " ")
+        observed_texts += ObservedTexts.get_all_words(observed_texts: observed_texts)
+        
+        // For every candidate, also try stripping any leading or trailing chars if they exist
+        observed_texts += ObservedTexts.get_texts_with_stripped_leading_trailing_bad_chars(observed_texts: observed_texts)
+        // observed_texts += ObservedTexts.get_texts_with_stripped_leading_trailing(observed_texts: observed_texts)
+
+        // Remove duplicates (ruins ordering!)
+        observed_texts = Array(Set(observed_texts))
+        
+        return observed_texts
+    }
+        
+    private static func get_all_words(observed_texts: [String]) -> [String] {
+                
+        var ret : [String] = []
+        for i in 0..<observed_texts.count {
+            let words = observed_texts[i].components(separatedBy: [" ", "-", "/"])
             
             // Only add words if more than one word
             if words.count != 1 {
                 for word in words {
                     // Only add if the word has more than 2 characters
                     if word.count >= 2 {
-                        candidates.append(word)
+                        ret.append(word)
                     }
                 }
             }
         }
         
-        // For every candidate, also try stripping any leading or trailing zeros if they exist
-        for i in 0..<candidates.count {
-            if candidates[i].first! == "0" {
-                candidates.append(String(candidates[i].dropFirst()))
+        return ret
+    }
+    
+    private static func get_texts_with_stripped_leading_trailing(observed_texts: [String]) -> [String] {
+                
+        var ret : [String] = []
+        for i in 0..<observed_texts.count {
+            let s = String(observed_texts[i].dropFirst())
+            if s.count > 2 {
+                ret.append(s)
             }
-            
-            if candidates[i].last! == "0" {
-                candidates.append(String(candidates[i].dropLast()))
+              
+            let r = String(observed_texts[i].dropLast())
+            if r.count > 2 {
+                ret.append(r)
             }
         }
         
-        // Remove duplicates (ruins ordering!)
-        candidates = Array(Set(candidates))
+        return ret
+    }
+    
+    private static func get_texts_with_stripped_leading_trailing_bad_chars(observed_texts: [String]) -> [String] {
         
-        return candidates
+        let bad_chars = ["0", "*", "/", "-", "?"]
+        
+        var ret : [String] = []
+        for i in 0..<observed_texts.count {
+            var s = observed_texts[i]
+
+            // Remove all bad chars from the front
+            var no_remove_front = 0
+            for char in s {
+                if bad_chars.contains(String(char)) {
+                    // Remove!
+                    no_remove_front += 1
+                } else {
+                    // Done
+                    break
+                }
+            }
+            
+            if no_remove_front > 0 {
+                s = String(s.dropFirst(no_remove_front))
+            }
+            
+            // Remove all bad chars from the back
+            var no_remove_back = 0
+            for char in s.reversed() {
+                if bad_chars.contains(String(char)) {
+                    // Remove
+                    no_remove_back += 1
+                } else {
+                    // Done
+                    break
+                }
+            }
+            
+            if no_remove_back > 0 {
+                s = String(s.dropLast(no_remove_back))
+            }
+            
+            // Append if the string is changed
+            if s != observed_texts[i] {
+                ret.append(s)
+            }
+        }
+        
+        return ret
     }
 }

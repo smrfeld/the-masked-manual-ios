@@ -42,7 +42,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
     
-    // var is_search_in_progress : Bool = false
+    var is_search_in_progress : Bool = false
     
     var session = AVCaptureSession()
     var requests = [VNRequest]()
@@ -60,6 +60,9 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         // Mask
         let maskNib = UINib.init(nibName: "MaskTableViewCell", bundle: Bundle.main)
         tableView.register(maskNib, forCellReuseIdentifier: "maskTableViewCell2")
+        
+        // Setup video once
+        setup_live_video()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -83,35 +86,13 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     
     func detectTextHandler(request: VNRequest, error: Error?) {
         
+        // Get observations
         guard let observations = request.results as? [VNRecognizedTextObservation] else {
             print("No result")
             return
         }
-        
-        var raw_observed_texts : [String] = []
-        
-        for observation in observations {
-            guard let topCandidate = observation.topCandidates(1).first else { return }
-            raw_observed_texts.append(topCandidate.string)
-        }
-        
-        // Search for the model
-        camera_search.update_candidates_with_observations(raw_observed_texts: raw_observed_texts)
-        
-        // Set best mask
-        let new_best_guess = camera_search.get_top_mask_or_company()
-        if let new_best_guess_mask = new_best_guess.0 {
-                        
-            if new_best_guess_mask != mask_best_guess {
-                mask_best_guess = new_best_guess_mask
-                
-                // Reload table
-                DispatchQueue.main.async() {
-                    self.tableView.reloadData()
-                }
-            }
-        }
-        
+
+        // Highlight
         DispatchQueue.main.async() {
             self.imageView.layer.sublayers?.removeSubrange(1...)
             for rg in observations {
@@ -119,33 +100,37 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             }
         }
         
-        // Text boxes
-        /*
-         
-        guard let observations = request.results else {
-            print("no result")
-            return
-        }
-
-        let result = observations.map({$0 as? VNTextObservation})
-        
-        DispatchQueue.main.async() {
-            self.imageView.layer.sublayers?.removeSubrange(1...)
-            for region in result {
-                guard let rg = region else {
-                    continue
-                }
-                
-                self.highlightWord(box: rg)
-                
-                if let boxes = region?.characterBoxes {
-                    for characterBox in boxes {
-                        self.highlightLetters(box: characterBox)
+        // Only search if not currently searching
+        if !is_search_in_progress {
+            is_search_in_progress = true
+                        
+            var raw_observed_texts : [String] = []
+            
+            for observation in observations {
+                guard let topCandidate = observation.topCandidates(1).first else { return }
+                raw_observed_texts.append(topCandidate.string)
+            }
+            
+            // Search for the model
+            camera_search.update_candidates_with_observations(raw_observed_texts: raw_observed_texts)
+            
+            // Set best mask
+            let new_best_guess = camera_search.get_top_mask_or_company()
+            if let new_best_guess_mask = new_best_guess.0 {
+                            
+                if new_best_guess_mask != mask_best_guess {
+                    mask_best_guess = new_best_guess_mask
+                    
+                    // Reload table
+                    DispatchQueue.main.async() {
+                        self.tableView.reloadData()
                     }
                 }
             }
+                    
+            // Search is done
+            is_search_in_progress = false
         }
-         */
     }
         
     func highlightWord(box: VNRecognizedTextObservation) {
@@ -184,7 +169,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         self.requests = [textRequest]
     }
     
-    func startLiveVideo() {
+    func setup_live_video() {
         // Init capture session
         session.sessionPreset = AVCaptureSession.Preset.photo
         let captureDevice = AVCaptureDevice.default(for: AVMediaType.video)
@@ -201,7 +186,9 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         let imageLayer = AVCaptureVideoPreviewLayer(session: session)
         imageLayer.bounds = imageView.bounds
         imageView.layer.addSublayer(imageLayer)
-            
+    }
+    
+    func startLiveVideo() {
         session.startRunning()
     }
     
@@ -312,12 +299,22 @@ extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
         
             let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "maskDetailViewController") as! MaskDetailViewController
             alert.mask = mask
+            alert.completion_on_close = {
+                // Start live video and recognition again
+                self.startLiveVideo()
+                self.startTextDetection()
+            }
             alert.providesPresentationContextTransitionStyle = true
             alert.definesPresentationContext = true
             alert.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
             alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
             
             DispatchQueue.main.async {
+                // Stop live video and recognition
+                self.stopLiveVideo()
+                self.stopTextDetection()
+                
+                // Show
                 self.present(alert, animated: true, completion: nil)
             }
         }
