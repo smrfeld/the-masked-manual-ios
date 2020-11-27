@@ -38,11 +38,9 @@ class TabBarController: UITabBarController {
         self.selectedIndex = 1;
         
         // Load masks
-        let masks = load_masks()
-        var companies = organize_masks_by_company(masks)
-        companies.sort { (c1, c2) -> Bool in
-            return c1.name < c2.name
-        }
+        let pr = LoadMasks.load_masks_and_companies()
+        let masks = pr.0
+        let companies = pr.1
         
         // Send to VCs
         if let nvc = self.viewControllers?[0] as? UINavigationController {
@@ -77,47 +75,6 @@ class TabBarController: UITabBarController {
     // ***************
     // MARK: - Load masks
     // ***************
-    
-    private func load_masks() -> [Mask] {
-        if let path = Bundle.main.path(forResource: "data", ofType: "txt") {
-            do {
-                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-                let masks = try JSONDecoder().decode(Masks.self, from: data)
-                print(masks)
-                
-                // Search name for models
-                for mask in masks.masks {
-                    mask.search_model = ModelSearchName.get_search_model_name(model_name: mask.model)
-                    mask.search_model = ModelSearchName.mend_too_simple_model_names(search_model_name: mask.search_model, search_company_name: mask.company)
-                    print("Search name for mask: ", mask.model, " -> ", mask.search_model)
-                }
-                
-                return masks.masks
-            } catch {
-                // handle error
-                print("Error info: \(error)")
-            }
-        }
-        
-        return []
-    }
-    
-    private func organize_masks_by_company(_ masks: [Mask]) -> [Company] {
-        var companies : [Company] = []
-        for mask in masks {
-            let cs = companies.filter { (c) -> Bool in
-                return c.name == mask.company
-            }
-            
-            if cs.count > 0 {
-                cs.first!.masks.append(mask)
-            } else {
-                companies.append(Company(mask: mask))
-            }
-        }
-        
-        return companies
-    }
     
     /*
     // MARK: - Navigation

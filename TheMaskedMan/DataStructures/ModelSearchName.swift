@@ -31,7 +31,7 @@ import Foundation
 
 protocol ModelSearchNameProtocol {
     static func get_search_model_name(model_name : String) -> String
-    static func mend_too_simple_model_names(search_model_name : String, search_company_name : String) -> String
+    static func mend_too_simple_model_names(search_model_name : String, search_company_name : String?) -> String
 }
 
 struct ModelSearchName : ModelSearchNameProtocol {
@@ -108,7 +108,12 @@ struct ModelSearchName : ModelSearchNameProtocol {
         return ret
     }
 
-    static func mend_too_simple_model_names(search_model_name : String, search_company_name : String) -> String {
+    static func mend_too_simple_model_names(search_model_name : String, search_company_name : String?) -> String {
+        guard let search_company_name = search_company_name else {
+            print("Warning: search_company_name is nil!")
+            return search_model_name
+        }
+        
         // Too simple
         let too_simple = [
             "surgical mask",

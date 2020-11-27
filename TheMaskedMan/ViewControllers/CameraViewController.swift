@@ -108,26 +108,43 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             
             for observation in observations {
                 guard let topCandidate = observation.topCandidates(1).first else { return }
-                raw_observed_texts.append(topCandidate.string)
+                
+                // Only include terms with confidence 1
+                if topCandidate.confidence == 1.0 {
+                    raw_observed_texts.append(topCandidate.string)
+                }
             }
             
             // Search for the model
             camera_search.update_candidates_with_observations(raw_observed_texts: raw_observed_texts)
             
             // Set best mask
+            let mask_best_guess_prev = mask_best_guess
             let new_best_guess = camera_search.get_top_mask_or_company()
-            if let new_best_guess_mask = new_best_guess.0 {
-                            
-                if new_best_guess_mask != mask_best_guess {
-                    mask_best_guess = new_best_guess_mask
-                    
-                    // Reload table
-                    DispatchQueue.main.async() {
-                        self.tableView.reloadData()
-                    }
+            if let new_mask_best_guess = new_best_guess.0 {
+                
+                // Found a new best guess for the mask
+                mask_best_guess = new_mask_best_guess
+                
+            } else if let new_company_best_guess = new_best_guess.1 {
+            
+                // Found a new best guess for the company
+                let company_best_guess = new_company_best_guess
+                print(company_best_guess)
+
+            } else {
+
+                // Truly nothing found
+                mask_best_guess = nil
+            }
+            
+            // Reload if needed
+            if mask_best_guess != mask_best_guess_prev {
+                DispatchQueue.main.async() {
+                    self.tableView.reloadData()
                 }
             }
-                    
+            
             // Search is done
             is_search_in_progress = false
         }

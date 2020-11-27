@@ -48,6 +48,7 @@ class Mask : Codable, CustomStringConvertible, Equatable, Hashable {
     // Fields added later
     // MUST provide default value! Else JSON will fail
     var search_model : String = ""
+    weak var company_obj : Company? = nil
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(uuid)
@@ -125,27 +126,7 @@ class Mask : Codable, CustomStringConvertible, Equatable, Hashable {
             return false
         }
     }
-    
-    func distance(to_mask: Mask) -> Double {
-        let dist_company = self.company.distance(between: to_mask.company)
-        let dist_model = self.model.distance(between: to_mask.model)
-        return dist_company + dist_model
-    }
-
-    func distance(to_company: String, to_model: String) -> Double {
-        let dist_company = self.company.distance(between: to_company)
-        let dist_model = self.model.distance(between: to_model)
-        return dist_company + dist_model
-    }
-    
-    func distance_model_only(to_model: String) -> Double {
-        return self.model.distance(between: to_model)
-    }
-
-    func distance_company_only(to_company: String) -> Double {
-        return self.company.distance(between: to_company)
-    }
-    
+        
     private func get_image_surgical_mask(_ image_zoom : Bool) -> UIImage {
         if image_zoom {
             return UIImage(named: "surgical_mask_zoom")!

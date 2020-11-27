@@ -39,7 +39,9 @@ class Company : CustomStringConvertible, Hashable {
     var name : String = ""
     var masks : [Mask] = []
     
-    // var search_name : String
+    // Fields added later
+    // MUST provide default value! Else JSON will fail
+    var search_name : String = ""
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(uuid)
@@ -59,13 +61,5 @@ class Company : CustomStringConvertible, Hashable {
     convenience init(mask : Mask) {
         self.init(name: mask.company)
         self.masks.append(mask)
-    }
-    
-    func distance(to_company: Company) -> Double {
-        return self.name.distance(between: to_company.name)
-    }
-
-    func distance(to_name: String) -> Double {
-        return self.name.distance(between: to_name)
     }
 }
