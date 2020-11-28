@@ -12,7 +12,7 @@
         <!--Search by company-->
         <scene sceneID="dgN-5d-bkj">
             <objects>
-                <viewController id="Qeq-Ds-5bZ" customClass="SearchCompanyViewController" customModule="TheMaskedMan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Qeq-Ds-5bZ" customClass="SearchCompanyViewController" customModule="TheMaskedManual" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="szk-fR-BKz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -48,7 +48,7 @@
         <!--About-->
         <scene sceneID="1b5-fx-E1P">
             <objects>
-                <viewController id="bn9-7Y-NjG" customClass="AboutViewController" customModule="TheMaskedMan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bn9-7Y-NjG" customClass="AboutViewController" customModule="TheMaskedManual" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LLX-uj-Nc5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -201,7 +201,7 @@
         <!--Scan mask packaging-->
         <scene sceneID="c3r-l2-fuS">
             <objects>
-                <viewController id="cJl-Ow-DqB" customClass="CameraViewController" customModule="TheMaskedMan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="cJl-Ow-DqB" customClass="CameraViewController" customModule="TheMaskedManual" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="s91-wQ-kst">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -247,7 +247,7 @@
         <!--Disclaimer and terms of use-->
         <scene sceneID="cdA-BQ-wer">
             <objects>
-                <viewController storyboardIdentifier="disclaimerViewController" id="1ES-Mn-R2q" customClass="DisclaimerViewController" customModule="TheMaskedMan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="disclaimerViewController" id="1ES-Mn-R2q" customClass="DisclaimerViewController" customModule="TheMaskedManual" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PX1-wy-StC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -506,7 +506,7 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sDK-k0-B8t" customClass="Button" customModule="TheMaskedMan" customModuleProvider="target">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sDK-k0-B8t" customClass="Button" customModule="TheMaskedManual" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="570" width="414" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="D1h-s1-yOZ"/>
@@ -534,7 +534,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="bn4-Ja-11w">
             <objects>
-                <tabBarController id="tg2-ZN-sMO" customClass="TabBarController" customModule="TheMaskedMan" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController id="tg2-ZN-sMO" customClass="TabBarController" customModule="TheMaskedManual" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Y0d-hY-MgY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -553,7 +553,7 @@
         <!--Search by model-->
         <scene sceneID="7vd-Hg-0iZ">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="FAv-fB-8lH" customClass="SearchModelViewController" customModule="TheMaskedMan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="FAv-fB-8lH" customClass="SearchModelViewController" customModule="TheMaskedManual" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="H5U-ev-D8U">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -603,7 +603,7 @@
         <!--Mask Detail View Controller-->
         <scene sceneID="zv9-0z-mA1">
             <objects>
-                <viewController storyboardIdentifier="maskDetailViewController" id="Rgw-w9-qTl" customClass="MaskDetailViewController" customModule="TheMaskedMan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="maskDetailViewController" id="Rgw-w9-qTl" customClass="MaskDetailViewController" customModule="TheMaskedManual" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cpi-le-cZk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -964,7 +964,7 @@
                                             <constraint firstItem="kYy-xt-f2Z" firstAttribute="height" secondItem="Sd1-or-DOe" secondAttribute="height" id="Mce-Kg-szA"/>
                                         </constraints>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n2n-xI-tTo" customClass="Button" customModule="TheMaskedMan" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n2n-xI-tTo" customClass="Button" customModule="TheMaskedManual" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="423.5" width="354" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="ah8-SU-isL"/>
@@ -1045,7 +1045,7 @@
         <!--Mask Not Found View Controller-->
         <scene sceneID="An5-zi-tca">
             <objects>
-                <viewController storyboardIdentifier="maskNotFoundViewController" modalPresentationStyle="fullScreen" id="fud-Dl-rKP" customClass="MaskNotFoundViewController" customModule="TheMaskedMan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="maskNotFoundViewController" modalPresentationStyle="fullScreen" id="fud-Dl-rKP" customClass="MaskNotFoundViewController" customModule="TheMaskedManual" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TlA-VP-6XW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1155,7 +1155,7 @@
                                             <constraint firstItem="xMM-0j-b8S" firstAttribute="height" secondItem="eYr-sM-eNS" secondAttribute="height" id="f7f-H3-njj"/>
                                         </constraints>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7B7-M4-bsT" customClass="Button" customModule="TheMaskedMan" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7B7-M4-bsT" customClass="Button" customModule="TheMaskedManual" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="570" width="354" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="9bX-fk-NEd"/>
