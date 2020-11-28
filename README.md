@@ -1,3 +1,3 @@
-# The Masked Man iOS App
+# The Masked Manual iOS App
 
 Motivation from [this introduction to the Vision framework on iOS](https://www.appcoda.com/vision-framework-introduction/).
