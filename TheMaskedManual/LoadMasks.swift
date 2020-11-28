@@ -166,7 +166,7 @@ struct LoadMasks {
     }
     
     private static func download_latest_data(completion: @escaping () -> Void) {
-        if let url = URL(string: "https://raw.githubusercontent.com/smrfeld/man-mask-python/main/data.txt?token=AD4ZKP3OV2R3IDA7IPFQQ5S7ZMMU4") {
+        if let url = URL(string: "https://the-masked-manual.herokuapp.com/data_latest") {
             
             let downloadTask = URLSession.shared.downloadTask(with: url) {
                 urlOrNil, responseOrNil, errorOrNil in
