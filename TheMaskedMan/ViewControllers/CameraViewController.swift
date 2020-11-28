@@ -37,7 +37,9 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     var masks : [Mask] = []
     var companies : [Company] = []
     var camera_search : CameraSearch!
+    
     var mask_best_guess : Mask? = nil
+    var company_best_guess : Company? = nil
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
@@ -60,6 +62,10 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         // Mask
         let maskNib = UINib.init(nibName: "MaskTableViewCell", bundle: Bundle.main)
         tableView.register(maskNib, forCellReuseIdentifier: "maskTableViewCell2")
+        
+        // Company
+        let companyNib = UINib.init(nibName: "CompanyTableViewCell", bundle: Bundle.main)
+        tableView.register(companyNib, forCellReuseIdentifier: "companyTableViewCell")
         
         // Setup video once
         setup_live_video()
@@ -110,8 +116,10 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
                 guard let topCandidate = observation.topCandidates(1).first else { return }
                 
                 // Only include terms with confidence 1
-                if topCandidate.confidence == 1.0 {
+                if topCandidate.confidence > 0.5 {
                     raw_observed_texts.append(topCandidate.string)
+                } else {
+                    print("Discarding: ", topCandidate.string, " for too low confidence: ", topCandidate.confidence)
                 }
             }
             
@@ -119,34 +127,44 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             camera_search.update_candidates_with_observations(raw_observed_texts: raw_observed_texts)
             
             // Set best mask
-            let mask_best_guess_prev = mask_best_guess
             let new_best_guess = camera_search.get_top_mask_or_company()
-            if let new_mask_best_guess = new_best_guess.0 {
-                
-                // Found a new best guess for the mask
-                mask_best_guess = new_mask_best_guess
-                
-            } else if let new_company_best_guess = new_best_guess.1 {
-            
-                // Found a new best guess for the company
-                let company_best_guess = new_company_best_guess
-                print(company_best_guess)
-
-            } else {
-
-                // Truly nothing found
-                mask_best_guess = nil
-            }
-            
-            // Reload if needed
-            if mask_best_guess != mask_best_guess_prev {
-                DispatchQueue.main.async() {
-                    self.tableView.reloadData()
-                }
-            }
+            reload_table_with_new_guesses(new_mask_best_guess: new_best_guess.0, new_company_best_guess: new_best_guess.1)
             
             // Search is done
             is_search_in_progress = false
+        }
+    }
+    
+    private func reload_table_with_new_guesses(new_mask_best_guess: Mask?, new_company_best_guess: Company?) {
+        
+        // Save current
+        let mask_best_guess_prev = mask_best_guess
+        let company_best_guess_prev = company_best_guess
+        
+        if let new_mask_best_guess = new_mask_best_guess {
+            
+            // Found a new best guess for the mask
+            mask_best_guess = new_mask_best_guess
+            company_best_guess = nil
+            
+        } else if let new_company_best_guess = new_company_best_guess {
+        
+            // Found a new best guess for the company
+            mask_best_guess = nil
+            company_best_guess = new_company_best_guess
+
+        } else {
+
+            // Truly nothing found
+            mask_best_guess = nil
+            company_best_guess = nil
+        }
+        
+        // Reload if needed
+        if mask_best_guess != mask_best_guess_prev || company_best_guess != company_best_guess_prev {
+            DispatchQueue.main.async() {
+                self.tableView.reloadData()
+            }
         }
     }
         
@@ -248,16 +266,16 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         }
     }
 
-    /*
+    // ***************
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    // ***************
+    
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "searchModelsSegue", let vc = segue.destination as? SearchModelViewController, let company = sender as? Company {
+            vc.masks = company.masks
+        }
+     }
 }
 
 extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
@@ -268,7 +286,7 @@ extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         // Only show header if no best guess
-        if mask_best_guess == nil {
+        if mask_best_guess == nil && company_best_guess == nil {
             return 60.0
         } else {
             return 0.0
@@ -277,7 +295,7 @@ extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // Only show header if no best guess
-        if mask_best_guess == nil {
+        if mask_best_guess == nil && company_best_guess == nil {
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "maskNotFoundHeaderView") as! MaskNotFoundHeaderView
             
             // Add tap
@@ -292,7 +310,7 @@ extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Only show rows if best guess
-        if mask_best_guess == nil {
+        if mask_best_guess == nil && company_best_guess == nil {
             return 0
         } else {
             return 1
@@ -300,21 +318,32 @@ extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "maskTableViewCell2") as! MaskTableViewCell
-        if let mask = mask_best_guess {
-            cell.reload(mask: mask)
-        }
         
-        return cell
+        if let mask = mask_best_guess {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "maskTableViewCell2") as! MaskTableViewCell
+            cell.reload(mask: mask)
+        
+            return cell
+            
+        } else if let company = company_best_guess {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "companyTableViewCell") as! CompanyTableViewCell
+            cell.reload(company: company)
+        
+            return cell
+        } else {
+            let cell = UITableViewCell()
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Deselect
         tableView.deselectRow(at: indexPath, animated: true)
         
-        // Show
         if let mask = mask_best_guess {
         
+            // Selected mask
+            
             let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "maskDetailViewController") as! MaskDetailViewController
             alert.mask = mask
             alert.completion_on_close = {
@@ -335,6 +364,11 @@ extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
                 // Show
                 self.present(alert, animated: true, completion: nil)
             }
+            
+        } else if let company = company_best_guess {
+            
+            self.performSegue(withIdentifier: "searchModelsSegue", sender: company)
+            
         }
     }
 }

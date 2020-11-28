@@ -31,46 +31,35 @@ import Foundation
 
 struct ObservedTexts {
     
-    var observed_texts : [String]
-    
-    init(raw_observed_texts : [String]) {
-        observed_texts = raw_observed_texts
+    let model_search_name = ModelSearchName()
+    let company_search_name = CompanySearchName()
+        
+    nonmutating func get_observed_texts(raw_observed_texts : [String]) -> ([String],[String]) {
+        
+        // Split into words
+        let observed_texts = split_into_words(raw_observed_texts: raw_observed_texts)
         
         // Get search words
         // Removes nonsense characters and trivial phrases
-        observed_texts = observed_texts.map({ (c) -> String in
-            return ModelSearchName.get_search_model_name(model_name: c)
-        })
-        
-        // Remove anything less than 2 characters
-        remove_small_words_less_than_two_chars()
-        
+        var model_observed_texts = model_search_name.get_search_model_names(model_names: observed_texts)
+        var company_observed_texts = company_search_name.get_search_company_names(company_names: observed_texts)
+
         // Remove any nonsense words we can identify
-        remove_nonsense_words()
-                
-        // Add all words
-        add_all_words()
-        
+        remove_nonsense_words(observed_texts: &model_observed_texts)
+        remove_nonsense_words(observed_texts: &company_observed_texts)
+
         // For every candidate, also try stripping any leading or trailing chars if they exist
-        add_texts_with_stripped_leading_trailing_bad_chars()
+        add_texts_with_stripped_leading_trailing_bad_chars(observed_texts: &model_observed_texts)
+        add_texts_with_stripped_leading_trailing_bad_chars(observed_texts: &company_observed_texts)
 
         // Remove duplicates (ruins ordering!)
-        observed_texts = Array(Set(observed_texts))
+        model_observed_texts = Array(Set(model_observed_texts))
+        company_observed_texts = Array(Set(company_observed_texts))
+
+        return (model_observed_texts, company_observed_texts)
     }
     
-    private mutating func remove_small_words_less_than_two_chars() {
-        
-        var i = 0
-        while i < observed_texts.count {
-            if observed_texts[i].count < 2 {
-                observed_texts.remove(at: i)
-            } else {
-                i += 1
-            }
-        }
-    }
-    
-    private mutating func remove_nonsense_words() {
+    private nonmutating func remove_nonsense_words(observed_texts : inout [String]) {
         
         var bad_strs : [String] = []
         // Three in a row of any chraacter
@@ -122,25 +111,22 @@ struct ObservedTexts {
         }
     }
         
-    private mutating func add_all_words() {
+    private nonmutating func split_into_words(raw_observed_texts: [String]) -> [String] {
                 
-        let no = observed_texts.count
+        var ret : [String] = []
+        let no = raw_observed_texts.count
         for i in 0..<no {
-            let words = observed_texts[i].components(separatedBy: [" ", "-", "/"])
+            let words = raw_observed_texts[i].components(separatedBy: [" ", "-", "/", "&", ".", ",", ";", ":"])
             
-            // Only add words if more than one word
-            if words.count != 1 {
-                for word in words {
-                    // Only add if the word has more than 2 characters
-                    if word.count >= 2 {
-                        observed_texts.append(word)
-                    }
-                }
+            for word in words {
+                ret.append(word)
             }
         }
+        
+        return ret
     }
     
-    private mutating func add_texts_with_stripped_leading_trailing() {
+    private nonmutating func add_texts_with_stripped_leading_trailing(observed_texts : inout [String]) {
                 
         let no = observed_texts.count
         for i in 0..<no {
@@ -156,7 +142,7 @@ struct ObservedTexts {
         }
     }
     
-    private mutating func add_texts_with_stripped_leading_trailing_bad_chars() {
+    private nonmutating func add_texts_with_stripped_leading_trailing_bad_chars(observed_texts : inout [String]) {
         
         let bad_chars = ["0", "*", "/", "-", "?"]
         

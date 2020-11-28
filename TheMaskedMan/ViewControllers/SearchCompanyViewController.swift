@@ -69,6 +69,10 @@ class SearchCompanyViewController : UIViewController {
         // Header
         let headerNib = UINib.init(nibName: "MaskNotFoundHeaderView", bundle: Bundle.main)
         tableView.register(headerNib, forHeaderFooterViewReuseIdentifier: "maskNotFoundHeaderView")
+        
+        // Company
+        let companyNib = UINib.init(nibName: "CompanyTableViewCell", bundle: Bundle.main)
+        tableView.register(companyNib, forCellReuseIdentifier: "companyTableViewCell")
     }
     
     // ***************

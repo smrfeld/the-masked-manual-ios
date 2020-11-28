@@ -32,6 +32,9 @@ import Foundation
 struct LoadMasks {
     
     static func load_masks_and_companies() -> ([Mask], [Company]) {
+        let csn = CompanySearchName()
+        let msn = ModelSearchName()
+        
         if let path = Bundle.main.path(forResource: "data", ofType: "txt") {
             do {
                 // Load masks
@@ -43,13 +46,12 @@ struct LoadMasks {
                 
                 // Search name for companies
                 for company in companies {
-                    // company.search_name = CompanySearchName.get_search_company_name(company_name: company.name)
+                    company.search_name = csn.get_search_company_name(company_name: company.name)
                 }
                 
                 // Search name for models
                 for mask in masks.masks {
-                    mask.search_model = ModelSearchName.get_search_model_name(model_name: mask.model)
-                    mask.search_model = ModelSearchName.mend_too_simple_model_names(search_model_name: mask.search_model, search_company_name: mask.company_obj?.search_name)
+                    mask.search_model = msn.get_search_model_name(model_name: mask.model)
                     print("Search name for mask: ", mask.model, " -> ", mask.search_model)
                 }
                                 

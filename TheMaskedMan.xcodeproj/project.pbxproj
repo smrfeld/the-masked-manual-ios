@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B7A119E2571A59A00F22258 /* CompanySearchName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A119D2571A59A00F22258 /* CompanySearchName.swift */; };
+		4B7A11A12571AA5100F22258 /* CompanyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B7A11A02571AA5100F22258 /* CompanyTableViewCell.xib */; };
+		4B7A11A52571C37D00F22258 /* TrivialWordsRemover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A11A42571C37D00F22258 /* TrivialWordsRemover.swift */; };
+		4B7A11A92571C3DF00F22258 /* ShortWordsRemover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A11A82571C3DF00F22258 /* ShortWordsRemover.swift */; };
+		4B7A11AC2571C48200F22258 /* ReplaceBadCharsWithSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A11AB2571C48200F22258 /* ReplaceBadCharsWithSpaces.swift */; };
 		4B7CF3F6256B800B001191A7 /* SearchCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7CF3F5256B800B001191A7 /* SearchCompanyViewController.swift */; };
 		4B7CF3FA256B82C7001191A7 /* SearchModelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7CF3F9256B82C7001191A7 /* SearchModelViewController.swift */; };
 		4B7CF3FD256B84FB001191A7 /* CompanyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7CF3FC256B84FB001191A7 /* CompanyTableViewCell.swift */; };
@@ -40,6 +45,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4B7A119D2571A59A00F22258 /* CompanySearchName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanySearchName.swift; sourceTree = "<group>"; };
+		4B7A11A02571AA5100F22258 /* CompanyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompanyTableViewCell.xib; sourceTree = "<group>"; };
+		4B7A11A42571C37D00F22258 /* TrivialWordsRemover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrivialWordsRemover.swift; sourceTree = "<group>"; };
+		4B7A11A82571C3DF00F22258 /* ShortWordsRemover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortWordsRemover.swift; sourceTree = "<group>"; };
+		4B7A11AB2571C48200F22258 /* ReplaceBadCharsWithSpaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplaceBadCharsWithSpaces.swift; sourceTree = "<group>"; };
 		4B7CF3F5256B800B001191A7 /* SearchCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCompanyViewController.swift; sourceTree = "<group>"; };
 		4B7CF3F9256B82C7001191A7 /* SearchModelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModelViewController.swift; sourceTree = "<group>"; };
 		4B7CF3FC256B84FB001191A7 /* CompanyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyTableViewCell.swift; sourceTree = "<group>"; };
@@ -98,6 +108,16 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		4B7A11A32571C36600F22258 /* StringManipulations */ = {
+			isa = PBXGroup;
+			children = (
+				4B7A11A42571C37D00F22258 /* TrivialWordsRemover.swift */,
+				4B7A11A82571C3DF00F22258 /* ShortWordsRemover.swift */,
+				4B7A11AB2571C48200F22258 /* ReplaceBadCharsWithSpaces.swift */,
+			);
+			path = StringManipulations;
+			sourceTree = "<group>";
+		};
 		4B7EAB202570A08900C69D05 /* CameraSearch */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +157,7 @@
 				4BDCEDA9256E301C0035B51F /* MaskTableViewCell.xib */,
 				4BB1741A256D979D005EAC86 /* MaskNotFoundHeaderView.xib */,
 				4B7CF40A256BA09F001191A7 /* Button.swift */,
+				4B7A11A02571AA5100F22258 /* CompanyTableViewCell.xib */,
 				4B7CF3FF256B8A2A001191A7 /* MaskTableViewCell.swift */,
 				4B7CF3FC256B84FB001191A7 /* CompanyTableViewCell.swift */,
 				4BB17413256D9603005EAC86 /* MaskNotFoundHeaderView.swift */,
@@ -150,6 +171,7 @@
 			children = (
 				4BDCED9E256DFC460035B51F /* Mask.swift */,
 				4BB6FF03256F7FB900A72429 /* ModelSearchName.swift */,
+				4B7A119D2571A59A00F22258 /* CompanySearchName.swift */,
 				4BB6FEFE256F7F9600A72429 /* Company.swift */,
 			);
 			path = DataStructures;
@@ -181,6 +203,7 @@
 				4BC6B8AC256885830075D1AD /* AppDelegate.swift */,
 				4BC6B8AE256885830075D1AD /* SceneDelegate.swift */,
 				4B7EAB312570A46600C69D05 /* LoadMasks.swift */,
+				4B7A11A32571C36600F22258 /* StringManipulations */,
 				4BB6FF01256F7FA800A72429 /* DataStructures */,
 				4B7EAB282570A3A500C69D05 /* Helpers */,
 				4BC6B8B2256885830075D1AD /* Main.storyboard */,
@@ -264,6 +287,7 @@
 				4BC6B8B9256885850075D1AD /* LaunchScreen.storyboard in Resources */,
 				4BB1741B256D979D005EAC86 /* MaskNotFoundHeaderView.xib in Resources */,
 				4BC6B8B6256885850075D1AD /* Assets.xcassets in Resources */,
+				4B7A11A12571AA5100F22258 /* CompanyTableViewCell.xib in Resources */,
 				4BC6B8B4256885830075D1AD /* Main.storyboard in Resources */,
 				4BB17411256D93A4005EAC86 /* data.txt in Resources */,
 				4BDCEDAA256E301C0035B51F /* MaskTableViewCell.xib in Resources */,
@@ -319,12 +343,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B7A119E2571A59A00F22258 /* CompanySearchName.swift in Sources */,
 				4B7EAB322570A46600C69D05 /* LoadMasks.swift in Sources */,
 				4BFF3D15256CB53400ACBAD9 /* SearchBar.swift in Sources */,
 				4B7CF3F6256B800B001191A7 /* SearchCompanyViewController.swift in Sources */,
 				4B7CF40E256BA50D001191A7 /* Colors.swift in Sources */,
 				4B7EAB262570A0BC00C69D05 /* Candidates.swift in Sources */,
 				4B7CF3FA256B82C7001191A7 /* SearchModelViewController.swift in Sources */,
+				4B7A11A92571C3DF00F22258 /* ShortWordsRemover.swift in Sources */,
 				4BC6B8AD256885830075D1AD /* AppDelegate.swift in Sources */,
 				4BB17424256DDD4A005EAC86 /* TabBarController.swift in Sources */,
 				4BB6FF04256F7FB900A72429 /* ModelSearchName.swift in Sources */,
@@ -333,6 +359,8 @@
 				4BDCED9F256DFC460035B51F /* Mask.swift in Sources */,
 				4BB6FEFF256F7F9600A72429 /* Company.swift in Sources */,
 				4BB17414256D9603005EAC86 /* MaskNotFoundHeaderView.swift in Sources */,
+				4B7A11AC2571C48200F22258 /* ReplaceBadCharsWithSpaces.swift in Sources */,
+				4B7A11A52571C37D00F22258 /* TrivialWordsRemover.swift in Sources */,
 				4BDEA0A9256EF78C00659FAF /* DisclaimerViewController.swift in Sources */,
 				4BDCEDA7256E27E70035B51F /* CameraSearch.swift in Sources */,
 				4B7EAB232570A09F00C69D05 /* ObservedTexts.swift in Sources */,

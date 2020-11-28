@@ -81,20 +81,3 @@ open class MyCandidate : Hashable {
         return weights.count == no_observations
     }
 }
-
-struct ModelCandidate {
-    var model_candidate : MyCandidate
-    var company : Company
-    var company_candidate : MyCandidate
-    
-    init(model_candidate : MyCandidate, company : Company, company_candidate : MyCandidate) {
-        self.model_candidate = model_candidate
-        self.company = company
-        self.company_candidate = company_candidate
-    }
-    
-    func get_weight() -> Float {
-        return 0.5 * ( model_candidate.get_weight() + company_candidate.get_weight() )
-    }
-}
-

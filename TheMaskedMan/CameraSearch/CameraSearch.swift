@@ -29,6 +29,12 @@ SOFTWARE.
 
 import Foundation
 
+extension String {
+    func no_spaces() -> Int {
+        return self.components(separatedBy: " ").count - 1
+    }
+}
+
 protocol CameraSearchProtocol {
     mutating func update_candidates_with_observations(raw_observed_texts : [String])
     func get_top_mask_or_company() -> (Mask?, Company?)
@@ -38,8 +44,9 @@ struct CameraSearch : CameraSearchProtocol {
     
     private var masks : [Mask] = []
     private var companies : [Company] = []
-    private var model_candidates : [Mask : ModelCandidate] = [:]
+    private var model_candidates : [Mask : MyCandidate] = [:]
     private var company_candidates : [Company : MyCandidate] = [:]
+    private let observed_texts = ObservedTexts()
 
     init(masks : [Mask], companies : [Company]) {
         self.masks = masks
@@ -49,13 +56,10 @@ struct CameraSearch : CameraSearchProtocol {
     mutating func update_candidates_with_observations(raw_observed_texts : [String]) {
         
         // Ammend and fix list of candidates
-        let observed_texts = ObservedTexts(raw_observed_texts: raw_observed_texts).observed_texts
-        print(observed_texts)
-        
-        // print("Observed texts: ", observed_texts)
-        
-        add_observations_for_model(observed_texts: observed_texts)
-        add_observations_for_company(observed_texts: observed_texts)
+        let ret = observed_texts.get_observed_texts(raw_observed_texts: raw_observed_texts)
+                
+        add_observations_for_models(observed_texts: ret.0)
+        add_observations_for_companies(observed_texts: ret.1)
     }
     
     func get_top_mask_or_company() -> (Mask?, Company?) {
@@ -69,7 +73,7 @@ struct CameraSearch : CameraSearchProtocol {
         })
         
         // Check sufficient weight
-        if let top = top, top.value.get_weight() > 0.4 {
+        if let top = top, top.value.get_weight() > 0.6 {
             return (top.key, nil)
         } else {
             
@@ -78,9 +82,8 @@ struct CameraSearch : CameraSearchProtocol {
             let top_company = company_candidates.max { (c1, c2) -> Bool in
                 return c1.value.get_weight() < c2.value.get_weight()
             }
-            print("Top company: ", top_company?.key)
             
-            if let top_company = top_company, top_company.value.get_weight() > 0.5 {
+            if let top_company = top_company, top_company.value.get_weight() > 0.6 {
                 return (nil, top_company.key)
             } else {
             
@@ -96,10 +99,10 @@ struct CameraSearch : CameraSearchProtocol {
             return m1.value.get_weight() > m2.value.get_weight()
         }
         
-        print("Top 3 mask candidates by model + company:")
+        print("Top 3 mask candidates by model:")
         var i = 0
-        for (mask, rhs) in ms {
-            print(mask.company, ": ", mask.model, " ~ ", mask.search_model, ": weight: ", rhs.get_weight())
+        for (mask, model_candidate) in ms {
+            print(mask.company, ": ", mask.model, " ~ ", mask.search_model, ": weight: ", model_candidate.get_weight())
             
             i += 1
             if i == 3 {
@@ -126,21 +129,20 @@ struct CameraSearch : CameraSearchProtocol {
         }
     }
     
-    private mutating func add_observations_for_model(observed_texts : [String]) {
+    private func collect_unnormalized_weights_for_models(observed_texts : [String]) -> [Mask : Float] {
         
-        // Collect weights
         var weights : [Mask : Float] = [:]
         for observed_text in observed_texts {
             
             let masks_filtered = masks.filter({ (mask) -> Bool in
                 return mask.search_model.contains(observed_text)
             })
+            print("--- ", observed_text, " is in: ", masks_filtered.map({ (m) -> String in
+                return m.search_model
+            }))
             
             for mask in masks_filtered {
-                // Min weight = 0
-                // Max weight = 1 => all of the name was found, i.e. the two match exactly
-                // Square to skew the distribution
-                let weight = pow(Float(observed_text.count) / Float(mask.search_model.count), 2)
+                let weight = Float(observed_text.count)
                 if weights[mask] == nil {
                     weights[mask] = 0.0
                 }
@@ -148,71 +150,11 @@ struct CameraSearch : CameraSearchProtocol {
             }
         }
         
-        // Ensure all observed masks have a candidate
-        for (mask, _) in weights {
-            if model_candidates[mask] == nil {
-                
-                // Find the company!
-                guard let ret = find_company_for_mask(mask: mask) else {
-                    print("Could not find company, company candidate for mask observation: ", mask)
-                    continue
-                }
-                
-                model_candidates[mask] = ModelCandidate(model_candidate: MyCandidate(), company: ret.0, company_candidate: ret.1)
-            }
-        }
-        
-        // Add observations for all candidates
-        for (mask_candidate, rhs) in model_candidates {
-            if let weight = weights[mask_candidate] {
-                // There exists an observation for this candidate
-                rhs.model_candidate.add_observation(weight)
-            } else {
-                // No observation right now
-                // "Expire" old observations i.e. get smaller = less important
-                rhs.model_candidate.expire_observations_if_exist()
-            }
-        }
+        return weights
     }
 
-    private mutating func find_company_for_mask(mask : Mask) -> (Company, MyCandidate)? {
+    private func collect_unnormalized_weights_for_companies(observed_texts : [String]) -> [Company : Float] {
         
-        // First try candidates
-        var ret : (Company, MyCandidate)? = nil
-        let cf = company_candidates.filter({ (c) -> Bool in
-            return c.key.name == mask.company
-        })
-        if cf.count == 1 {
-            let company = cf.first!.key
-            let company_candidate = cf.first!.value
-            ret = (company, company_candidate)
-        } else {
-            
-            // Need to create a candidate company
-            // Find the company
-            let cf2 = companies.filter { (c) -> Bool in
-                return c.name == mask.company
-            }
-            if cf2.count == 1 {
-                let company = cf2.first!
-                let company_candidate = MyCandidate()
-                ret = (company, company_candidate)
-
-                // Add to the companies dict
-                company_candidates[company] = company_candidate
-                
-            } else {
-                // Uh oh!
-                print("Could not find company corresponding to mask: ", mask)
-            }
-        }
-        
-        return ret
-    }
-    
-    private mutating func add_observations_for_company(observed_texts : [String]) {
-        
-        // Collect weights
         var weights : [Company : Float] = [:]
         for observed_text in observed_texts {
             
@@ -221,10 +163,7 @@ struct CameraSearch : CameraSearchProtocol {
             })
             
             for company in companies_filtered {
-                // Min weight = 0
-                // Max weight = 1 => all of the name was found, i.e. the two match exactly
-                // Square to skew the distribution
-                let weight = pow(Float(observed_text.count) / Float(company.search_name.count), 2)
+                let weight = Float(observed_text.count)
                 if weights[company] == nil {
                     weights[company] = 0.0
                 }
@@ -232,12 +171,97 @@ struct CameraSearch : CameraSearchProtocol {
             }
         }
         
+        return weights
+    }
+    
+    private func normalize_weights(weights : inout [Mask : Float]) {
+        
+        // Normalize by the highest number if exists
+        // Why?
+        // Matching observation -> correct mask name:
+        // "3m" -> "3m" is good
+        // "guangzhou powecom labr" -> "guangzhou powecom labor" should be higher even though labr is wrong
+        // This rewards longer matches
+        if let max_weight = weights.values.max() {
+            weights = weights.mapValues { (weight) -> Float in
+                return weight / max_weight
+            }
+        }
+    }
+
+    private func normalize_weights(weights : inout [Company : Float]) {
+        
+        // Normalize by the highest number if exists
+        // Why?
+        // Matching observation -> correct mask name:
+        // "3m" -> "3m" is good
+        // "guangzhou powecom labr" -> "guangzhou powecom labor" should be higher even though labr is wrong
+        // This rewards longer matches
+        if let max_weight = weights.values.max() {
+            weights = weights.mapValues { (weight) -> Float in
+                return weight / max_weight
+            }
+        }
+    }
+
+    private mutating func ensure_candidates_exist_for_mask(weights : [Mask : Float]) {
+        
+        // Ensure all observed masks have a candidate
+        for (mask, _) in weights {
+            if model_candidates[mask] == nil {
+                // Add
+                model_candidates[mask] = MyCandidate()
+            }
+            
+            // Also add the company!
+            if let company = mask.company_obj {
+                if company_candidates[company] == nil {
+                    company_candidates[company] = MyCandidate()
+                }
+            }
+        }
+    }
+
+    private mutating func ensure_candidates_exist_for_company(weights : [Company : Float]) {
+        
         // Ensure all observed masks have a candidate
         for (company, _) in weights {
             if company_candidates[company] == nil {
                 company_candidates[company] = MyCandidate()
             }
         }
+    }
+    
+    private mutating func add_observations_for_models(observed_texts : [String]) {
+        
+        // Collect weights
+        var weights = collect_unnormalized_weights_for_models(observed_texts: observed_texts)
+        normalize_weights(weights: &weights)
+        
+        // Ensure all observed masks have a candidate
+        ensure_candidates_exist_for_mask(weights: weights)
+        
+        // Add observations for all candidates
+        for (mask_candidate, model_candidate) in model_candidates {
+            if let weight = weights[mask_candidate] {
+                // There exists an observation for this candidate
+                model_candidate.add_observation(weight)
+            } else {
+                // No observation right now
+                // "Expire" old observations i.e. get smaller = less important
+                model_candidate.expire_observations_if_exist()
+            }
+        }
+    }
+    
+    private mutating func add_observations_for_companies(observed_texts : [String]) {
+        
+        // Collect weights
+        var weights = collect_unnormalized_weights_for_companies(observed_texts: observed_texts)
+        normalize_weights(weights: &weights)
+        
+        // Ensure all observed masks have a candidate
+        ensure_candidates_exist_for_company(weights: weights)
         
         // Add observations for all candidates
         for (company_candidate, candidate) in company_candidates {
