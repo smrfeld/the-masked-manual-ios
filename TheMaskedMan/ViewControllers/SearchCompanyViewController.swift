@@ -28,7 +28,6 @@
  */
 
 import UIKit
-import Eureka
 
 class SearchCompanyViewController : UIViewController {
     
