@@ -36,8 +36,10 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     
     var masks : [Mask] = []
     var companies : [Company] = []
-    var camera_search : CameraSearch!
-    
+    var camera_search_for_model : CameraSearchForModel!
+    var camera_search_for_company : CameraSearchForCompany!
+    let observed_texts = ObservedTexts()
+
     var mask_best_guess : Mask? = nil
     var company_best_guess : Company? = nil
     
@@ -53,7 +55,8 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         super.viewDidLoad()
         
         // Camera search
-        camera_search = CameraSearch(masks: masks, companies: companies)
+        camera_search_for_model = CameraSearchForModel(masks: masks)
+        camera_search_for_company = CameraSearchForCompany(companies: companies)
         
         // Header
         let headerNib = UINib.init(nibName: "MaskNotFoundHeaderView", bundle: Bundle.main)
@@ -116,38 +119,41 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
                 guard let topCandidate = observation.topCandidates(1).first else { return }
                 
                 // Only include terms with confidence 1
-                if topCandidate.confidence > 0.5 {
+                if topCandidate.confidence > 0.7 {
                     raw_observed_texts.append(topCandidate.string)
                 } else {
                     print("Discarding: ", topCandidate.string, " for too low confidence: ", topCandidate.confidence)
                 }
             }
             
-            // Search for the model
-            camera_search.update_candidates_with_observations(raw_observed_texts: raw_observed_texts)
+            // Observed texts
+            let texts = observed_texts.get_observed_texts(raw_observed_texts: raw_observed_texts)
             
-            // Set best mask
-            let new_best_guess = camera_search.get_top_mask_or_company()
-            reload_table_with_new_guesses(new_mask_best_guess: new_best_guess.0, new_company_best_guess: new_best_guess.1)
+            // Search for the model
+            camera_search_for_model.update_candidates_with_observations(observed_texts: texts.0)
+            camera_search_for_company.update_candidates_with_observations(observed_texts: texts.1)
+            
+            // Reload
+            reload_table_with_new_guesses()
             
             // Search is done
             is_search_in_progress = false
         }
     }
     
-    private func reload_table_with_new_guesses(new_mask_best_guess: Mask?, new_company_best_guess: Company?) {
+    private func reload_table_with_new_guesses() {
         
         // Save current
         let mask_best_guess_prev = mask_best_guess
         let company_best_guess_prev = company_best_guess
         
-        if let new_mask_best_guess = new_mask_best_guess {
+        if let new_mask_best_guess = camera_search_for_model.get_top_mask() {
             
             // Found a new best guess for the mask
             mask_best_guess = new_mask_best_guess
             company_best_guess = nil
             
-        } else if let new_company_best_guess = new_company_best_guess {
+        } else if let new_company_best_guess = camera_search_for_company.get_top_company() {
         
             // Found a new best guess for the company
             mask_best_guess = nil

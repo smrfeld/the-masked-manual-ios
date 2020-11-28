@@ -47,6 +47,7 @@ struct LoadMasks {
                 // Search name for companies
                 for company in companies {
                     company.search_name = csn.get_search_company_name(company_name: company.name)
+                    company.search_name_words = company.search_name.components(separatedBy: " ")
                 }
                 
                 // Search name for models

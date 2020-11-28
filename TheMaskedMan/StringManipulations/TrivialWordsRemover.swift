@@ -73,7 +73,11 @@ struct TrivialWordsRemover {
         "protection",
         "kit",
         "personal",
-        "disposable"
+        "disposable",
+        "to",
+        "do",
+        "yes",
+        "no"
     ]
     
     func remove_trivial_words(_ name : String) -> String {

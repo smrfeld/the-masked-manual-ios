@@ -42,6 +42,7 @@ class Company : CustomStringConvertible, Hashable {
     // Fields added later
     // MUST provide default value! Else JSON will fail
     var search_name : String = ""
+    var search_name_words : [String] = []
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(uuid)
