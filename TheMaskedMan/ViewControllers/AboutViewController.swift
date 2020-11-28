@@ -31,6 +31,7 @@ import UIKit
 
 class AboutViewController: UIViewController {
 
+    @IBOutlet weak var scroll_view: UIScrollView!
     @IBOutlet weak var content_stack: UIStackView!
     @IBOutlet weak var text_disclaimer: UITextView!
     @IBOutlet weak var text_about_1: UITextView!
@@ -39,7 +40,19 @@ class AboutViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // set_text_views_size_to_fit_content()
+        // Add stack to scroll view
+        self.scroll_view.addSubview(content_stack)
+        // Tell stack view we are adding constraints programmatically
+        self.content_stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Bind the stackview at all sides with scroll view
+        self.content_stack.leadingAnchor.constraint(equalTo: self.scroll_view.leadingAnchor).isActive = true
+        self.content_stack.trailingAnchor.constraint(equalTo: self.scroll_view.trailingAnchor).isActive = true
+        self.content_stack.topAnchor.constraint(equalTo: self.scroll_view.topAnchor).isActive = true
+        self.content_stack.bottomAnchor.constraint(equalTo: self.scroll_view.bottomAnchor).isActive = true
+        
+        // Set width of stack view to match scroll
+        self.content_stack.widthAnchor.constraint(equalTo: self.scroll_view.widthAnchor).isActive = true
     }
     
     @IBAction func disclaimer_button_pressed(_ sender: Any) {

@@ -37,7 +37,7 @@ class Button: UIButton {
         // Drawing code
         
         self.backgroundColor = .clear
-        self.layer.cornerRadius = 5
+        self.layer.cornerRadius = 15
         self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.black.cgColor
     }

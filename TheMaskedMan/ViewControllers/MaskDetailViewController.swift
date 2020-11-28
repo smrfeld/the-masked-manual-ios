@@ -40,6 +40,7 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
     private let recalled = "FDA-approval potentially recalled"
     private let revoked = "Emergency authorization revoked"
     
+    @IBOutlet weak var type_label: UILabel!
     @IBOutlet weak var central_view: UIView!
     @IBOutlet weak var image_view: UIImageView!
     @IBOutlet weak var model_label: UILabel!
@@ -66,7 +67,8 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor(red: 244/256, green: 244/256, blue: 248/256, alpha: 0.95)
+        // view.backgroundColor = UIColor(red: 244/256, green: 244/256, blue: 248/256, alpha: 0.95)
+        view.backgroundColor = UIColor(red: 199/256, green: 199/256, blue: 204/256, alpha: 0.9)
         central_view.backgroundColor = UIColor.white
         // view.backgroundColor = UIColor(white: 1.0, alpha: 0.8)
         
@@ -79,7 +81,7 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
                 
         // Round corners
         central_view.layer.cornerRadius = 15
-        
+                
         // Load mask details
         // model_label.text = mask.model
         // company_label.text = mask.company
@@ -117,7 +119,7 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
             links_stack.isHidden = false
         }
         
-        date_label.text = "Information last updated on: " + mask.get_date_last_updated_str()
+        date_label.text = "Last updated on:\n" + mask.get_date_last_updated_str()
     }
     
     @objc func open_url_source(recognizer : UITapGestureRecognizer) {
@@ -144,6 +146,10 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.text = text
         label.sizeToFit()
+    }
+    
+    func set_type(_ val: String) {
+        type_label.text = val
     }
     
     func set_extra(_ val: MaskExtra) {

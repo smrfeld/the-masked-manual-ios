@@ -30,6 +30,10 @@ SOFTWARE.
 import Foundation
 import UIKit
 
+private let n95_surgical_respirator = "N95 Surgical Respirator"
+private let n95_respirator = "N95 Respirator"
+private let surgical_mask = "Surgical Mask"
+
 class Mask : Codable, CustomStringConvertible, Equatable, Hashable {
     
     let uuid = UUID().uuidString
@@ -150,36 +154,43 @@ class Mask : Codable, CustomStringConvertible, Equatable, Hashable {
             delegate.set_fda(.approved)
             delegate.set_niosh(.not_applicable)
             delegate.set_extra(.emergency_authorized)
+            delegate.set_type(surgical_mask)
         case "SURGICAL_MASK_FDA":
             delegate.set_image(get_image_surgical_mask(image_zoom))
             delegate.set_fda(.approved)
             delegate.set_niosh(.not_applicable)
             delegate.set_extra(.none)
+            delegate.set_type(surgical_mask)
         case "SURGICAL_MASK_FDA_POTENTIALLY_RECALLED":
             delegate.set_image(get_image_surgical_mask(image_zoom))
             delegate.set_fda(.not_approved)
             delegate.set_niosh(.not_approved) // extra bad for recalls
             delegate.set_extra(.recalled)
+            delegate.set_type(surgical_mask)
         case "RESPIRATOR_EUA":
             delegate.set_image(get_image_respirator(image_zoom))
             delegate.set_fda(.not_approved)
             delegate.set_niosh(.not_approved)
             delegate.set_extra(.emergency_authorized)
+            delegate.set_type(n95_respirator)
         case "RESPIRATOR_EUA_EXPIRED_AUTH":
             delegate.set_image(get_image_respirator(image_zoom))
             delegate.set_fda(.not_approved)
             delegate.set_niosh(.not_approved)
             delegate.set_extra(.revoked)
+            delegate.set_type(n95_respirator)
         case "RESPIRATOR_N95_NIOSH":
             delegate.set_image(get_image_respirator(image_zoom))
             delegate.set_fda(.not_approved)
             delegate.set_niosh(.approved)
             delegate.set_extra(.none)
+            delegate.set_type(n95_respirator)
         case "RESPIRATOR_N95_NIOSH_FDA":
             delegate.set_image(get_image_respirator(image_zoom))
             delegate.set_fda(.approved)
             delegate.set_niosh(.approved)
             delegate.set_extra(.none)
+            delegate.set_type(n95_surgical_respirator)
         default:
             print("Warning! Respirator type not recognized...")
         }
@@ -203,6 +214,7 @@ protocol ShowMaskDetailsProtocol {
     func set_niosh(_ val : MaskNIOSH)
     func set_fda(_ val : MaskFDA)
     func set_image(_ image : UIImage)
+    func set_type(_ val : String)
 }
 
 func get_str_without_strikethrough(_ str: String) -> NSAttributedString {

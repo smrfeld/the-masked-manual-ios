@@ -85,6 +85,10 @@ class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
         mask.show_mask_details(delegate: self, image_zoom: true)
     }
     
+    func set_type(_ val: String) {
+        // Ignore
+    }
+    
     func set_extra(_ val: MaskExtra) {
         extra_label.isHidden = false
         extra_image.isHidden = false
