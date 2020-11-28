@@ -32,31 +32,32 @@ import UIKit
 class MaskNotFoundViewController: UIViewController {
     
     @IBOutlet weak var central_view: UIView!
-    @IBOutlet weak var first_label: UILabel!
-    @IBOutlet weak var second_label: UILabel!
+    @IBOutlet weak var first_text_view: UITextView!
+    @IBOutlet weak var second_text_view: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor(white: 1.0, alpha: 0.8)
+        view.backgroundColor = UIColor.transparent_background
+        central_view.backgroundColor = UIColor.white
         
         // Bring view to front on top of blurr
         self.view.bringSubviewToFront(central_view)
         
         // Text
-        first_label.text = "Your mask was not found in our system."
-        second_label.text = "Your mask is:\n"
-            + "- Not FDA approved, and\n"
-            + "- Not NIOSH approved, and\n"
-            + "- Not authorized by the FDA for emergency\n"
+        first_text_view.text = "Your mask was not found in our system."
+        second_text_view.text = "Your mask is:\n"
+            + "(1) Not FDA approved, and\n"
+            + "(2) Not NIOSH approved, and\n"
+            + "(3) Not authorized by the FDA for emergency"
             + "  use in response to Covid-19.\n"
             + "\n"
             + "It is therefore possible that your mask's\n"
             + "effectiveness is unvalidated."
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         // Round corners
         central_view.layer.cornerRadius = 15

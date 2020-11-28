@@ -33,29 +33,30 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+                    
+        // Load masks
+        LoadMasks.load_masks_and_companies { (masks, companies) in
+                        
+            // Send to VCs
+            DispatchQueue.main.async {
+                if let nvc = self.viewControllers?[0] as? UINavigationController {
+                    if let vc = nvc.topViewController as? CameraViewController {
+                        vc.masks = masks
+                        vc.companies = companies
+                    }
+                }
+                if let nvc = self.viewControllers?[2] as? UINavigationController {
+                    if let vc = nvc.topViewController as? SearchCompanyViewController {
+                        vc.masks = masks
+                        vc.companies = companies
+                   }
+                }
+            }
+        }
 
         // About by default
         self.selectedIndex = 1;
-        
-        // Load masks
-        let pr = LoadMasks.load_masks_and_companies()
-        let masks = pr.0
-        let companies = pr.1
-        
-        // Send to VCs
-        if let nvc = self.viewControllers?[0] as? UINavigationController {
-            if let vc = nvc.topViewController as? CameraViewController {
-                vc.masks = masks
-                vc.companies = companies
-            }
-        }
-        if let nvc = self.viewControllers?[2] as? UINavigationController {
-            if let vc = nvc.topViewController as? SearchCompanyViewController {
-                vc.masks = masks
-                vc.companies = companies
-           }
-        }
-        
+                
         // Show disclaimer
         let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "disclaimerNavigationController") as! UINavigationController
         alert.providesPresentationContextTransitionStyle = true
@@ -64,17 +65,13 @@ class TabBarController: UITabBarController {
         alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         
         DispatchQueue.main.async {
-            // self.present(alert, animated: false, completion: nil)
+            self.present(alert, animated: false, completion: nil)
         }
     }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-    
-    // ***************
-    // MARK: - Load masks
-    // ***************
     
     /*
     // MARK: - Navigation

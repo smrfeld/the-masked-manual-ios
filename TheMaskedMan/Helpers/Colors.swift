@@ -31,6 +31,10 @@ import UIKit
 
 extension UIColor {
 
+    class var transparent_background: UIColor {
+        return UIColor(red: 199/256, green: 199/256, blue: 204/256, alpha: 0.9)
+    }
+    
     class var backgroundColor: UIColor {
         return UIColor(red: 9/256.0, green: 219/256.0, blue: 202/256.0, alpha: 1.0)
     }

@@ -29,6 +29,18 @@ SOFTWARE.
 
 import UIKit
 
+let url_fda = "https://www.fda.gov/medical-devices/personal-protective-equipment-infection-control/n95-respirators-surgical-masks-and-face-masks"
+let url_niosh = "https://www.cdc.gov/niosh/npptl/topics/respirators/disp_part/default.html"
+let url_emergency = "https://www.fda.gov/medical-devices/coronavirus-disease-2019-covid-19-emergency-use-authorizations-medical-devices/personal-protective-equipment-euas"
+
+func set_text_to_wrap(label : UILabel, text: String) {
+    label.frame = CGRect(x: 0, y: 0, width: label.frame.width, height: CGFloat.greatestFiniteMagnitude)
+    label.numberOfLines = 0
+    label.lineBreakMode = NSLineBreakMode.byWordWrapping
+    label.text = text
+    label.sizeToFit()
+}
+
 class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
 
     private let fda_approved = "FDA-approved"
@@ -68,7 +80,7 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
         super.viewDidLoad()
 
         // view.backgroundColor = UIColor(red: 244/256, green: 244/256, blue: 248/256, alpha: 0.95)
-        view.backgroundColor = UIColor(red: 199/256, green: 199/256, blue: 204/256, alpha: 0.9)
+        view.backgroundColor = UIColor.transparent_background
         central_view.backgroundColor = UIColor.white
         // view.backgroundColor = UIColor(white: 1.0, alpha: 0.8)
         
@@ -139,13 +151,23 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
             UIApplication.shared.open(url)
         }
     }
-    
-    private func set_text_to_wrap(label : UILabel, text: String) {
-        label.frame = CGRect(x: 0, y: 0, width: label.frame.width, height: CGFloat.greatestFiniteMagnitude)
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.byWordWrapping
-        label.text = text
-        label.sizeToFit()
+
+    @objc func open_url_fda(recognizer : UITapGestureRecognizer) {
+        if let url = URL(string: url_fda) {
+            UIApplication.shared.open(url)
+        }
+    }
+
+    @objc func open_url_niosh(recognizer : UITapGestureRecognizer) {
+        if let url = URL(string: url_niosh) {
+            UIApplication.shared.open(url)
+        }
+    }
+
+    @objc func open_url_emergency(recognizer : UITapGestureRecognizer) {
+        if let url = URL(string: url_emergency) {
+            UIApplication.shared.open(url)
+        }
     }
     
     func set_type(_ val: String) {
@@ -172,11 +194,12 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
             extra_label.textColor = UIColor.notOkRed
             set_checkmark_not_ok(extra_image)
         }
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.open_url_emergency(recognizer:)))
+        extra_stack.addGestureRecognizer(tapGestureRecognizer)
     }
     
     func set_niosh(_ val: MaskNIOSH) {
-        print(val)
-
         switch val {
         case .approved:
             set_text_to_wrap(label: niosh_label, text: niosh_approved)
@@ -192,6 +215,9 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
             niosh_label.textColor = UIColor.notOkRed
             set_checkmark_not_ok(niosh_image)
         }
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.open_url_niosh(recognizer:)))
+        niosh_stack.addGestureRecognizer(tapGestureRecognizer)
     }
     
     func set_fda(_ val: MaskFDA) {
@@ -205,6 +231,9 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
             fda_label.textColor = UIColor.notOkRed
             set_checkmark_not_ok(fda_image)
         }
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.open_url_fda(recognizer:)))
+        fda_stack.addGestureRecognizer(tapGestureRecognizer)
     }
     
     func set_image(_ image: UIImage) {
