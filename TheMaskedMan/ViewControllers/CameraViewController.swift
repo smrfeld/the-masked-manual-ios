@@ -119,10 +119,10 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
                 guard let topCandidate = observation.topCandidates(1).first else { return }
                 
                 // Only include terms with confidence 1
-                if topCandidate.confidence > 0.7 {
+                if topCandidate.confidence > 0.5 {
                     raw_observed_texts.append(topCandidate.string)
                 } else {
-                    print("Discarding: ", topCandidate.string, " for too low confidence: ", topCandidate.confidence)
+                    // print("Discarding: ", topCandidate.string, " for too low confidence: ", topCandidate.confidence)
                 }
             }
             
@@ -326,20 +326,31 @@ extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if let mask = mask_best_guess {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "maskTableViewCell2") as! MaskTableViewCell
-            cell.reload(mask: mask)
-        
-            return cell
+            return get_mask_table_view_cell(mask)
             
         } else if let company = company_best_guess {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "companyTableViewCell") as! CompanyTableViewCell
-            cell.reload(company: company)
-        
-            return cell
+            
+            if company.masks.count == 1 {
+                return get_mask_table_view_cell(company.masks.first!)
+            
+            } else {
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "companyTableViewCell") as! CompanyTableViewCell
+                cell.reload(company: company)
+            
+                return cell
+            }
         } else {
             let cell = UITableViewCell()
             return cell
         }
+    }
+    
+    private func get_mask_table_view_cell(_ mask : Mask) -> MaskTableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "maskTableViewCell2") as! MaskTableViewCell
+        cell.reload(mask: mask)
+    
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -349,32 +360,40 @@ extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
         if let mask = mask_best_guess {
         
             // Selected mask
-            
-            let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "maskDetailViewController") as! MaskDetailViewController
-            alert.mask = mask
-            alert.completion_on_close = {
-                // Start live video and recognition again
-                self.startLiveVideo()
-                self.startTextDetection()
-            }
-            alert.providesPresentationContextTransitionStyle = true
-            alert.definesPresentationContext = true
-            alert.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
-            alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
-            
-            DispatchQueue.main.async {
-                // Stop live video and recognition
-                self.stopLiveVideo()
-                self.stopTextDetection()
-                
-                // Show
-                self.present(alert, animated: true, completion: nil)
-            }
+            clicked_mask(mask)
             
         } else if let company = company_best_guess {
             
-            self.performSegue(withIdentifier: "searchModelsSegue", sender: company)
+            if company.masks.count == 1 {
+                // Selected only mask
+                clicked_mask(company.masks.first!)
+            } else {
+                self.performSegue(withIdentifier: "searchModelsSegue", sender: company)
+            }
+        }
+    }
+    
+    private func clicked_mask(_ mask : Mask) {
+        
+        let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "maskDetailViewController") as! MaskDetailViewController
+        alert.mask = mask
+        alert.completion_on_close = {
+            // Start live video and recognition again
+            self.startLiveVideo()
+            self.startTextDetection()
+        }
+        alert.providesPresentationContextTransitionStyle = true
+        alert.definesPresentationContext = true
+        alert.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+        alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        
+        DispatchQueue.main.async {
+            // Stop live video and recognition
+            self.stopLiveVideo()
+            self.stopTextDetection()
             
+            // Show
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }

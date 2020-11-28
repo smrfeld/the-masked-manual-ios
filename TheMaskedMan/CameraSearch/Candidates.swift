@@ -48,7 +48,7 @@ open class MyCandidate : Hashable {
         // All observations reduced by a factor
         if weights.count > 0 {
             weights = weights.map { (x) -> Float in
-                return 0.98 * x
+                return 0.985 * x
             }
         }
     }
