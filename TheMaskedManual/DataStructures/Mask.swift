@@ -393,4 +393,8 @@ func get_str_with_strikethrough(_ str: String) -> NSAttributedString {
 
 struct Masks : Decodable {
     let masks : [Mask]
+    let url_fda : String
+    let url_niosh : String
+    let url_emergency : String
+    let url_dev : String
 }

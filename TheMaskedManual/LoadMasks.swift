@@ -39,6 +39,126 @@ extension Date {
     }
 }
 
+func get_url_fda() -> String {
+    if let url = UserDefaults.standard.object(forKey: "url_fda") as? String, url != "" {
+        return url
+    } else {
+        return "https://www.fda.gov/medical-devices/personal-protective-equipment-infection-control/n95-respirators-surgical-masks-and-face-masks"
+    }
+}
+
+func get_url_data_fda() -> String {
+    if let url = UserDefaults.standard.object(forKey: "url_data_fda") as? String, url != "" {
+        return url
+    } else {
+        return "https://open.fda.gov"
+    }
+}
+
+func get_url_niosh() -> String {
+    if let url = UserDefaults.standard.object(forKey: "url_niosh") as? String, url != "" {
+        return url
+    } else {
+        return "https://www.cdc.gov/niosh/npptl/topics/respirators/disp_part/default.html"
+    }
+}
+
+func get_url_data_niosh() -> String {
+    if let url = UserDefaults.standard.object(forKey: "url_data_niosh") as? String, url != "" {
+        return url
+    } else {
+        return "https://www.fda.gov/medical-devices/coronavirus-disease-2019-covid-19-emergency-use-authorizations-medical-devices/personal-protective-equipment-euas"
+    }
+}
+
+func get_url_emergency() -> String {
+    if let url = UserDefaults.standard.object(forKey: "url_emergency") as? String, url != "" {
+        return url
+    } else {
+        return "https://www.fda.gov/medical-devices/coronavirus-disease-2019-covid-19-emergency-use-authorizations-medical-devices/personal-protective-equipment-euas"
+    }
+}
+
+func get_url_data_emergency() -> String {
+    if let url = UserDefaults.standard.object(forKey: "url_data_emergency") as? String, url != "" {
+        return url
+    } else {
+        return "https://www.cdc.gov/niosh/npptl/"
+    }
+}
+
+func get_url_dev() -> String {
+    if let url = UserDefaults.standard.object(forKey: "url_dev") as? String, url != "" {
+        return url
+    } else {
+        return "https://github.com/smrfeld/the-masked-manual-ios"
+    }
+}
+
+
+func set_url_fda(_ url : String) {
+    if url == "" {
+        return
+    }
+    
+    UserDefaults.standard.setValue(url, forKey: "url_fda")
+    UserDefaults.standard.synchronize()
+}
+
+func set_url_data_fda(_ url : String) {
+    if url == "" {
+        return
+    }
+    
+    UserDefaults.standard.setValue(url, forKey: "url_data_fda")
+    UserDefaults.standard.synchronize()
+}
+
+func set_url_niosh(_ url : String) {
+    if url == "" {
+        return
+    }
+
+    UserDefaults.standard.setValue(url, forKey: "url_niosh")
+    UserDefaults.standard.synchronize()
+}
+
+func set_url_data_niosh(_ url : String) {
+    if url == "" {
+        return
+    }
+
+    UserDefaults.standard.setValue(url, forKey: "url_data_niosh")
+    UserDefaults.standard.synchronize()
+}
+
+func set_url_emergency(_ url : String) {
+    if url == "" {
+        return
+    }
+
+    UserDefaults.standard.setValue(url, forKey: "url_emergency")
+    UserDefaults.standard.synchronize()
+}
+
+func set_url_data_emergency(_ url : String) {
+    if url == "" {
+        return
+    }
+
+    UserDefaults.standard.setValue(url, forKey: "url_data_emergency")
+    UserDefaults.standard.synchronize()
+}
+
+func set_url_dev(_ url : String) {
+    if url == "" {
+        return
+    }
+
+    UserDefaults.standard.setValue(url, forKey: "url_dev")
+    UserDefaults.standard.synchronize()
+}
+
 struct LoadMasks {
     
     static func load_masks_and_companies(completion: @escaping ([Mask], [Company]) -> Void) {
@@ -70,6 +190,14 @@ struct LoadMasks {
                 let data = try Data(contentsOf: url, options: .mappedIfSafe)
                 let masks = try JSONDecoder().decode(Masks.self, from: data)
                 
+                set_url_dev(masks.url_dev)
+                set_url_fda(masks.url_fda)
+                set_url_niosh(masks.url_niosh)
+                set_url_emergency(masks.url_emergency)
+                set_url_data_fda(masks.url_fda)
+                set_url_data_niosh(masks.url_niosh)
+                set_url_data_emergency(masks.url_emergency)
+
                 // Organize masks by company
                 let companies = LoadMasks.organize_masks_by_company(masks.masks)
                 

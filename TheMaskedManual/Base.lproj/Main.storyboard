@@ -308,23 +308,52 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="CWP-x9-nJs">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="83"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <string key="text">This application, including all data and information displayed and all external links, is not affiliated with or endorsed by the U.S. government or any federal or state agency.</string>
                             <color key="textColor" systemColor="labelColor"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qGy-2k-pNr">
-                            <rect key="frame" x="0.0" y="83" width="414" height="116.5"/>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="DeN-gX-B3Z">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="116.5"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <string key="text">Reference to specific commercial products, manufacturers, companies, or trademarks does not constitute its endorsement or recommendation by the U.S. Government, Department of Health and Human Services, Centers for Disease Control and Prevention, or U.S. Food and Drug Administration.</string>
                             <color key="textColor" systemColor="labelColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="QYB-Vo-XA7">
+                            <rect key="frame" x="0.0" y="116.5" width="414" height="133"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <string key="text">Reference to specific commercial products, manufacturers, companies or trademarks does not constitute its endorsement by the creators of this application, it's label, or other individuals. The application makes no statements or recommentdations regarding proper mask usage, no recommendations for purchasing decisions, and no health advice of any form.</string>
+                            <color key="textColor" systemColor="labelColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" text="This application is open source software. It is released under a permissive MIT license as follows:" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mX6-GA-EZr">
+                            <rect key="frame" x="0.0" y="249.5" width="414" height="49.5"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="textColor" systemColor="labelColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qGy-2k-pNr">
+                            <rect key="frame" x="0.0" y="299" width="414" height="41"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <mutableString key="text">Copyright 2020 Oliver K. Ernst
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</mutableString>
+                            <color key="textColor" systemColor="labelColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text=" Data sources" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aop-Zw-6oh">
-                            <rect key="frame" x="0.0" y="199.5" width="414" height="30"/>
+                            <rect key="frame" x="0.0" y="340" width="414" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="RkR-BZ-yT1"/>
                             </constraints>
@@ -333,7 +362,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2Fx-X5-JIV">
-                            <rect key="frame" x="0.0" y="229.5" width="414" height="83"/>
+                            <rect key="frame" x="0.0" y="370" width="414" height="0.0"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <string key="text">Each entry for a mask or respirator features a link to the source of the material and a timestamp for when the entry in this application was last updated. The data is sourced from (click to visit links):</string>
                             <color key="textColor" systemColor="labelColor"/>
@@ -341,7 +370,7 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pv7-vo-0nK">
-                            <rect key="frame" x="0.0" y="312.5" width="414" height="50"/>
+                            <rect key="frame" x="0.0" y="370" width="414" height="50"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ObT-pF-gNz">
                                     <rect key="frame" x="0.0" y="0.0" width="5" height="50"/>
@@ -380,7 +409,7 @@
                             </constraints>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="44A-N8-E7W">
-                            <rect key="frame" x="0.0" y="362.5" width="414" height="50"/>
+                            <rect key="frame" x="0.0" y="420" width="414" height="50"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QWc-c2-SLw">
                                     <rect key="frame" x="0.0" y="0.0" width="5" height="50"/>
@@ -419,7 +448,7 @@
                             </constraints>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AbW-Pv-1kI">
-                            <rect key="frame" x="0.0" y="412.5" width="414" height="70"/>
+                            <rect key="frame" x="0.0" y="470" width="414" height="70"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k5b-oF-wTz">
                                     <rect key="frame" x="0.0" y="0.0" width="5" height="70"/>
@@ -458,15 +487,23 @@
                             </constraints>
                         </stackView>
                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" text="The substantive content of the materials has not been changed from their original sources." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3r9-KY-673">
-                            <rect key="frame" x="0.0" y="482.5" width="414" height="49.5"/>
+                            <rect key="frame" x="0.0" y="540" width="414" height="0.0"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <color key="textColor" systemColor="labelColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
-                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" text="The material is otherwise available on the respective agency website for no charge." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gvK-4Z-mlu">
-                            <rect key="frame" x="0.0" y="532" width="414" height="8"/>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" text="The material is otherwise available on the respective agency website for no charge." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rBu-JY-zAN">
+                            <rect key="frame" x="0.0" y="540" width="414" height="0.0"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <color key="textColor" systemColor="labelColor"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gvK-4Z-mlu">
+                            <rect key="frame" x="0.0" y="540" width="414" height="0.0"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <string key="text">The terms of service for all data follow from their source as indicated for each entry for a mask. Data from openFDA is available under Creative Commons CC0 1.0 Universal dedication (timestamp: 11/28/2020). Data from the CDC provided here is not under copyright and is in the public domain (timestamp: 11/28/2020). Data from the FDA provided here is not under copyright and is in the public domain (timestamp: 11/28/2020).</string>
                             <color key="textColor" systemColor="labelColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>

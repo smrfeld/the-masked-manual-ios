@@ -98,7 +98,7 @@ class AboutViewController: UIViewController {
     }
     
     @objc func open_url_github(recognizer : UITapGestureRecognizer) {
-        if let url = URL(string: "https://github.com/smrfeld/the-masked-manual-ios") {
+        if let url = URL(string: get_url_dev()) {
             UIApplication.shared.open(url)
         }
     }

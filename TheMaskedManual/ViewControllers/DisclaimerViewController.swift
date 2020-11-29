@@ -95,19 +95,19 @@ class DisclaimerViewController: UIViewController {
     }
     
     @objc func open_fda_link(recognizer : UITapGestureRecognizer) {
-        if let url = URL(string: "https://open.fda.gov") {
+        if let url = URL(string: get_url_data_fda()) {
             UIApplication.shared.open(url)
         }
     }
 
     @objc func open_emergency_link(recognizer : UITapGestureRecognizer) {
-        if let url = URL(string: "https://www.fda.gov/medical-devices/coronavirus-disease-2019-covid-19-emergency-use-authorizations-medical-devices/personal-protective-equipment-euas") {
+        if let url = URL(string: get_url_data_emergency()) {
             UIApplication.shared.open(url)
         }
     }
 
     @objc func open_cdc_link(recognizer : UITapGestureRecognizer) {
-        if let url = URL(string: "https://www.cdc.gov/niosh/npptl/") {
+        if let url = URL(string: get_url_data_niosh()) {
             UIApplication.shared.open(url)
         }
     }

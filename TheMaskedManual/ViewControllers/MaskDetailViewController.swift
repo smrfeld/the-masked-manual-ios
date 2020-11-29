@@ -145,7 +145,7 @@ class MaskDetailViewController: UIViewController {
 
     @objc func open_help_emergency(recognizer : UITapGestureRecognizer) {
         let alert = open_help()
-        alert.url = url_emergency
+        alert.url = get_url_emergency()
         alert.field = .extra
         DispatchQueue.main.async {
             self.present(alert, animated: false, completion: nil)
@@ -154,7 +154,7 @@ class MaskDetailViewController: UIViewController {
 
     @objc func open_help_fda(recognizer : UITapGestureRecognizer) {
         let alert = open_help()
-        alert.url = url_fda
+        alert.url = get_url_fda()
         alert.field = .fda
         DispatchQueue.main.async {
             self.present(alert, animated: false, completion: nil)
@@ -163,7 +163,7 @@ class MaskDetailViewController: UIViewController {
 
     @objc func open_help_niosh(recognizer : UITapGestureRecognizer) {
         let alert = open_help()
-        alert.url = url_niosh
+        alert.url = get_url_niosh()
         alert.field = .niosh
         DispatchQueue.main.async {
             self.present(alert, animated: false, completion: nil)

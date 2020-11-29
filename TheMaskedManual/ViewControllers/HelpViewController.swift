@@ -29,10 +29,6 @@ SOFTWARE.
 
 import UIKit
 
-let url_fda = "https://www.fda.gov/medical-devices/personal-protective-equipment-infection-control/n95-respirators-surgical-masks-and-face-masks"
-let url_niosh = "https://www.cdc.gov/niosh/npptl/topics/respirators/disp_part/default.html"
-let url_emergency = "https://www.fda.gov/medical-devices/coronavirus-disease-2019-covid-19-emergency-use-authorizations-medical-devices/personal-protective-equipment-euas"
-
 enum HelpField {
     case extra, fda, niosh
 }
@@ -89,19 +85,19 @@ class HelpViewController: UIViewController {
     }
     
     @objc func open_url_fda(recognizer : UITapGestureRecognizer) {
-        if let url = URL(string: url_fda) {
+        if let url = URL(string: get_url_fda()) {
             UIApplication.shared.open(url)
         }
     }
 
     @objc func open_url_niosh(recognizer : UITapGestureRecognizer) {
-        if let url = URL(string: url_niosh) {
+        if let url = URL(string: get_url_niosh()) {
             UIApplication.shared.open(url)
         }
     }
 
     @objc func open_url_emergency(recognizer : UITapGestureRecognizer) {
-        if let url = URL(string: url_emergency) {
+        if let url = URL(string: get_url_emergency()) {
             UIApplication.shared.open(url)
         }
     }
