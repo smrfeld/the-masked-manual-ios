@@ -53,6 +53,8 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     var session = AVCaptureSession()
     var requests = [VNRequest]()
 
+    private var screenshot_mode = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,8 +74,21 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         let companyNib = UINib.init(nibName: "CompanyTableViewCell", bundle: Bundle.main)
         tableView.register(companyNib, forCellReuseIdentifier: "companyTableViewCell")
         
-        // Setup video once
-        setup_live_video()
+        if !screenshot_mode {
+            // Setup video once
+            setup_live_video()
+        }
+        
+        if screenshot_mode {
+            imageView.image = UIImage(named: "toy_image")
+            
+            mask_best_guess = masks.filter({ (m) -> Bool in
+                return m.model == "7048"
+            }).first!
+            
+            self.table_view_height_constraint.constant = 120.0
+            self.tableView.layoutIfNeeded()
+        }
         
         // Background color
         tableView.backgroundColor = UIColor(red: 174.0/256.0, green: 174.0/256.0, blue: 178.0/256.0, alpha: 1.0)
@@ -82,15 +97,19 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        startLiveVideo()
-        startTextDetection()
+        if !screenshot_mode {
+            startLiveVideo()
+            startTextDetection()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        stopLiveVideo()
-        stopTextDetection()
+        if !screenshot_mode {
+            stopLiveVideo()
+            stopTextDetection()
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -157,41 +176,42 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             // Found a new best guess for the mask
             mask_best_guess = new_mask_best_guess
             company_best_guess = nil
-            
-            // Set height to two cells
-            DispatchQueue.main.async() {
-                self.table_view_height_constraint.constant = 120.0
-                self.tableView.layoutIfNeeded()
-            }
-            
+                        
         } else if let new_company_best_guess = camera_search_for_company.get_top_company() {
         
             // Found a new best guess for the company
             mask_best_guess = nil
             company_best_guess = new_company_best_guess
-
-            // Set height to two cells
-            DispatchQueue.main.async() {
-                self.table_view_height_constraint.constant = 120.0
-                self.tableView.layoutIfNeeded()
-            }
             
         } else {
 
             // Truly nothing found
             mask_best_guess = nil
             company_best_guess = nil
-            
-            // Set height to one cells
-            DispatchQueue.main.async() {
-                self.table_view_height_constraint.constant = 60.0
-                self.tableView.layoutIfNeeded()
-            }
         }
         
         // Reload if needed
         if mask_best_guess != mask_best_guess_prev || company_best_guess != company_best_guess_prev {
             DispatchQueue.main.async() {
+                
+                // Fix height
+                if self.mask_best_guess != nil {
+                    // Set height to two cells
+                    self.table_view_height_constraint.constant = 120.0
+                    self.tableView.layoutIfNeeded()
+                    
+                } else if self.company_best_guess != nil {
+                    // Set height to two cells
+                    self.table_view_height_constraint.constant = 120.0
+                    self.tableView.layoutIfNeeded()
+                    
+                } else {
+                    // Set height to one cells
+                    self.table_view_height_constraint.constant = 60.0
+                    self.tableView.layoutIfNeeded()
+                }
+                
+                // Reload table
                 self.tableView.reloadData()
             }
         }

@@ -330,7 +330,7 @@ class Mask : Codable, CustomStringConvertible, Equatable, Hashable {
                 fda: .approved,
                 fda_name: fda_approved,
                 fda_name_short: fda_approved_short,
-                help_fda: "This respirator is not FDA approved. It is a surgical respirator.",
+                help_fda: "This respirator is FDA approved. It is a surgical respirator.",
                 niosh: .approved,
                 niosh_name: niosh_approved,
                 niosh_name_short: niosh_approved_short,
