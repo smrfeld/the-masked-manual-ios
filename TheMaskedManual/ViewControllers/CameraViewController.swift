@@ -425,7 +425,7 @@ extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
     
     private func get_mask_table_view_cell(_ mask : Mask) -> MaskTableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "maskTableViewCell2") as! MaskTableViewCell
-        cell.reload(mask: mask, rounded: true)
+        cell.reload(mask: mask, mask_ui: mask.get_mask_ui(), rounded: true)
     
         return cell
     }
@@ -454,6 +454,7 @@ extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
         
         let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "maskDetailViewController") as! MaskDetailViewController
         alert.mask = mask
+        alert.mask_ui = mask.get_mask_ui()
         alert.completion_on_close = {
             // Start live video and recognition again
             self.startLiveVideo()

@@ -29,13 +29,41 @@ SOFTWARE.
 
 import UIKit
 
+extension NSMutableAttributedString {
+    var fontSize:CGFloat { return 14 }
+    var boldFont:UIFont { return UIFont.boldSystemFont(ofSize: fontSize) }
+    var normalFont:UIFont { return  UIFont.systemFont(ofSize: fontSize)}
+
+    func bold(_ value:String) -> NSMutableAttributedString {
+
+        let attributes:[NSAttributedString.Key : Any] = [
+            .font : boldFont
+        ]
+
+        self.append(NSAttributedString(string: value, attributes:attributes))
+        return self
+    }
+
+    func normal(_ value:String) -> NSMutableAttributedString {
+
+        let attributes:[NSAttributedString.Key : Any] = [
+            .font : normalFont,
+        ]
+
+        self.append(NSAttributedString(string: value, attributes:attributes))
+        return self
+    }
+}
+
 class AboutViewController: UIViewController {
 
     @IBOutlet weak var scroll_view: UIScrollView!
     @IBOutlet weak var content_stack: UIStackView!
     @IBOutlet weak var text_disclaimer: UITextView!
     @IBOutlet weak var text_about_1: UITextView!
-    @IBOutlet weak var text_about_2: UITextView!
+    
+    @IBOutlet weak var dev_stack_view: UIStackView!
+    @IBOutlet weak var dev_text_view: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +81,26 @@ class AboutViewController: UIViewController {
         
         // Set width of stack view to match scroll
         self.content_stack.widthAnchor.constraint(equalTo: self.scroll_view.widthAnchor).isActive = true
+        
+        // Tap to see github link
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.open_url_github(recognizer:)))
+        dev_stack_view.addGestureRecognizer(tapGestureRecognizer)
+        
+        // Texts
+        text_disclaimer.attributedText = NSMutableAttributedString()
+            .bold("Disclaimer: ")
+            .normal("This application is not affiliated with and not endorsed by the U.S. government or any federal or state agency, including the Department of Health and Human Services, the Centers for Disease Control and Prevention, and the U.S. Food and Drug Administration.")
+
+        dev_text_view.attributedText = NSMutableAttributedString()
+            .bold("Developer? ")
+            .normal("This is an open source project. Contribute on GitHub.")
+
+    }
+    
+    @objc func open_url_github(recognizer : UITapGestureRecognizer) {
+        if let url = URL(string: "https://github.com/smrfeld/the-masked-manual-ios") {
+            UIApplication.shared.open(url)
+        }
     }
     
     @IBAction func disclaimer_button_pressed(_ sender: Any) {

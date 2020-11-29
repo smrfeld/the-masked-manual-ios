@@ -50,7 +50,7 @@ class MaskNotFoundViewController: UIViewController {
             + "(1) Not FDA approved, and\n"
             + "(2) Not NIOSH approved, and\n"
             + "(3) Not authorized by the FDA for emergency"
-            + "  use in response to Covid-19.\n"
+            + "  use in response to COVID-19.\n"
             + "\n"
             + "It is therefore possible that your mask's\n"
             + "effectiveness is unvalidated."

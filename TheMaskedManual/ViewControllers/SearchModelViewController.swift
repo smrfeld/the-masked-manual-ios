@@ -198,7 +198,7 @@ extension SearchModelViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "maskTableViewCell2") as! MaskTableViewCell
-        cell.reload(mask: masks_filtered[indexPath.row], rounded: false)
+        cell.reload(mask: masks_filtered[indexPath.row], mask_ui: masks_filtered[indexPath.row].get_mask_ui(), rounded: false)
         
         return cell
     }
@@ -212,6 +212,7 @@ extension SearchModelViewController: UITableViewDelegate, UITableViewDataSource 
         
         let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "maskDetailViewController") as! MaskDetailViewController
         alert.mask = mask
+        alert.mask_ui = mask.get_mask_ui()
         alert.providesPresentationContextTransitionStyle = true
         alert.definesPresentationContext = true
         alert.modalPresentationStyle = UIModalPresentationStyle.overFullScreen

@@ -29,10 +29,6 @@ SOFTWARE.
 
 import UIKit
 
-let url_fda = "https://www.fda.gov/medical-devices/personal-protective-equipment-infection-control/n95-respirators-surgical-masks-and-face-masks"
-let url_niosh = "https://www.cdc.gov/niosh/npptl/topics/respirators/disp_part/default.html"
-let url_emergency = "https://www.fda.gov/medical-devices/coronavirus-disease-2019-covid-19-emergency-use-authorizations-medical-devices/personal-protective-equipment-euas"
-
 func set_text_to_wrap(label : UILabel, text: String) {
     label.frame = CGRect(x: 0, y: 0, width: label.frame.width, height: CGFloat.greatestFiniteMagnitude)
     label.numberOfLines = 0
@@ -41,16 +37,7 @@ func set_text_to_wrap(label : UILabel, text: String) {
     label.sizeToFit()
 }
 
-class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
-
-    private let fda_approved = "FDA-approved"
-    private let fda_not_approved = "Not FDA-approved"
-    private let niosh_approved = "NIOSH-approved"
-    private let niosh_not_approved = "Not NIOSH-approved"
-    private let niosh_not_applicable = "NIOSH approval not applicable for surgical masks"
-    private let emergency = "Emergency-authorized for COVID-19"
-    private let recalled = "FDA-approval potentially recalled"
-    private let revoked = "Emergency authorization revoked"
+class MaskDetailViewController: UIViewController {
     
     @IBOutlet weak var type_label: UILabel!
     @IBOutlet weak var central_view: UIView!
@@ -74,15 +61,14 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
     @IBOutlet weak var date_label: UILabel!
     
     var mask : Mask!
+    var mask_ui : Mask.MaskUI!
     var completion_on_close : () -> Void = {}
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // view.backgroundColor = UIColor(red: 244/256, green: 244/256, blue: 248/256, alpha: 0.95)
         view.backgroundColor = UIColor.transparent_background
         central_view.backgroundColor = UIColor.white
-        // view.backgroundColor = UIColor(white: 1.0, alpha: 0.8)
         
         // Bring view to front on top of blurr
         self.view.bringSubviewToFront(central_view)
@@ -99,7 +85,12 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
         // company_label.text = mask.company
         set_text_to_wrap(label: model_label, text: mask.model)
         set_text_to_wrap(label: company_label, text: mask.company)
-        mask.show_mask_details(delegate: self, image_zoom: false)
+        
+        set_type(mask_ui.type)
+        set_extra(mask_ui)
+        set_niosh(mask_ui)
+        set_fda(mask_ui)
+        set_image(mask_ui)
         
         if mask.url_company != "" {
             company_website_stack.isHidden = false
@@ -152,92 +143,107 @@ class MaskDetailViewController: UIViewController, ShowMaskDetailsProtocol {
         }
     }
 
-    @objc func open_url_fda(recognizer : UITapGestureRecognizer) {
-        if let url = URL(string: url_fda) {
-            UIApplication.shared.open(url)
+    @objc func open_help_emergency(recognizer : UITapGestureRecognizer) {
+        let alert = open_help()
+        alert.url = url_emergency
+        alert.field = .extra
+        DispatchQueue.main.async {
+            self.present(alert, animated: false, completion: nil)
         }
     }
 
-    @objc func open_url_niosh(recognizer : UITapGestureRecognizer) {
-        if let url = URL(string: url_niosh) {
-            UIApplication.shared.open(url)
+    @objc func open_help_fda(recognizer : UITapGestureRecognizer) {
+        let alert = open_help()
+        alert.url = url_fda
+        alert.field = .fda
+        DispatchQueue.main.async {
+            self.present(alert, animated: false, completion: nil)
         }
     }
 
-    @objc func open_url_emergency(recognizer : UITapGestureRecognizer) {
-        if let url = URL(string: url_emergency) {
-            UIApplication.shared.open(url)
+    @objc func open_help_niosh(recognizer : UITapGestureRecognizer) {
+        let alert = open_help()
+        alert.url = url_niosh
+        alert.field = .niosh
+        DispatchQueue.main.async {
+            self.present(alert, animated: false, completion: nil)
         }
     }
     
+    private func open_help() -> HelpViewController {
+        let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "helpViewController") as! HelpViewController
+        alert.mask = mask
+        alert.mask_ui = mask_ui
+        alert.providesPresentationContextTransitionStyle = true
+        alert.definesPresentationContext = true
+        alert.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
+        alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        return alert
+    }
+        
     func set_type(_ val: String) {
         type_label.text = val
     }
     
-    func set_extra(_ val: MaskExtra) {
-        switch val {
+    func set_extra(_ mask_ui : Mask.MaskUI) {
+        set_text_to_wrap(label: extra_label, text: mask_ui.extra_name)
+        extra_image.image = mask_ui.extra_image_checkmark.0
+        extra_image.tintColor = mask_ui.extra_image_checkmark.1
+        
+        switch mask_ui.extra {
         case .none:
             extra_stack.isHidden = true
         case .emergency_authorized:
             extra_stack.isHidden = false
-            set_text_to_wrap(label: extra_label, text: emergency)
             extra_label.textColor = UIColor.okGreen
-            set_checkmark_ok(extra_image)
         case .recalled:
             extra_stack.isHidden = false
-            extra_label.text = recalled
             extra_label.textColor = UIColor.notOkRed
-            set_checkmark_not_ok(extra_image)
         case .revoked:
             extra_stack.isHidden = false
-            extra_label.text = revoked
             extra_label.textColor = UIColor.notOkRed
-            set_checkmark_not_ok(extra_image)
         }
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.open_url_emergency(recognizer:)))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.open_help_emergency(recognizer:)))
         extra_stack.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func set_niosh(_ val: MaskNIOSH) {
-        switch val {
+    func set_niosh(_ mask_ui : Mask.MaskUI) {
+        set_text_to_wrap(label: niosh_label, text: mask_ui.niosh_name)
+        niosh_image.image = mask_ui.niosh_image_checkmark.0
+        niosh_image.tintColor = mask_ui.niosh_image_checkmark.1
+
+        switch mask_ui.niosh {
         case .approved:
-            set_text_to_wrap(label: niosh_label, text: niosh_approved)
-            // niosh_label.text = niosh_approved
             niosh_label.textColor = UIColor.okGreen
-            set_checkmark_ok(niosh_image)
         case .not_applicable:
-            niosh_label.text = niosh_not_applicable
             niosh_label.textColor = UIColor.mehGray
-            set_checkmark_not_applicable(niosh_image)
         case .not_approved:
-            niosh_label.text = niosh_not_approved
             niosh_label.textColor = UIColor.notOkRed
-            set_checkmark_not_ok(niosh_image)
         }
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.open_url_niosh(recognizer:)))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.open_help_niosh(recognizer:)))
         niosh_stack.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func set_fda(_ val: MaskFDA) {
-        switch val {
+    func set_fda(_ mask_ui : Mask.MaskUI) {
+        fda_label.text = mask_ui.fda_name
+        fda_image.image = mask_ui.fda_image_checkmark.0
+        fda_image.tintColor = mask_ui.fda_image_checkmark.1
+
+        switch mask_ui.fda {
         case .approved:
-            fda_label.text = fda_approved
             fda_label.textColor = UIColor.okGreen
-            set_checkmark_ok(fda_image)
         case .not_approved:
-            fda_label.text = fda_not_approved
             fda_label.textColor = UIColor.notOkRed
-            set_checkmark_not_ok(fda_image)
         }
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.open_url_fda(recognizer:)))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.open_help_fda(recognizer:)))
         fda_stack.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func set_image(_ image: UIImage) {
-        image_view.image = image
+    func set_image(_ mask_ui : Mask.MaskUI) {
+        image_view.image = mask_ui.image_zoom
     }
         
     @IBAction func close_button_pressed(_ sender: Any) {

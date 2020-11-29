@@ -32,6 +32,7 @@
 		4BB6FEFC256F6CA500A72429 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB6FEFB256F6CA500A72429 /* AboutViewController.swift */; };
 		4BB6FEFF256F7F9600A72429 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB6FEFE256F7F9600A72429 /* Company.swift */; };
 		4BB6FF04256F7FB900A72429 /* ModelSearchName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BB6FF03256F7FB900A72429 /* ModelSearchName.swift */; };
+		4BC4B93825733549007B17E9 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4B93725733549007B17E9 /* HelpViewController.swift */; };
 		4BC6B8AD256885830075D1AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8AC256885830075D1AD /* AppDelegate.swift */; };
 		4BC6B8AF256885830075D1AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC6B8AE256885830075D1AD /* SceneDelegate.swift */; };
 		4BC6B8B4256885830075D1AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4BC6B8B2256885830075D1AD /* Main.storyboard */; };
@@ -69,6 +70,7 @@
 		4BB6FEFB256F6CA500A72429 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		4BB6FEFE256F7F9600A72429 /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		4BB6FF03256F7FB900A72429 /* ModelSearchName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSearchName.swift; sourceTree = "<group>"; };
+		4BC4B93725733549007B17E9 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		4BC6B8A9256885830075D1AD /* TheMaskedManual.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMaskedManual.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BC6B8AC256885830075D1AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4BC6B8AE256885830075D1AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 		4B7EAB2A2570A3BF00C69D05 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				4BC4B93725733549007B17E9 /* HelpViewController.swift */,
 				4BB6FEFB256F6CA500A72429 /* AboutViewController.swift */,
 				4BDEA0A8256EF78C00659FAF /* DisclaimerViewController.swift */,
 				4BB17423256DDD4A005EAC86 /* TabBarController.swift */,
@@ -302,6 +305,7 @@
 				4B7CF408256B9ECA001191A7 /* MaskDetailViewController.swift in Sources */,
 				4BB6FEFC256F6CA500A72429 /* AboutViewController.swift in Sources */,
 				4B7CF40B256BA09F001191A7 /* Button.swift in Sources */,
+				4BC4B93825733549007B17E9 /* HelpViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

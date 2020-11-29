@@ -29,32 +29,8 @@ SOFTWARE.
 
 import UIKit
 
-func set_checkmark_not_applicable(_ label : UIImageView) {
-    label.image = UIImage(systemName: "minus.circle")
-    label.tintColor = UIColor.mehGray
-}
-
-func set_checkmark_ok(_ label : UIImageView) {
-    label.image = UIImage(systemName: "checkmark.circle")
-    label.tintColor = UIColor.okGreen
-}
-
-func set_checkmark_not_ok(_ label : UIImageView) {
-    label.image = UIImage(systemName: "multiply.circle")
-    label.tintColor = UIColor.notOkRed
-}
-
-class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
-    
-    private let fda_approved = "FDA"
-    private let fda_not_approved = "FDA"
-    private let niosh_approved = "NIOSH"
-    private let niosh_not_approved = "NIOSH"
-    private let niosh_not_applicable = "NIOSH"
-    private let emergency = "Emergency"
-    private let recalled = "Recalled"
-    private let revoked = "Revoked"
-
+class MaskTableViewCell: UITableViewCell {
+        
     /*
     private let fda_approved = "FDA-approved  "
     private let fda_not_approved = "Not FDA-approved  "
@@ -78,8 +54,8 @@ class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
     @IBOutlet weak var extra_image: UIImageView!
     
     @IBOutlet weak var stack_view: UIStackView!
-    
-    func reload(mask : Mask, rounded : Bool) {
+        
+    func reload(mask : Mask, mask_ui : Mask.MaskUI, rounded : Bool) {
 
         backgroundColor = .white
         if rounded {
@@ -90,69 +66,36 @@ class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
         
         self.model_label.text = mask.model
         self.company_label.text = mask.company
+        set_extra(mask_ui)
+        set_niosh(mask_ui)
+        set_fda(mask_ui)
+        set_image(mask_ui)
+    }
         
-        mask.show_mask_details(delegate: self, image_zoom: true)
-    }
-    
-    func set_type(_ val: String) {
-        // Ignore
-    }
-    
-    func set_extra(_ val: MaskExtra) {
+    func set_extra(_ mask_ui : Mask.MaskUI) {
         extra_label.isHidden = false
         extra_image.isHidden = false
         
-        switch val {
-        case .emergency_authorized:
-            extra_label.text = emergency
-            // extra_label.textColor = UIColor.okGreen
-            set_checkmark_ok(extra_image)
-        case .recalled:
-            extra_label.text = recalled
-            // extra_label.textColor = UIColor.notOkRed
-            set_checkmark_not_ok(extra_image)
-        case .revoked:
-            extra_label.text = revoked
-            // extra_label.textColor = UIColor.notOkRed
-            set_checkmark_not_ok(extra_image)
-        case .none:
-            extra_label.text = ""
-            extra_image.image = nil
-        }
+        extra_image.image = mask_ui.extra_image_checkmark.0
+        extra_image.tintColor = mask_ui.extra_image_checkmark.1
+
+        extra_label.text = mask_ui.extra_name_short
     }
     
-    func set_niosh(_ val: MaskNIOSH) {
-        switch val {
-        case .approved:
-            niosh_label.text = niosh_approved
-            // niosh_label.textColor = UIColor.okGreen
-            set_checkmark_ok(niosh_image)
-        case .not_approved:
-            niosh_label.text = niosh_not_approved
-            // niosh_label.textColor = UIColor.notOkRed
-            set_checkmark_not_ok(niosh_image)
-        case .not_applicable:
-            niosh_label.text = niosh_not_applicable
-            // niosh_label.textColor = UIColor.mehGray
-            set_checkmark_not_applicable(niosh_image)
-        }
+    func set_niosh(_ mask_ui : Mask.MaskUI) {
+        niosh_label.text = mask_ui.niosh_name_short
+        niosh_image.image = mask_ui.niosh_image_checkmark.0
+        niosh_image.tintColor = mask_ui.niosh_image_checkmark.1
     }
     
-    func set_fda(_ val: MaskFDA) {
-        switch val {
-        case .approved:
-            fda_label.text = fda_approved
-            // fda_label.textColor = UIColor.okGreen
-            set_checkmark_ok(fda_image)
-        case .not_approved:
-            fda_label.text = fda_not_approved
-            // fda_label.textColor = UIColor.notOkRed
-            set_checkmark_not_ok(fda_image)
-        }
+    func set_fda(_ mask_ui : Mask.MaskUI) {
+        fda_label.text = mask_ui.fda_name_short
+        fda_image.image = mask_ui.fda_image_checkmark.0
+        fda_image.tintColor = mask_ui.fda_image_checkmark.1
     }
     
-    func set_image(_ image: UIImage) {
-        image_view.image = image
+    func set_image(_ mask_ui : Mask.MaskUI) {
+        image_view.image = mask_ui.image
     }
         
     override func awakeFromNib() {
