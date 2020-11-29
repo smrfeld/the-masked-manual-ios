@@ -163,14 +163,13 @@ struct LoadMasks {
     
     static func load_masks_and_companies(completion: @escaping ([Mask], [Company]) -> Void) {
         
+        // Load current data
+        load_masks_and_companies_from_local(completion: completion)
+        
+        // Also: check if data should be downloaded, and if so, download asynch
         if check_if_data_should_be_downloaded() {
             print("Downloading latest data...")
-            download_latest_data {
-                load_masks_and_companies_from_local(completion: completion)
-            }
-        } else {
-            print("Loading data from local storage...")
-            load_masks_and_companies_from_local(completion: completion)
+            download_latest_data(completion: {})
         }
     }
     
@@ -289,7 +288,16 @@ struct LoadMasks {
             
         } catch {
             print ("url error: \(error)")
-            completion(nil)
+            
+            // Try the backup
+            if let path = Bundle.main.path(forResource: "data_2020_11_29", ofType: "txt") {
+                print("Switching to backup")
+                completion(URL(fileURLWithPath: path))
+            } else {
+                // Very bad!
+                print ("url error for backup!")
+                completion(nil)
+            }
         }
     }
     

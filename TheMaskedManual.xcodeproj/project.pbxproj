@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B79C5F725745E5900AA16D7 /* data_2020_11_29.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4B79C5F625745E5900AA16D7 /* data_2020_11_29.txt */; };
 		4B7A119E2571A59A00F22258 /* CompanySearchName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A119D2571A59A00F22258 /* CompanySearchName.swift */; };
 		4B7A11A12571AA5100F22258 /* CompanyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B7A11A02571AA5100F22258 /* CompanyTableViewCell.xib */; };
 		4B7A11A52571C37D00F22258 /* TrivialWordsRemover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B7A11A42571C37D00F22258 /* TrivialWordsRemover.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4B79C5F625745E5900AA16D7 /* data_2020_11_29.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = data_2020_11_29.txt; sourceTree = "<group>"; };
 		4B7A119D2571A59A00F22258 /* CompanySearchName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanySearchName.swift; sourceTree = "<group>"; };
 		4B7A11A02571AA5100F22258 /* CompanyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CompanyTableViewCell.xib; sourceTree = "<group>"; };
 		4B7A11A42571C37D00F22258 /* TrivialWordsRemover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrivialWordsRemover.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				4BC6B8AC256885830075D1AD /* AppDelegate.swift */,
 				4BC6B8AE256885830075D1AD /* SceneDelegate.swift */,
 				4B7EAB312570A46600C69D05 /* LoadMasks.swift */,
+				4B79C5F625745E5900AA16D7 /* data_2020_11_29.txt */,
 				4B7A11A32571C36600F22258 /* StringManipulations */,
 				4BB6FF01256F7FA800A72429 /* DataStructures */,
 				4B7EAB282570A3A500C69D05 /* Helpers */,
@@ -264,6 +267,7 @@
 				4BB1741B256D979D005EAC86 /* MaskNotFoundHeaderView.xib in Resources */,
 				4BC6B8B6256885850075D1AD /* Assets.xcassets in Resources */,
 				4B7A11A12571AA5100F22258 /* CompanyTableViewCell.xib in Resources */,
+				4B79C5F725745E5900AA16D7 /* data_2020_11_29.txt in Resources */,
 				4BC6B8B4256885830075D1AD /* Main.storyboard in Resources */,
 				4BDCEDAA256E301C0035B51F /* MaskTableViewCell.xib in Resources */,
 				4B7A11C3257200A400F22258 /* Launch Screen.storyboard in Resources */,
