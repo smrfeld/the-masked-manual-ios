@@ -209,12 +209,13 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ig6-qg-clc">
                                 <rect key="frame" x="0.0" y="148" width="414" height="665"/>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rOp-vU-pb2">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rOp-vU-pb2">
                                 <rect key="frame" x="0.0" y="88" width="414" height="60"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="eYM-Wa-clN"/>
                                 </constraints>
+                                <color key="sectionIndexBackgroundColor" systemColor="systemGray2Color"/>
                                 <connections>
                                     <outlet property="dataSource" destination="cJl-Ow-DqB" id="S1R-Ds-SSp"/>
                                     <outlet property="delegate" destination="cJl-Ow-DqB" id="Z9D-nt-X9D"/>
@@ -237,6 +238,7 @@
                     <connections>
                         <outlet property="imageView" destination="Ig6-qg-clc" id="8MF-O4-sBx"/>
                         <outlet property="tableView" destination="rOp-vU-pb2" id="6Uc-ae-Fb2"/>
+                        <outlet property="table_view_height_constraint" destination="eYM-Wa-clN" id="4Cy-Eb-8bL"/>
                         <segue destination="FAv-fB-8lH" kind="show" identifier="searchModelsSegue" id="mco-MZ-NNJ"/>
                     </connections>
                 </viewController>
@@ -1274,6 +1276,9 @@
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray3Color">
             <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

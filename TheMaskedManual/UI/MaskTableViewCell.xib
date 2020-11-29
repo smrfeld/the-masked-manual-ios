@@ -131,7 +131,6 @@
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="45H-o2-Wxw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="8pe-sm-WC7"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="45H-o2-Wxw" secondAttribute="trailing" constant="10" id="Sq6-JF-cdT"/>
@@ -149,15 +148,13 @@
                 <outlet property="model_label" destination="fNg-mO-khQ" id="JQh-pO-hPo"/>
                 <outlet property="niosh_image" destination="pkr-hf-N91" id="cQM-ne-pqN"/>
                 <outlet property="niosh_label" destination="coJ-7A-rlT" id="xhw-6D-TRr"/>
+                <outlet property="stack_view" destination="45H-o2-Wxw" id="bjS-Cy-B0I"/>
             </connections>
             <point key="canvasLocation" x="141" y="50"/>
         </view>
     </objects>
     <resources>
         <image name="multiply.circle.fill" catalog="system" width="128" height="121"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemGray2Color">
             <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

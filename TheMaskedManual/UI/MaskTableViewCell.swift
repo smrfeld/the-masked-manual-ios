@@ -77,7 +77,16 @@ class MaskTableViewCell: UITableViewCell, ShowMaskDetailsProtocol {
     @IBOutlet weak var niosh_image: UIImageView!
     @IBOutlet weak var extra_image: UIImageView!
     
-    func reload(mask : Mask) {
+    @IBOutlet weak var stack_view: UIStackView!
+    
+    func reload(mask : Mask, rounded : Bool) {
+
+        backgroundColor = .white
+        if rounded {
+            layer.cornerRadius = 15
+        } else {
+            layer.cornerRadius = 0
+        }
         
         self.model_label.text = mask.model
         self.company_label.text = mask.company

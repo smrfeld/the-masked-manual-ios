@@ -45,12 +45,14 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
+
+    @IBOutlet weak var table_view_height_constraint: NSLayoutConstraint!
     
     var is_search_in_progress : Bool = false
     
     var session = AVCaptureSession()
     var requests = [VNRequest]()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,6 +74,9 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         
         // Setup video once
         setup_live_video()
+        
+        // Background color
+        tableView.backgroundColor = UIColor(red: 174.0/256.0, green: 174.0/256.0, blue: 178.0/256.0, alpha: 1.0)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -153,17 +158,35 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             mask_best_guess = new_mask_best_guess
             company_best_guess = nil
             
+            // Set height to two cells
+            DispatchQueue.main.async() {
+                self.table_view_height_constraint.constant = 120.0
+                self.tableView.layoutIfNeeded()
+            }
+            
         } else if let new_company_best_guess = camera_search_for_company.get_top_company() {
         
             // Found a new best guess for the company
             mask_best_guess = nil
             company_best_guess = new_company_best_guess
 
+            // Set height to two cells
+            DispatchQueue.main.async() {
+                self.table_view_height_constraint.constant = 120.0
+                self.tableView.layoutIfNeeded()
+            }
+            
         } else {
 
             // Truly nothing found
             mask_best_guess = nil
             company_best_guess = nil
+            
+            // Set height to one cells
+            DispatchQueue.main.async() {
+                self.table_view_height_constraint.constant = 60.0
+                self.tableView.layoutIfNeeded()
+            }
         }
         
         // Reload if needed
@@ -259,6 +282,12 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     // MARK: - Tap not found header
     // ***************
     
+    @objc func handleTapSeeMoreMasksByThisCompany(_ sender: UITapGestureRecognizer) {
+        if let mask_best_guess = mask_best_guess {
+            self.performSegue(withIdentifier: "searchModelsSegue", sender: mask_best_guess.company_obj)
+        }
+    }
+
     @objc func handleTapMaskNotFound(_ sender: UITapGestureRecognizer) {
         
         let alert = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "maskNotFoundViewController") as! MaskNotFoundViewController
@@ -287,37 +316,86 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
 extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        if mask_best_guess != nil {
+            return 2
+        } else if company_best_guess != nil {
+            return 2
+        } else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        // Only show header if no best guess
-        if mask_best_guess == nil && company_best_guess == nil {
-            return 60.0
+        if mask_best_guess != nil {
+            if section == 0 {
+                return 0.0
+            } else {
+                return 60.0
+            }
+        } else if company_best_guess != nil {
+            if section == 0 {
+                return 0.0
+            } else {
+                return 60.0
+            }
         } else {
-            return 0.0
+            return 60.0
         }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        // Only show header if no best guess
-        if mask_best_guess == nil && company_best_guess == nil {
-            let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "maskNotFoundHeaderView") as! MaskNotFoundHeaderView
-            
-            // Add tap
-            let tap = UITapGestureRecognizer(target: self, action:#selector(self.handleTapMaskNotFound(_:)))
-            view.addGestureRecognizer(tap)
-            
-            return view
+        if mask_best_guess != nil {
+            if section == 0 {
+                return nil
+            } else {
+                return get_see_more_masks_by_this_company_header_view()
+            }
+        } else if company_best_guess != nil {
+            if section == 0 {
+                return nil
+            } else {
+                return get_mask_not_found_header_view()
+            }
         } else {
-            return nil
+            return get_mask_not_found_header_view()
         }
     }
     
+    private func get_see_more_masks_by_this_company_header_view() -> MaskNotFoundHeaderView {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "maskNotFoundHeaderView") as! MaskNotFoundHeaderView
+        view.show_see_more_masks(mask: mask_best_guess)
+        
+        // Add tap
+        let tap = UITapGestureRecognizer(target: self, action:#selector(self.handleTapSeeMoreMasksByThisCompany(_:)))
+        view.addGestureRecognizer(tap)
+        
+        return view
+    }
+    
+    private func get_mask_not_found_header_view() -> MaskNotFoundHeaderView {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "maskNotFoundHeaderView") as! MaskNotFoundHeaderView
+        view.show_cant_find_your_mask()
+
+        // Add tap
+        let tap = UITapGestureRecognizer(target: self, action:#selector(self.handleTapMaskNotFound(_:)))
+        view.addGestureRecognizer(tap)
+        
+        return view
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // Only show rows if best guess
-        if mask_best_guess == nil && company_best_guess == nil {
-            return 0
+        if mask_best_guess != nil {
+            if section == 0 {
+                return 1
+            } else {
+                return 0
+            }
+        } else if company_best_guess != nil {
+            if section == 0 {
+                return 1
+            } else {
+                return 0
+            }
         } else {
             return 1
         }
@@ -336,19 +414,18 @@ extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
             } else {
                 
                 let cell = tableView.dequeueReusableCell(withIdentifier: "companyTableViewCell") as! CompanyTableViewCell
-                cell.reload(company: company)
+                cell.reload(company: company, rounded: true)
             
                 return cell
             }
         } else {
-            let cell = UITableViewCell()
-            return cell
+            return UITableViewCell()
         }
     }
     
     private func get_mask_table_view_cell(_ mask : Mask) -> MaskTableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "maskTableViewCell2") as! MaskTableViewCell
-        cell.reload(mask: mask)
+        cell.reload(mask: mask, rounded: true)
     
         return cell
     }

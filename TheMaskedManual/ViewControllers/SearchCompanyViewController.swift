@@ -165,7 +165,7 @@ extension SearchCompanyViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "companyTableViewCell") as! CompanyTableViewCell
-        cell.reload(company: companies_filtered[indexPath.row])
+        cell.reload(company: companies_filtered[indexPath.row], rounded: false)
         
         return cell
     }

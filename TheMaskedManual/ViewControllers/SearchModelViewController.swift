@@ -48,7 +48,7 @@ class SearchModelViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+                        
         // Sort
         masks.sort { (m1, m2) -> Bool in
             return m1.model < m2.model
@@ -198,7 +198,7 @@ extension SearchModelViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "maskTableViewCell2") as! MaskTableViewCell
-        cell.reload(mask: masks_filtered[indexPath.row])
+        cell.reload(mask: masks_filtered[indexPath.row], rounded: false)
         
         return cell
     }

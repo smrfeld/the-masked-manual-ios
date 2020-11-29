@@ -20,22 +20,21 @@
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Can't find your mask?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P9t-OP-a0X">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                            <color key="backgroundColor" systemColor="systemGray2Color"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemGray2Color"/>
                     <constraints>
-                        <constraint firstItem="P9t-OP-a0X" firstAttribute="leading" secondItem="s9E-by-pmN" secondAttribute="leading" id="04O-Qo-RnF"/>
-                        <constraint firstItem="P9t-OP-a0X" firstAttribute="top" secondItem="s9E-by-pmN" secondAttribute="top" id="2X7-EB-al4"/>
-                        <constraint firstAttribute="bottom" secondItem="P9t-OP-a0X" secondAttribute="bottom" id="C6V-Yp-wsM"/>
-                        <constraint firstAttribute="trailing" secondItem="P9t-OP-a0X" secondAttribute="trailing" id="XJ5-ck-UKv"/>
+                        <constraint firstItem="P9t-OP-a0X" firstAttribute="top" secondItem="s9E-by-pmN" secondAttribute="top" id="hcQ-Jd-8uW"/>
+                        <constraint firstAttribute="trailing" secondItem="P9t-OP-a0X" secondAttribute="trailing" id="vgQ-0l-fef"/>
+                        <constraint firstItem="P9t-OP-a0X" firstAttribute="leading" secondItem="s9E-by-pmN" secondAttribute="leading" id="x4l-B1-z49"/>
+                        <constraint firstAttribute="bottom" secondItem="P9t-OP-a0X" secondAttribute="bottom" id="xBb-Bu-7AP"/>
                     </constraints>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="s9E-by-pmN" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="8Aj-3e-nzr"/>
                 <constraint firstItem="s9E-by-pmN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="P1w-xf-jMU"/>
@@ -43,13 +42,13 @@
                 <constraint firstAttribute="bottom" secondItem="s9E-by-pmN" secondAttribute="bottom" id="vRv-TG-C45"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="label" destination="P9t-OP-a0X" id="YpP-jj-zHD"/>
+            </connections>
             <point key="canvasLocation" x="252" y="93"/>
         </view>
     </objects>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemGray2Color">
             <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

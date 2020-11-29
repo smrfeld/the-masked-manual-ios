@@ -34,7 +34,14 @@ class CompanyTableViewCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var no_masks: UILabel!
     
-    func reload(company: Company) {
+    func reload(company: Company, rounded: Bool) {
+        backgroundColor = UIColor.white
+        if rounded {
+            layer.cornerRadius = 15
+        } else {
+            layer.cornerRadius = 0
+        }
+        
         self.name.text = company.name
         self.no_masks.text = String(company.masks.count)
     }

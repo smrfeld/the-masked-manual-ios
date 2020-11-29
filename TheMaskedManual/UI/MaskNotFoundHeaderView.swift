@@ -31,12 +31,24 @@ import UIKit
 
 class MaskNotFoundHeaderView: UITableViewHeaderFooterView {
 
-    /*
+    @IBOutlet weak var label: UILabel!
+    
+    func show_cant_find_your_mask() {
+        label.text = "Can't find your mask?"
+    }
+    
+    func show_see_more_masks(mask : Mask?) {
+        if let mask = mask {
+            label.text = "See more masks by: " + mask.company
+        } else {
+            label.text = "See more masks by this company"
+        }
+    }
+    
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
+    /*
     override func draw(_ rect: CGRect) {
-        // Drawing code
     }
-    */
-
+     */
 }
