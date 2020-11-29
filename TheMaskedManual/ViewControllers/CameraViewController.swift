@@ -53,7 +53,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     var session = AVCaptureSession()
     var requests = [VNRequest]()
 
-    private var screenshot_mode = true
+    private var screenshot_mode = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
