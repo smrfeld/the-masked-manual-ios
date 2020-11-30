@@ -159,6 +159,10 @@ func set_url_dev(_ url : String) {
     UserDefaults.standard.synchronize()
 }
 
+enum EmptyData: Error {
+    case empty_data
+}
+
 struct LoadMasks {
     
     static func load_masks_and_companies(completion: @escaping ([Mask], [Company]) -> Void) {
@@ -174,52 +178,87 @@ struct LoadMasks {
     }
     
     private static func load_masks_and_companies_from_local(completion: @escaping ([Mask], [Company]) -> Void) {
-        let csn = CompanySearchName()
-        let msn = ModelSearchName()
         
-        get_masks_url { (url) in
-            guard let url = url else {
-                print("Error! Could not load masks and companies...")
-                completion([],[])
-                return
+        guard let url = get_masks_url() else {
+            print("Could not get save URL")
+            completion([],[])
+            return
+        }
+                        
+        do {
+            // Load masks
+            let data = try Data(contentsOf: url, options: .mappedIfSafe)
+            let masks = try JSONDecoder().decode(Masks.self, from: data)
+            
+            if masks.masks.count == 0 {
+                // No masks
+                throw EmptyData.empty_data
             }
-                    
+            
+            // Finish
+            let companies = finish_load_json(masks)
+            
+            // Callback
+            completion(masks.masks, companies)
+            
+        } catch {
+            // handle error
+            print("Error info: \(error)")
+            
+            // Try again with the masks from the backup file
+            print("Trying again to load masks from backup data...")
             do {
-                // Load masks
-                let data = try Data(contentsOf: url, options: .mappedIfSafe)
-                let masks = try JSONDecoder().decode(Masks.self, from: data)
-                
-                set_url_dev(masks.url_dev)
-                set_url_fda(masks.url_fda)
-                set_url_niosh(masks.url_niosh)
-                set_url_emergency(masks.url_emergency)
-                set_url_data_fda(masks.url_fda)
-                set_url_data_niosh(masks.url_niosh)
-                set_url_data_emergency(masks.url_emergency)
-
-                // Organize masks by company
-                let companies = LoadMasks.organize_masks_by_company(masks.masks)
-                
-                // Search name for companies
-                for company in companies {
-                    company.search_name = csn.get_search_company_name(company_name: company.name)
-                    company.search_name_words = company.search_name.components(separatedBy: " ")
-                }
-                
-                // Search name for models
-                for mask in masks.masks {
-                    mask.search_model = msn.get_search_model_name(model_name: mask.model)
-                    // print("Search name for mask: ", mask.model, " -> ", mask.search_model)
-                }
+                if let path = Bundle.main.path(forResource: "data_2020_11_29", ofType: "txt") {
+                    let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                    let masks = try JSONDecoder().decode(Masks.self, from: data)
                     
-                // Callback
-                completion(masks.masks, companies)
+                    // Finish
+                    let companies = finish_load_json(masks)
+                    
+                    // Callback
+                    completion(masks.masks, companies)
+                    
+                } else {
+                    // Very bad!
+                    print ("url error for backup!")
+                    completion([],[])
+                }
             } catch {
-                // handle error
-                print("Error info: \(error)")
+                // Bad, very bad
+                print("Error backup info: \(error)")
                 completion([],[])
             }
         }
+    }
+    
+    private static func finish_load_json(_ masks: Masks) -> [Company] {
+        let csn = CompanySearchName()
+        let msn = ModelSearchName()
+
+        set_url_dev(masks.url_dev)
+        set_url_fda(masks.url_fda)
+        set_url_niosh(masks.url_niosh)
+        set_url_emergency(masks.url_emergency)
+        set_url_data_fda(masks.url_fda)
+        set_url_data_niosh(masks.url_niosh)
+        set_url_data_emergency(masks.url_emergency)
+
+        // Organize masks by company
+        let companies = LoadMasks.organize_masks_by_company(masks.masks)
+        
+        // Search name for companies
+        for company in companies {
+            company.search_name = csn.get_search_company_name(company_name: company.name)
+            company.search_name_words = company.search_name.components(separatedBy: " ")
+        }
+        
+        // Search name for models
+        for mask in masks.masks {
+            mask.search_model = msn.get_search_model_name(model_name: mask.model)
+            // print("Search name for mask: ", mask.model, " -> ", mask.search_model)
+        }
+        
+        return companies
     }
     
     private static func organize_masks_by_company(_ masks: [Mask]) -> [Company] {
@@ -274,7 +313,7 @@ struct LoadMasks {
         UserDefaults.standard.synchronize()
     }
     
-    private static func get_masks_url(completion: @escaping (URL?) -> Void) {
+    private static func get_masks_url() -> URL? {
         
         do {
             let documentsURL = try
@@ -284,20 +323,11 @@ struct LoadMasks {
                                         create: false)
             
             let savedURL = documentsURL.appendingPathComponent("data.txt")
-            completion(savedURL)
+            return savedURL
             
         } catch {
             print ("url error: \(error)")
-            
-            // Try the backup
-            if let path = Bundle.main.path(forResource: "data_2020_11_29", ofType: "txt") {
-                print("Switching to backup")
-                completion(URL(fileURLWithPath: path))
-            } else {
-                // Very bad!
-                print ("url error for backup!")
-                completion(nil)
-            }
+            return nil
         }
     }
     
@@ -331,28 +361,26 @@ struct LoadMasks {
                 let fileURL = urlOrNil!
                 
                 // Move to permanent storage
-                get_masks_url { (savedURL) in
-                    guard let savedURL = savedURL else {
-                        completion()
-                        return
-                    }
-
-                    do {
-                        
-                        print("Saving data from: ", fileURL, " to: ", savedURL, " ...")
-                        try? FileManager.default.removeItem(at: savedURL) // Ignores failure
-                        try FileManager.default.moveItem(at: fileURL, to: savedURL)
-                        print("Saved data from: ", fileURL, " to: ", savedURL)
-                        
-                        // Success; mark date
-                        mark_date_downloaded_as_today()
-                        
-                        // Done!
-                        completion()
-                    } catch {
-                        print ("file error: \(error)")
-                        completion()
-                    }
+                guard let savedURL = get_masks_url() else {
+                    print("Could not get save url")
+                    completion()
+                    return
+                }
+                do {
+                    
+                    print("Saving data from: ", fileURL, " to: ", savedURL, " ...")
+                    try? FileManager.default.removeItem(at: savedURL) // Ignores failure
+                    try FileManager.default.moveItem(at: fileURL, to: savedURL)
+                    print("Saved data from: ", fileURL, " to: ", savedURL)
+                    
+                    // Success; mark date
+                    mark_date_downloaded_as_today()
+                    
+                    // Done!
+                    completion()
+                } catch {
+                    print ("file error: \(error)")
+                    completion()
                 }
             }
             downloadTask.resume()
