@@ -32,6 +32,7 @@ import UIKit
 
 private let n95_surgical_respirator = "N95 Surgical Respirator"
 private let n95_respirator = "N95 Respirator"
+private let respirator = "Respirator"
 private let surgical_mask = "Surgical Mask"
 
 private let fda_approved = "FDA-approved"
@@ -276,7 +277,7 @@ class Mask : Codable, CustomStringConvertible, Equatable, Hashable {
                 extra_name: emergency,
                 extra_name_short: emergency_short,
                 help_extra: "This respirator is authorized for emergency use by the FDA during COVID-19.",
-                type: n95_respirator,
+                type: respirator,
                 extra_image_checkmark: image_ok,
                 fda_image_checkmark: image_not_ok,
                 niosh_image_checkmark: image_not_ok
@@ -297,7 +298,7 @@ class Mask : Codable, CustomStringConvertible, Equatable, Hashable {
                 extra_name: revoked,
                 extra_name_short: revoked_short,
                 help_extra: "This respirator has been revoked from the list of COVID-19 emergency approved respirators by the FDA.",
-                type: n95_respirator,
+                type: respirator,
                 extra_image_checkmark: image_not_ok,
                 fda_image_checkmark: image_not_ok,
                 niosh_image_checkmark: image_not_ok
