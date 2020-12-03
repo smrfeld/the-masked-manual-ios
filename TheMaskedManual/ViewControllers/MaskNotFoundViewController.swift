@@ -34,7 +34,8 @@ class MaskNotFoundViewController: UIViewController {
     @IBOutlet weak var central_view: UIView!
     @IBOutlet weak var first_text_view: UITextView!
     @IBOutlet weak var second_text_view: UITextView!
-    
+    var completion_on_close : () -> Void = {}
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -64,7 +65,7 @@ class MaskNotFoundViewController: UIViewController {
     }
     
     @IBAction func close_button_pressed(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: completion_on_close)
     }
     
     /*

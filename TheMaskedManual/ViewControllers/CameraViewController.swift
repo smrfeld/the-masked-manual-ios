@@ -51,6 +51,8 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     var is_search_in_progress : Bool = false
     
     var session = AVCaptureSession()
+    var deviceInput : AVCaptureInput? = nil
+    var deviceOutput : AVCaptureOutput? = nil
     var requests = [VNRequest]()
 
     private var screenshot_mode = false
@@ -73,12 +75,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         // Company
         let companyNib = UINib.init(nibName: "CompanyTableViewCell", bundle: Bundle.main)
         tableView.register(companyNib, forCellReuseIdentifier: "companyTableViewCell")
-        
-        if !screenshot_mode {
-            // Setup video once
-            setup_live_video()
-        }
-        
+                
         if screenshot_mode {
             imageView.image = UIImage(named: "toy_image")
             
@@ -92,24 +89,41 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         
         // Background color
         tableView.backgroundColor = UIColor(red: 174.0/256.0, green: 174.0/256.0, blue: 178.0/256.0, alpha: 1.0)
+        
+        // Setup image once
+        setup_image_once()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        start_up()
+    }
+    
+    private func start_up() {
         if !screenshot_mode {
-            startLiveVideo()
-            startTextDetection()
+            let success = setup_live_video()
+            
+            if success {
+                startLiveVideo()
+                startTextDetection()
+            }
+        }
+    }
+    
+    private func shut_down() {
+        if !screenshot_mode {
+            stopLiveVideo()
+            stopTextDetection()
+            
+            break_down_live_video()
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if !screenshot_mode {
-            stopLiveVideo()
-            stopTextDetection()
-        }
+        shut_down()
     }
     
     override func viewDidLayoutSubviews() {
@@ -124,19 +138,19 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             print("No result")
             return
         }
-
-        // Highlight
-        DispatchQueue.main.async() {
-            self.imageView.layer.sublayers?.removeSubrange(1...)
-            for rg in observations {
-                self.highlightWord(box: rg)
-            }
-        }
         
         // Only search if not currently searching
         if !is_search_in_progress {
             is_search_in_progress = true
-                        
+            
+            // Highlight
+            DispatchQueue.main.async() {
+                self.imageView.layer.sublayers?.removeSubrange(1...)
+                for rg in observations {
+                    self.highlightWord(box: rg)
+                }
+            }
+            
             var raw_observed_texts : [String] = []
             
             for observation in observations {
@@ -238,7 +252,11 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     }
     
     func stopLiveVideo() {
-        session.stopRunning()
+        print("Stopping live video...")
+        if session.isRunning {
+            session.stopRunning()
+        }
+        print("Stopped live video.")
     }
     
     func startTextDetection() {
@@ -254,23 +272,58 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         self.requests = [textRequest]
     }
     
-    func setup_live_video() {
+    func setup_live_video() -> Bool {
+        print("setup live video start...")
+        
         // Init capture session
         session.sessionPreset = AVCaptureSession.Preset.photo
-        let captureDevice = AVCaptureDevice.default(for: AVMediaType.video)
-        
+        guard let captureDevice = AVCaptureDevice.default(for: AVMediaType.video) else {
+            print("No camera device")
+            return false
+        }
+                
         // Setup
-        let deviceInput = try! AVCaptureDeviceInput(device: captureDevice!)
-        let deviceOutput = AVCaptureVideoDataOutput()
-        deviceOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
-        deviceOutput.setSampleBufferDelegate(self, queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.default))
-        session.addInput(deviceInput)
-        session.addOutput(deviceOutput)
-           
+        do {
+            let deviceInput_ = try AVCaptureDeviceInput(device: captureDevice)
+            session.addInput(deviceInput_)
+            deviceInput = deviceInput_
+        } catch {
+            print("Error: ", error.localizedDescription)
+            return false
+        }
+        
+        let deviceOutput_ = AVCaptureVideoDataOutput()
+        deviceOutput_.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_32BGRA)]
+        deviceOutput_.setSampleBufferDelegate(self, queue: DispatchQueue.global(qos: DispatchQoS.QoSClass.default))
+        session.addOutput(deviceOutput_)
+        deviceOutput = deviceOutput_
+                   
+        print("setup live video.")
+
+        return true
+    }
+    
+    private func setup_image_once() {
         // Set image
         let imageLayer = AVCaptureVideoPreviewLayer(session: session)
-        imageLayer.bounds = imageView.bounds
+        imageLayer.frame = imageView.bounds
         imageView.layer.addSublayer(imageLayer)
+    }
+    
+    func break_down_live_video() {
+        print("Breaking down live video...")
+        
+        // Remove IO
+        if let deviceInput = deviceInput {
+            session.removeInput(deviceInput)
+        }
+        if let deviceOutput = deviceOutput {
+            session.removeOutput(deviceOutput)
+        }
+        deviceOutput = nil
+        deviceInput = nil
+        
+        print("Broke down live video.")
     }
     
     func startLiveVideo() {
@@ -315,8 +368,15 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         alert.definesPresentationContext = true
         alert.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         alert.modalTransitionStyle = UIModalTransitionStyle.coverVertical
-        
+        alert.completion_on_close = {
+            // Start live video and recognition again
+            self.start_up()
+        }
+
         DispatchQueue.main.async {
+            // Stop live video and recognition
+            self.shut_down()
+
             self.present(alert, animated: true, completion: nil)
         }
     }
@@ -477,8 +537,7 @@ extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
         alert.mask_ui = mask.get_mask_ui()
         alert.completion_on_close = {
             // Start live video and recognition again
-            self.startLiveVideo()
-            self.startTextDetection()
+            self.start_up()
         }
         alert.providesPresentationContextTransitionStyle = true
         alert.definesPresentationContext = true
@@ -487,8 +546,7 @@ extension CameraViewController : UITableViewDataSource, UITableViewDelegate {
         
         DispatchQueue.main.async {
             // Stop live video and recognition
-            self.stopLiveVideo()
-            self.stopTextDetection()
+            self.shut_down()
             
             // Show
             self.present(alert, animated: true, completion: nil)

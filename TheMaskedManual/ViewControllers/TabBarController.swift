@@ -33,7 +33,8 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-                    
+        print("Tab bar viewDidLoad starting...")
+        
         // Load masks
         LoadMasks.load_masks_and_companies { (masks, companies) in
                         
@@ -67,6 +68,8 @@ class TabBarController: UITabBarController {
         DispatchQueue.main.async {
             self.present(alert, animated: false, completion: nil)
         }
+        
+        print("Tab bar viewDidLoad.")
     }
         
     override func viewWillAppear(_ animated: Bool) {
