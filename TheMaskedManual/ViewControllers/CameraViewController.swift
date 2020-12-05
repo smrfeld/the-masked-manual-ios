@@ -55,7 +55,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     var deviceOutput : AVCaptureOutput? = nil
     var requests = [VNRequest]()
 
-    private var screenshot_mode = false
+    private var screenshot_mode = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
